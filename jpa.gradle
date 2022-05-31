@@ -4,10 +4,6 @@ apply plugin: "idea"
 dependencies {
     implementation 'com.querydsl:querydsl-jpa'
     implementation 'com.querydsl:querydsl-apt'
-
-    compileQuerydsl {
-        options.annotationProcessorPath = configurations.querydsl
-    }
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.hibernate:hibernate-spatial'
 }
