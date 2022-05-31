@@ -11,5 +11,6 @@ include 'api-out'
 include 'application'
 include 'domain'
 
-include 'support'
+include 'board-jpa'
 
+include 'support'
