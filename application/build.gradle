@@ -1,0 +1,11 @@
+bootJar.enabled = false
+jar.enabled = true
+
+dependencies {
+    implementation project(':api-in')
+    implementation project(':api-out')
+
+    implementation project(':domain')
+
+    implementation project(':support')
+}

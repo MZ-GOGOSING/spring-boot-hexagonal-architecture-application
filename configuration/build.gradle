@@ -1,0 +1,16 @@
+bootJar.enabled = true
+jar.enabled = false
+
+dependencies {
+    implementation project(':web-adapter')
+    implementation project(':persistence-adapter')
+    implementation project(':application')
+}
+
+tasks.named("bootJar") {
+    mainClass = 'me.gogosing.ApplicationInitializr'
+}
+
+tasks.named("bootRun") {
+    systemProperties = System.properties
+}

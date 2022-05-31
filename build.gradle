@@ -1,19 +1,93 @@
-plugins {
-    id 'java'
+buildscript {
+    ext {
+        springBootVersion = '2.7.0'
+        lombokVersion = '1.18.24'
+    }
+
+    repositories {
+        mavenCentral()
+        maven { url "https://plugins.gradle.org/m2/" }
+    }
+
+    dependencies {
+        classpath "org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}"
+        classpath 'gradle.plugin.com.ewerk.gradle.plugins:querydsl-plugin:1.0.10'
+    }
 }
 
-group 'me.gogosing'
-version '1.0-SNAPSHOT'
+ext {
 
-repositories {
-    mavenCentral()
 }
 
-dependencies {
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
+ext.projectVersion = {
+    Properties versionProps = new Properties()
+    versionProps.load(new FileInputStream(file('version.properties')))
+    def (major, minor, patch) = [versionProps['VERSION_MAJOR'].toString(), versionProps['VERSION_MINOR'].toString(), versionProps['VERSION_PATCH'].toString()]
+    return "${major}.${minor}.${patch}"
 }
 
-test {
-    useJUnitPlatform()
+subprojects {
+    group 'me.gogosing'
+    version '1.0.0'
+
+    apply plugin: 'java'
+    apply plugin: 'groovy'
+    apply plugin: 'org.springframework.boot'
+    apply plugin: 'io.spring.dependency-management'
+
+    project.version = projectVersion()
+
+    def javaVer = JavaVersion.VERSION_11
+
+    targetCompatibility = javaVer
+    sourceCompatibility = javaVer
+    compileJava.options.encoding = 'UTF-8'
+
+    repositories {
+        mavenCentral()
+    }
+
+    sourceSets {
+        integrationTest {
+            java {
+                compileClasspath += main.output + test.output
+                runtimeClasspath += main.output + test.output
+                srcDir file('src/integration-test/java')
+            }
+            resources.srcDir file('src/integration-test/resources')
+            resources.srcDir file('src/webapp')
+        }
+    }
+
+    dependencies {
+        implementation ('org.springframework.boot:spring-boot-starter-web') {
+            exclude module: "spring-boot-starter-tomcat"
+        }
+        implementation 'org.springframework.boot:spring-boot-starter-undertow'
+        implementation 'org.springframework.boot:spring-boot-starter-validation'
+
+        implementation 'org.projectlombok:lombok'
+        implementation 'org.apache.commons:commons-lang3:3.7'
+
+        annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+        annotationProcessor 'org.projectlombok:lombok'
+
+        testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+        testAnnotationProcessor 'org.projectlombok:lombok'
+    }
+
+    configurations {
+        integrationTestCompile.extendsFrom testCompile
+        integrationTestRuntime.extendsFrom testRuntime
+    }
+
+    task integrationTest(type: Test) {
+        afterTest { desc, result ->
+            logger.quiet "Executing integration test ${desc.name} [${desc.className}] with result: ${result.resultType}"
+        }
+        testClassesDirs = sourceSets.integrationTest.output.classesDirs
+        classpath = sourceSets.integrationTest.runtimeClasspath
+        outputs.upToDateWhen { false }
+    }
 }
