@@ -7,6 +7,7 @@ import org.springframework.boot.autoconfigure.jdbc.DataSourceTransactionManagerA
 import org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 
 @Configuration
 @EnableAutoConfiguration(exclude = {
@@ -15,6 +16,7 @@ import org.springframework.context.annotation.Configuration;
 	HibernateJpaAutoConfiguration.class})
 @ComponentScan(basePackages = {"me.gogosing.jpa", "me.gogosing.support"})
 @EntityScan(basePackages = {"me.gogosing.jpa"})
+@Import({BoardJpaDataSourceJpaConfig.class})
 public class BoardJpaConfig {
 
 }
