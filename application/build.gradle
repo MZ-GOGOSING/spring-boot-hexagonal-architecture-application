@@ -8,4 +8,6 @@ dependencies {
     implementation project(':domain')
 
     implementation project(':support')
+
+    implementation 'org.springframework:spring-tx'
 }

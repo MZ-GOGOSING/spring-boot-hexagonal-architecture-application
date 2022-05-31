@@ -4,4 +4,6 @@ jar.enabled = true
 dependencies {
     implementation project(':api-out')
     implementation project(':support')
+
+    implementation 'org.springframework:spring-tx'
 }

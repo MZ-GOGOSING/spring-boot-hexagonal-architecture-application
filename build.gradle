@@ -60,14 +60,11 @@ subprojects {
     }
 
     dependencies {
-        implementation ('org.springframework.boot:spring-boot-starter-web') {
-            exclude module: "spring-boot-starter-tomcat"
-        }
-        implementation 'org.springframework.boot:spring-boot-starter-undertow'
+        implementation 'org.springframework.boot:spring-boot-starter'
         implementation 'org.springframework.boot:spring-boot-starter-validation'
 
         implementation 'org.projectlombok:lombok'
-        implementation 'org.apache.commons:commons-lang3:3.7'
+        implementation 'org.apache.commons:commons-lang3:3.12.0'
 
         annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
         annotationProcessor 'org.projectlombok:lombok'

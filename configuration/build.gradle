@@ -4,6 +4,10 @@ jar.enabled = false
 dependencies {
     implementation project(':web-adapter')
     implementation project(':persistence-adapter')
+
+    implementation project(':api-in')
+    implementation project(':api-out')
+
     implementation project(':application')
 }
 
