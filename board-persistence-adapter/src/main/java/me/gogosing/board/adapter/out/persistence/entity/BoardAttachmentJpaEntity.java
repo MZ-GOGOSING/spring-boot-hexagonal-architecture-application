@@ -22,7 +22,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @Entity(name = "board_attachment")
 @EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = false)
-public class BoardAttachmentEntity extends BaseEntity {
+public class BoardAttachmentJpaEntity extends BaseJpaEntity {
 
 	/**
 	 * 게시물 첨부파일 번호.

@@ -20,7 +20,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @Entity(name = "board_contents")
 @EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = false)
-public class BoardContentsEntity extends BaseEntity {
+public class BoardContentsJpaEntity extends BaseJpaEntity {
 
 	/**
 	 * 게시물 번호.

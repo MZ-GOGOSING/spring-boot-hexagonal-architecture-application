@@ -25,7 +25,7 @@ import org.springframework.data.annotation.LastModifiedDate;
 @AllArgsConstructor
 @Entity(name = "board")
 @EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = false)
-public class BoardEntity extends BaseEntity {
+public class BoardJpaEntity extends BaseJpaEntity {
 
 	/**
 	 * 일련번호.
@@ -44,8 +44,8 @@ public class BoardEntity extends BaseEntity {
 	/**
 	 * 사용여부.
 	 */
-	@Column(name = "board_use_yn", nullable = false)
-	private boolean boardUseYn;
+	@Column(name = "deleted", nullable = false)
+	private boolean deleted;
 
 	/**
 	 * 등록일시.

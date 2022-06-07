@@ -15,6 +15,6 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @Audited
 @EntityListeners(AuditingEntityListener.class)
 @MappedSuperclass
-public abstract class BaseEntity implements Serializable {
+public abstract class BaseJpaEntity implements Serializable {
 
 }
