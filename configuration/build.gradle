@@ -8,8 +8,7 @@ dependencies {
     implementation project(':application')
     implementation project(':api-out')
 
-    implementation project(':persistence-adapter')
-    implementation project(':board-jpa')
+    implementation project(':board-persistence-adapter')
 }
 
 tasks.named("bootJar") {

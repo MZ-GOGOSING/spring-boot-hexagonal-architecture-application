@@ -12,6 +12,7 @@ buildscript {
     dependencies {
         classpath "org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}"
         classpath 'gradle.plugin.com.ewerk.gradle.plugins:querydsl-plugin:1.0.10'
+        classpath 'org.flywaydb:flyway-mysql:8.5.12'
     }
 }
 

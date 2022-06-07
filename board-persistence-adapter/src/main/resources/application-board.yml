@@ -1,0 +1,59 @@
+spring.jpa.open-in-view: false
+
+spring:
+  flyway:
+    enabled: false
+
+board:
+  persistence:
+    datasource:
+      poolName: board-persistence-cp
+      type: com.zaxxer.hikari.HikariDataSource
+      driverClassName: org.mariadb.jdbc.Driver
+      jdbcUrl: "jdbc:mariadb://localhost:3306/board"
+      username: root
+      password: root
+      auto-commit: false
+      sqlScriptEncoding: UTF-8
+      connectionTimeout: 3000
+      idleTimeout: 0
+      maxLifetime: 58000
+      maximumPoolSize: 5
+    jpa:
+      hibernate:
+        ddl-auto: validate
+      properties:
+        hibernate:
+          dialect: org.hibernate.dialect.MariaDBDialect
+          format_sql: true
+          show-sql: true
+          order_inserts: true
+          order_updates: true
+          jdbc:
+            batch_size: 500
+            fetch_size: 500
+            batch_versioned_data: true
+
+---
+spring:
+  config:
+    activate:
+      on-profile: local
+
+---
+spring:
+  config:
+    activate:
+      on-profile: dev
+
+---
+spring:
+  config:
+    activate:
+      on-profile: beta
+
+---
+spring:
+  config:
+    activate:
+      on-profile: prod

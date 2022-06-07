@@ -1,2 +1,17 @@
 bootJar.enabled = false
 jar.enabled = true
+
+dependencies {
+    implementation 'org.slf4j:slf4j-api'
+    implementation 'com.fasterxml.jackson.core:jackson-databind'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.hibernate:hibernate-envers'
+
+    annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
+
+    //Java8 이상 Feign 사용시 필수 설정
+    implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jdk8'
+    implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310'
+
+    implementation 'org.owasp.encoder:encoder:1.2.2'
+}

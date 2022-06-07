@@ -1,0 +1,28 @@
+plugins {
+    id "org.flywaydb.flyway" version "8.5.12"
+}
+
+apply from: '../jpa.gradle'
+
+bootJar.enabled = false
+jar.enabled = true
+
+dependencies {
+    implementation project(':api-out')
+    implementation project(':support')
+
+    implementation 'org.mariadb.jdbc:mariadb-java-client:3.0.5'
+    implementation 'org.hibernate:hibernate-envers'
+}
+
+jar.dependsOn test
+
+flyway {
+    url = "jdbc:mariadb://localhost:3306/board?useSSL=false"
+    user = "root"
+    password = "root"
+    locations = ["filesystem:${file('src/migration/board').absolutePath}"]
+    encoding = 'UTF-8'
+    outOfOrder = true // 여러브랜치에서 서로 다른 날짜로 만들어도 작동하도록
+    validateOnMigrate = true
+}
