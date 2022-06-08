@@ -3,4 +3,5 @@ spring:
     include:
       - web
       - core
-      - board
+      - persistence
+      - board-jpa
