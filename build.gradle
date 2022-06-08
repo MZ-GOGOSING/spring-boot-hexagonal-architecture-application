@@ -17,7 +17,7 @@ buildscript {
 }
 
 ext {
-
+    springdocVersion = '1.6.8'
 }
 
 ext.projectVersion = {
@@ -68,6 +68,9 @@ subprojects {
         implementation 'org.projectlombok:lombok'
         implementation 'org.apache.commons:commons-lang3:3.12.0'
         implementation 'org.apache.commons:commons-collections4:4.4'
+
+        implementation "org.springdoc:springdoc-openapi-ui:$springdocVersion"
+        implementation "org.springdoc:springdoc-openapi-webmvc-core:$springdocVersion"
 
         annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
         annotationProcessor 'org.projectlombok:lombok'

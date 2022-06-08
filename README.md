@@ -5,7 +5,7 @@
 ### Build
 
 ```
-./gradlew clean build -x npm_ci -x npmBuild
+./gradlew clean build
 ```
 
 ### [Docker](https://www.docker.com/get-started) Install
@@ -56,4 +56,12 @@ MariaDB 접속 정보
 
 ```
 ./gradlew integrationTest
+```
+
+### API Documentation
+
+API 명세는 아래의 경로를 통하여 확인할 수 있습니다.
+
+```
+http://localhost:9090/swagger-ui/index.html
 ```

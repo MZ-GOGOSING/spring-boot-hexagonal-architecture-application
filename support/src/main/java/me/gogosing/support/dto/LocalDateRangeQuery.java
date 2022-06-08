@@ -2,6 +2,8 @@ package me.gogosing.support.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Schema;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -12,29 +14,25 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import me.gogosing.support.converter.DefaultDateTimeFormat;
+import org.springdoc.api.annotations.ParameterObject;
 import org.springframework.format.annotation.DateTimeFormat;
 
-/**
- * 기간 필터링 조건 모델.
- */
+@Schema(description = "날짜 범위 검색 모델")
+@ParameterObject
 @Getter
 @Setter
 @NoArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = false)
 public class LocalDateRangeQuery implements Serializable {
 
-  /**
-   * 필터링 적용 시작일.
-   */
   @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
   @JsonFormat(pattern = DefaultDateTimeFormat.DATE_FORMAT_PATTERN)
+  @Parameter(description = "검색 시작일")
   private LocalDate startDate;
 
-  /**
-   * 필터링 적용 종료일.
-   */
   @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
   @JsonFormat(pattern = DefaultDateTimeFormat.DATE_FORMAT_PATTERN)
+  @Parameter(description = "검색 종료일")
   private LocalDate endDate;
 
 
