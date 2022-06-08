@@ -14,10 +14,12 @@ import me.gogosing.jpa.board.repository.BoardAttachmentJpaRepository;
 import me.gogosing.jpa.board.repository.BoardContentsJpaRepository;
 import me.gogosing.jpa.board.repository.BoardJpaRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.validation.annotation.Validated;
 
 @Service
+@Validated
 @RequiredArgsConstructor
-@BoardJpaTransactional(readOnly = true)
 public class LoadBoardArticlePersistenceAdapter implements LoadBoardArticlePort {
 
 	private final BoardJpaRepository boardJpaRepository;
@@ -27,6 +29,7 @@ public class LoadBoardArticlePersistenceAdapter implements LoadBoardArticlePort 
 	private final BoardAttachmentJpaRepository boardAttachmentJpaRepository;
 
 	@Override
+	@BoardJpaTransactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public BoardDomainEntity loadBoardArticle(final Long id) {
 		BoardJpaEntity boardJpaEntity = boardJpaRepository.findByBoardIdAndDeletedFalse(id)
 			.orElseThrow(EntityNotFoundException::new);
@@ -48,6 +51,7 @@ public class LoadBoardArticlePersistenceAdapter implements LoadBoardArticlePort 
 		return BoardDomainEntity.withId(
 			boardJpaEntity.getBoardId(),
 			boardJpaEntity.getBoardTitle(),
+			boardJpaEntity.getBoardCategory(),
 			boardJpaEntity.getCreateDate(),
 			boardJpaEntity.getUpdateDate(),
 			contents,

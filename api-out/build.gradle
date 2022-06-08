@@ -4,4 +4,6 @@ jar.enabled = true
 dependencies {
     implementation project(':domain')
     implementation project(':support')
+
+    implementation 'org.springframework.data:spring-data-commons'
 }

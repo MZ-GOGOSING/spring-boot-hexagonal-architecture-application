@@ -3,6 +3,8 @@ package me.gogosing.jpa.board.entity;
 import java.time.LocalDateTime;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -12,6 +14,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import me.gogosing.support.code.board.BoardCategory;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
@@ -40,6 +43,13 @@ public class BoardJpaEntity extends BaseJpaEntity {
 	 */
 	@Column(name = "board_title", nullable = false)
 	private String boardTitle;
+
+	/**
+	 * 카테고리.
+	 */
+	@Enumerated(value = EnumType.STRING)
+	@Column(name = "board_category", nullable = false)
+	private BoardCategory boardCategory;
 
 	/**
 	 * 사용여부.

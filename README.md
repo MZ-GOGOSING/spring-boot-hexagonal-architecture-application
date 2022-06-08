@@ -55,5 +55,5 @@ MariaDB 접속 정보
 ### IntegrationTest
 
 ```
-./gradlew integrationTest -x npm_ci -x npmBuild
+./gradlew integrationTest
 ```

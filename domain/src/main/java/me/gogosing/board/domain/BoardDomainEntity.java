@@ -7,6 +7,7 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import me.gogosing.support.code.board.BoardCategory;
 import org.springframework.util.CollectionUtils;
 
 @Getter
@@ -18,6 +19,8 @@ public class BoardDomainEntity {
 
 	private final String title;
 
+	private final BoardCategory category;
+
 	private final String contents;
 
 	private final LocalDateTime createDate;
@@ -28,11 +31,13 @@ public class BoardDomainEntity {
 
 	public static BoardDomainEntity withoutId(
 		final String title,
+		final BoardCategory category,
 		final String contents,
 		final List<BoardAttachmentDomainEntity> attachments
 	) {
 		return BoardDomainEntity.builder()
 			.title(title)
+			.category(category)
 			.contents(contents)
 			.attachments(CollectionUtils.isEmpty(attachments) ? Collections.emptyList() : attachments)
 			.build();
@@ -41,6 +46,7 @@ public class BoardDomainEntity {
 	public static BoardDomainEntity withId(
 		final Long id,
 		final String title,
+		final BoardCategory category,
 		final LocalDateTime createDate,
 		final LocalDateTime updateDate,
 		final String contents,
@@ -49,6 +55,7 @@ public class BoardDomainEntity {
 		return BoardDomainEntity.builder()
 			.id(id)
 			.title(title)
+			.category(category)
 			.createDate(createDate)
 			.updateDate(updateDate)
 			.contents(contents)
