@@ -2,7 +2,6 @@ package me.gogosing.board.adapter.out.persistence;
 
 import java.util.List;
 import java.util.stream.Collectors;
-import javax.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import me.gogosing.board.application.port.out.LoadBoardArticlePort;
 import me.gogosing.board.domain.BoardAttachmentDomainEntity;
@@ -13,6 +12,7 @@ import me.gogosing.jpa.board.entity.BoardJpaEntity;
 import me.gogosing.jpa.board.repository.BoardAttachmentJpaRepository;
 import me.gogosing.jpa.board.repository.BoardContentsJpaRepository;
 import me.gogosing.jpa.board.repository.BoardJpaRepository;
+import me.gogosing.support.exception.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.validation.annotation.Validated;
