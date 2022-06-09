@@ -19,6 +19,8 @@ import me.gogosing.support.exception.InvalidStateException;
 import me.gogosing.support.exception.InvalidValueException;
 import me.gogosing.support.exception.UnAuthorizedException;
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.BindException;
+import org.springframework.validation.FieldError;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -72,8 +74,22 @@ public class ApiExceptionHandler {
 	@ExceptionHandler({MethodArgumentNotValidException.class})
 	public ApiResponse<List<InvalidArguments>> handleValidation(MethodArgumentNotValidException e) {
 		log.error("ApiExceptionHandler > Invalidation Exception > errorMessage:{}", e.getMessage(), e);
+		return handleValidation(e.getBindingResult().getFieldErrors());
+	}
+
+	/**
+	 * BindException
+	 */
+	@ResponseStatus(HttpStatus.OK)
+	@ExceptionHandler({BindException.class})
+	public ApiResponse<List<InvalidArguments>> handleValidation(BindException e) {
+		log.error("ApiExceptionHandler > Invalidation Exception > errorMessage:{}", e.getMessage(), e);
+		return handleValidation(e.getBindingResult().getFieldErrors());
+	}
+
+	private ApiResponse<List<InvalidArguments>> handleValidation(List<FieldError> fieldErrors) {
 		return ApiResponseGenerator.fail(ErrorCode.INVALID_PARAMETER,
-			e.getBindingResult().getFieldErrors().stream()
+			fieldErrors.stream()
 				.map(InvalidArguments::new)
 				.collect(Collectors.toList()));
 	}
