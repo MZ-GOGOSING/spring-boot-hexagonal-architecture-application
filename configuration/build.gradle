@@ -13,6 +13,32 @@ dependencies {
     implementation project(':board-jpa')
 }
 
+sourceSets {
+    integrationTest {
+        java {
+            compileClasspath += main.output + test.output
+            runtimeClasspath += main.output + test.output
+            srcDir file('src/integration-test/java')
+        }
+        resources.srcDir file('src/integration-test/resources')
+        resources.srcDir file('src/webapp')
+    }
+}
+
+configurations {
+    integrationTestCompile.extendsFrom testCompile
+    integrationTestRuntime.extendsFrom testRuntime
+}
+
+task integrationTest(type: Test) {
+    afterTest { desc, result ->
+        logger.quiet "Executing integration test ${desc.name} [${desc.className}] with result: ${result.resultType}"
+    }
+    testClassesDirs = sourceSets.integrationTest.output.classesDirs
+    classpath = sourceSets.integrationTest.runtimeClasspath
+    outputs.upToDateWhen { false }
+}
+
 tasks.named("bootJar") {
     mainClass = 'me.gogosing.ApplicationInitializr'
 }
