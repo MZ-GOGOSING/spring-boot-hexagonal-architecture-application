@@ -5,3 +5,32 @@ spring:
       - core
       - persistence
       - board-jpa
+  devtools:
+    add-properties: false
+    restart:
+      enabled: false
+
+springdoc:
+  api-docs:
+    groups:
+      enabled: true
+    resolve-schema-properties: true
+  group-configs:
+    - group: BOARD
+      display-name: 게시물 관리
+      paths-to-match: /v1/board/**
+    - group: ACTUATOR
+      display-name: Spring Actuator
+      paths-to-match:
+        - /actuator
+        - /actuator/**
+  swagger-ui:
+    enabled: false
+    version: v1
+    groups-order: desc
+    try-it-out-enabled: true
+    display-request-duration: true
+    disable-swagger-default-url: true
+  show-actuator: false
+  default-produces-media-type: application/json
+  writer-with-default-pretty-printer: true
