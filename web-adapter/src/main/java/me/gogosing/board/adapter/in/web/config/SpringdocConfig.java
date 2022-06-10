@@ -2,6 +2,7 @@ package me.gogosing.board.adapter.in.web.config;
 
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.models.OpenAPI;
+import io.swagger.v3.oas.models.info.Contact;
 import io.swagger.v3.oas.models.info.Info;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,7 +18,11 @@ public class SpringdocConfig {
 		Info info = new Info()
 			.title("spring-boot-hexagonal-architecture-application API")
 			.description("Hexagonal Architecture Sample Application")
-			.version("v0.0.1");
+			.version("v0.0.1")
+			.contact(new Contact()
+				.name("JinBum Jeong")
+				.email("gogosing@mz.co.kr")
+				.url("https://github.com/MZ-GOGOSING"));
 
 		return new OpenAPI().info(info);
 	}

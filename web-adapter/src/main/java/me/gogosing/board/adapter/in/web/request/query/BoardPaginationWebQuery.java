@@ -23,17 +23,17 @@ public class BoardPaginationWebQuery {
 
 	private static final int MAXIMUM_DATE_RANGE_LIMIT = 14;
 
-	@Parameter(description = "제목")
+	@Parameter(description = "검색 제목 (like)")
 	private String title;
 
-	@Parameter(description = "카테고리")
+	@Parameter(description = "검색 카테고리 (eq)")
 	private BoardCategory category;
 
-	@Parameter(description = "내용")
+	@Parameter(description = "검색 내용 (like)")
 	private String contents;
 
 	@Valid
-	@Parameter(description = "검색 등록기간", required = true)
+	@Parameter(description = "검색 등록기간 (between)", required = true)
 	@BetweenDate(maximumDateRangeLimit = MAXIMUM_DATE_RANGE_LIMIT)
 	private LocalDateRangeQuery registeredPeriod = new LocalDateRangeQuery(DEFAULT_DATE_RANGE_LIMIT);
 

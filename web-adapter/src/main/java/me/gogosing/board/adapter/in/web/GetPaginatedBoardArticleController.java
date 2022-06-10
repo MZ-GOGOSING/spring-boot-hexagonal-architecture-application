@@ -12,6 +12,7 @@ import me.gogosing.board.application.port.in.request.query.BoardPaginationInQuer
 import me.gogosing.support.dto.ApiResponse;
 import me.gogosing.support.dto.ApiResponseGenerator;
 import me.gogosing.support.dto.PageResponse;
+import org.springdoc.api.annotations.ParameterObject;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort.Direction;
@@ -34,7 +35,7 @@ public class GetPaginatedBoardArticleController {
 	@GetMapping
 	public ApiResponse<PageResponse<GetBoardArticleItemWebResponse>> getPaginatedBoard(
 		final @Valid BoardPaginationWebQuery webQuery,
-		final @PageableDefault(
+		final @ParameterObject @PageableDefault(
 			size = 5,
 			sort = "boardId",
 			direction = Direction.DESC

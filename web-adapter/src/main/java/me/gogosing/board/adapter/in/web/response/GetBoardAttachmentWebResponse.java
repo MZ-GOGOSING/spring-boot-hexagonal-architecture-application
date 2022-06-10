@@ -12,9 +12,9 @@ import lombok.Getter;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class GetBoardAttachmentWebResponse {
 
-	@Schema(description = "경로")
+	@Schema(description = "경로", example = "https://host.com/foo/bar/", required = true)
 	private final String path;
 
-	@Schema(description = "파일명")
+	@Schema(description = "파일명", example = "image.png", required = true)
 	private final String name;
 }

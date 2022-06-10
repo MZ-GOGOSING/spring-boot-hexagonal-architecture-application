@@ -14,18 +14,18 @@ import me.gogosing.support.code.board.BoardCategory;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class GetBoardArticleItemWebResponse {
 
-	@Schema(description = "식별자")
+	@Schema(description = "식별자", example = "1", required = true)
 	private final Long id;
 
-	@Schema(description = "제목")
+	@Schema(description = "제목", example = "게시물 제목", required = true)
 	private final String title;
 
-	@Schema(description = "카테고리")
+	@Schema(description = "카테고리", example = "NORMAL", required = true)
 	private final BoardCategory category;
 
-	@Schema(description = "등록일")
+	@Schema(description = "등록일", example = "yyyy-MM-dd", required = true)
 	private final LocalDateTime createDate;
 
-	@Schema(description = "수정일")
+	@Schema(description = "수정일", example = "yyyy-MM-dd", required = true)
 	private final LocalDateTime updateDate;
 }

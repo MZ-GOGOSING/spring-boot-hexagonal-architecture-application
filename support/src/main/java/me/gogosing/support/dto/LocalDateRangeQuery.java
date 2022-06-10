@@ -27,12 +27,12 @@ public class LocalDateRangeQuery implements Serializable {
 
   @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
   @JsonFormat(pattern = DefaultDateTimeFormat.DATE_FORMAT_PATTERN)
-  @Parameter(description = "검색 시작일")
+  @Parameter(description = "yyyy-MM-dd 형식의 검색 시작일 (goe)")
   private LocalDate startDate;
 
   @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
   @JsonFormat(pattern = DefaultDateTimeFormat.DATE_FORMAT_PATTERN)
-  @Parameter(description = "검색 종료일")
+  @Parameter(description = "yyyy-MM-dd 형식의 검색 종료일 (loe)")
   private LocalDate endDate;
 
 
