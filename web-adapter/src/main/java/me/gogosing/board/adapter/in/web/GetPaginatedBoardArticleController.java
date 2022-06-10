@@ -8,7 +8,8 @@ import me.gogosing.board.adapter.in.web.request.query.BoardPaginationWebQuery;
 import me.gogosing.board.adapter.in.web.response.GetBoardArticleItemWebResponse;
 import me.gogosing.board.adapter.in.web.response.converter.GetBoardArticleItemWebResponseConverter;
 import me.gogosing.board.application.port.in.GetPaginatedBoardArticleQuery;
-import me.gogosing.board.application.port.in.request.query.BoardPaginationInQuery;
+import me.gogosing.board.application.port.in.request.query.BoardArticlePaginationInQuery;
+import me.gogosing.board.application.port.in.response.GetBoardArticleInResponse;
 import me.gogosing.support.dto.ApiResponse;
 import me.gogosing.support.dto.ApiResponseGenerator;
 import me.gogosing.support.dto.PageResponse;
@@ -41,13 +42,12 @@ public class GetPaginatedBoardArticleController {
 			direction = Direction.DESC
 		) Pageable pageable
 	) {
-		BoardPaginationInQuery inQuery = webQuery.toInQuery();
-		GetBoardArticleItemWebResponseConverter webConverter = new GetBoardArticleItemWebResponseConverter();
+		BoardArticlePaginationInQuery inQuery = webQuery.toInQuery();
+		Page<GetBoardArticleInResponse> paginatedResult = getPaginatedBoardArticleQuery.getPaginatedBoardArticle(inQuery, pageable);
 
-		Page<GetBoardArticleItemWebResponse> paginatedResult = getPaginatedBoardArticleQuery
-			.getPaginatedBoardArticle(inQuery, pageable)
-			.map(webConverter::convert);
+		GetBoardArticleItemWebResponseConverter webResponseConverter = new GetBoardArticleItemWebResponseConverter();
+		Page<GetBoardArticleItemWebResponse> convertedResult = paginatedResult.map(webResponseConverter::convert);
 
-		return ApiResponseGenerator.success(PageResponse.convert(paginatedResult));
+		return ApiResponseGenerator.success(PageResponse.convert(convertedResult));
 	}
 }

@@ -5,7 +5,11 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import me.gogosing.board.adapter.in.web.request.command.BoardArticleCreationWebCommand;
-import me.gogosing.board.application.port.in.GetBoardArticleQuery;
+import me.gogosing.board.adapter.in.web.response.CreateBoardArticleWebResponse;
+import me.gogosing.board.adapter.in.web.response.converter.CreateBoardArticleWebResponseConverter;
+import me.gogosing.board.application.port.in.CreateBoardArticleUseCase;
+import me.gogosing.board.application.port.in.request.command.BoardArticleCreationInCommand;
+import me.gogosing.board.application.port.in.response.CreateBoardArticleInResponse;
 import me.gogosing.support.dto.ApiResponse;
 import me.gogosing.support.dto.ApiResponseGenerator;
 import org.springframework.validation.annotation.Validated;
@@ -21,13 +25,18 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class CreateBoardArticleController {
 
-	private final GetBoardArticleQuery getBoardArticleQuery;
+	private final CreateBoardArticleUseCase createBoardArticleUseCase;
 
 	@Operation(summary = "게시물 생성", description = "특정 게시물을 생성할 수 있습니다.")
 	@PostMapping
-	public ApiResponse<Void> postBoardArticle(
-		final @RequestBody @Valid BoardArticleCreationWebCommand command
+	public ApiResponse<CreateBoardArticleWebResponse> postBoardArticle(
+		final @RequestBody @Valid BoardArticleCreationWebCommand webCommand
 	) {
-		return ApiResponseGenerator.success();
+		BoardArticleCreationInCommand inCommand = webCommand.toInCommand();
+		CreateBoardArticleInResponse inResponse = createBoardArticleUseCase.createBoardArticle(inCommand);
+
+		CreateBoardArticleWebResponse webResponse = new CreateBoardArticleWebResponseConverter().convert(inResponse);
+
+		return ApiResponseGenerator.success(webResponse);
 	}
 }

@@ -10,7 +10,7 @@ import me.gogosing.support.dto.LocalDateRangeQuery;
 @Getter
 @Builder
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-public class BoardPaginationOutQuery {
+public class BoardArticlePaginationOutQuery {
 
 	private String title;
 

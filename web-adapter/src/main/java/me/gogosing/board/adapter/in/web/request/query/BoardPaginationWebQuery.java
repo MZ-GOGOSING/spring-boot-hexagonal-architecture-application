@@ -6,7 +6,7 @@ import javax.validation.Valid;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import me.gogosing.board.application.port.in.request.query.BoardPaginationInQuery;
+import me.gogosing.board.application.port.in.request.query.BoardArticlePaginationInQuery;
 import me.gogosing.support.code.board.BoardCategory;
 import me.gogosing.support.dto.LocalDateRangeQuery;
 import me.gogosing.support.validation.BetweenDate;
@@ -37,8 +37,8 @@ public class BoardPaginationWebQuery {
 	@BetweenDate(maximumDateRangeLimit = MAXIMUM_DATE_RANGE_LIMIT)
 	private LocalDateRangeQuery registeredPeriod = new LocalDateRangeQuery(DEFAULT_DATE_RANGE_LIMIT);
 
-	public BoardPaginationInQuery toInQuery() {
-		return BoardPaginationInQuery.builder()
+	public BoardArticlePaginationInQuery toInQuery() {
+		return BoardArticlePaginationInQuery.builder()
 			.title(title)
 			.category(category)
 			.contents(contents)

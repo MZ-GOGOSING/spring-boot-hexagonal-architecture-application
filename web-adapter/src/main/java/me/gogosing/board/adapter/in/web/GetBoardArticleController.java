@@ -31,8 +31,8 @@ public class GetBoardArticleController {
 		final @PathVariable @Min(1L) Long id
 	) {
 		GetBoardArticleInResponse inResponse = getBoardArticleQuery.getBoardArticle(id);
-		GetBoardArticleWebResponse outResponse = new GetBoardArticleWebResponseConverter().convert(inResponse);
+		GetBoardArticleWebResponse webResponse = new GetBoardArticleWebResponseConverter().convert(inResponse);
 
-		return ApiResponseGenerator.success(outResponse);
+		return ApiResponseGenerator.success(webResponse);
 	}
 }

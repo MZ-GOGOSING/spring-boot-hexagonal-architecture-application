@@ -2,10 +2,10 @@ package me.gogosing.board.application;
 
 import lombok.RequiredArgsConstructor;
 import me.gogosing.board.application.port.in.GetPaginatedBoardArticleQuery;
-import me.gogosing.board.application.port.in.request.query.BoardPaginationInQuery;
+import me.gogosing.board.application.port.in.request.query.BoardArticlePaginationInQuery;
 import me.gogosing.board.application.port.in.response.GetBoardArticleInResponse;
 import me.gogosing.board.application.port.out.LoadPaginatedBoardArticlePort;
-import me.gogosing.board.application.port.out.request.query.BoardPaginationOutQuery;
+import me.gogosing.board.application.port.out.request.query.BoardArticlePaginationOutQuery;
 import me.gogosing.board.domain.BoardDomainEntity;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -24,10 +24,10 @@ public class GetPaginatedBoardArticleService implements GetPaginatedBoardArticle
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Page<GetBoardArticleInResponse> getPaginatedBoardArticle(
-		final BoardPaginationInQuery query,
+		final BoardArticlePaginationInQuery query,
 		final Pageable pageable
 	) {
-		BoardPaginationOutQuery jpaCondition = convertToJpaCondition(query);
+		BoardArticlePaginationOutQuery jpaCondition = convertToJpaCondition(query);
 
 		Page<BoardDomainEntity> paginatedDomainEntities = loadPaginatedBoardArticlePort
 			.loadPaginatedBoardArticle(jpaCondition, pageable);
@@ -35,8 +35,8 @@ public class GetPaginatedBoardArticleService implements GetPaginatedBoardArticle
 		return paginatedDomainEntities.map(this::convertToOutResponse);
 	}
 
-	private BoardPaginationOutQuery convertToJpaCondition(final BoardPaginationInQuery inQuery) {
-		return BoardPaginationOutQuery.builder()
+	private BoardArticlePaginationOutQuery convertToJpaCondition(final BoardArticlePaginationInQuery inQuery) {
+		return BoardArticlePaginationOutQuery.builder()
 			.title(inQuery.getTitle())
 			.category(inQuery.getCategory())
 			.contents(inQuery.getContents())

@@ -3,7 +3,7 @@ package me.gogosing.board.adapter.out.persistence;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import me.gogosing.board.adapter.out.persistence.mapper.BoardArticleMapper;
-import me.gogosing.board.application.port.out.LoadBoardArticlePort;
+import me.gogosing.board.application.port.out.CreateBoardArticlePort;
 import me.gogosing.board.domain.BoardDomainEntity;
 import me.gogosing.jpa.board.config.BoardJpaTransactional;
 import me.gogosing.jpa.board.entity.BoardAttachmentJpaEntity;
@@ -12,15 +12,13 @@ import me.gogosing.jpa.board.entity.BoardJpaEntity;
 import me.gogosing.jpa.board.repository.BoardAttachmentJpaRepository;
 import me.gogosing.jpa.board.repository.BoardContentsJpaRepository;
 import me.gogosing.jpa.board.repository.BoardJpaRepository;
-import me.gogosing.support.exception.EntityNotFoundException;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.validation.annotation.Validated;
 
 @Service
 @Validated
 @RequiredArgsConstructor
-public class LoadBoardArticlePersistenceAdapter implements LoadBoardArticlePort {
+public class CreateBoardArticlePersistenceAdapter implements CreateBoardArticlePort {
 
 	private final BoardArticleMapper boardArticleMapper;
 
@@ -31,15 +29,19 @@ public class LoadBoardArticlePersistenceAdapter implements LoadBoardArticlePort 
 	private final BoardAttachmentJpaRepository boardAttachmentJpaRepository;
 
 	@Override
-	@BoardJpaTransactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public BoardDomainEntity loadBoardArticle(final Long id) {
-		BoardJpaEntity boardJpaEntity = boardJpaRepository.findByBoardIdAndDeletedFalse(id)
-			.orElseThrow(EntityNotFoundException::new);
+	@BoardJpaTransactional
+	public BoardDomainEntity createBoardArticle(final BoardDomainEntity source) {
+		BoardJpaEntity boardJpaEntity = boardArticleMapper.mapToJpaEntity(source);
+		BoardContentsJpaEntity boardContentsJpaEntity = boardArticleMapper.mapToContentsJpaEntity(source);
+		List<BoardAttachmentJpaEntity> boardAttachmentJpaEntities = boardArticleMapper.mapToAttachmentJpaEntities(source);
 
-		BoardContentsJpaEntity boardContentsJpaEntity = boardContentsJpaRepository.findByBoardId(id)
-			.orElseThrow(EntityNotFoundException::new);
+		boardJpaRepository.save(boardJpaEntity);
 
-		List<BoardAttachmentJpaEntity> boardAttachmentJpaEntities = boardAttachmentJpaRepository.findAllByBoardId(id);
+		boardContentsJpaEntity.setBoardId(boardJpaEntity.getBoardId());
+		boardAttachmentJpaEntities.forEach(entity -> entity.setBoardId(boardJpaEntity.getBoardId()));
+
+		boardContentsJpaRepository.save(boardContentsJpaEntity);
+		boardAttachmentJpaRepository.saveAll(boardAttachmentJpaEntities);
 
 		return boardArticleMapper.mapToDomainEntity(
 			boardJpaEntity,
