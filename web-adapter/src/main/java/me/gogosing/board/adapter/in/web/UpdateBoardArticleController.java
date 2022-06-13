@@ -1,6 +1,7 @@
 package me.gogosing.board.adapter.in.web;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import javax.validation.Valid;
 import javax.validation.constraints.Min;
@@ -14,6 +15,7 @@ import me.gogosing.board.application.port.in.response.UpdateBoardArticleInRespon
 import me.gogosing.support.dto.ApiResponse;
 import me.gogosing.support.dto.ApiResponseGenerator;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,7 +33,8 @@ public class UpdateBoardArticleController {
 	@Operation(summary = "특정 게시물 수정", description = "특정 게시물을 수정할 수 있습니다.")
 	@PutMapping("/{id}")
 	public ApiResponse<UpdateBoardArticleWebResponse> putBoardArticle(
-		final @Min(1L) Long id,
+		@Parameter(description = "게시물 식별자")
+		final @PathVariable @Min(1L) Long id,
 		final @RequestBody @Valid UpdateBoardArticleWebCommand webCommand
 	) {
 		UpdateBoardArticleInCommand inCommand = webCommand.toInCommand();

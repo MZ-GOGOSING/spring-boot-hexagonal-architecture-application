@@ -1,6 +1,7 @@
 package me.gogosing.board.adapter.in.web;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import javax.validation.constraints.Min;
 import lombok.RequiredArgsConstructor;
@@ -25,6 +26,7 @@ public class DeleteBoardArticleController {
 	@Operation(summary = "특정 게시물 삭제", description = "특정 게시물을 삭제처리 할 수 있습니다.")
 	@DeleteMapping("/{id}")
 	public ApiResponse<Void> deleteBoardArticle(
+		@Parameter(description = "게시물 식별자")
 		final @PathVariable @Min(1L) Long id
 	) {
 		deleteBoardArticleUseCase.deleteBoardArticle(id);
