@@ -1,5 +1,8 @@
 package me.gogosing.board.adapter.in.web.request.command;
 
+import static me.gogosing.support.code.board.BoardCategory.NORMAL;
+import static me.gogosing.support.code.board.BoardCategory.NOTICE;
+
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.Collections;
 import java.util.List;
@@ -10,21 +13,23 @@ import javax.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import me.gogosing.board.application.port.in.request.command.BoardArticleCreationInCommand;
-import me.gogosing.board.application.port.in.request.command.BoardAttachmentCreationInCommand;
+import me.gogosing.board.application.port.in.request.command.CreateBoardArticleInCommand;
+import me.gogosing.board.application.port.in.request.command.CreateBoardAttachmentInCommand;
 import me.gogosing.support.code.board.BoardCategory;
+import me.gogosing.support.validation.board.BoardCategorySubset;
 
 @Schema(description = "게시물 등록 모델")
 @Getter
 @Setter
 @NoArgsConstructor
-public class BoardArticleCreationWebCommand {
+public class CreateBoardArticleWebCommand {
 
 	@NotBlank
 	@Schema(description = "제목", example = "게시물 제목", required = true)
 	private String title;
 
 	@NotNull
+	@BoardCategorySubset(anyOf = {NOTICE, NORMAL})
 	@Schema(description = "카테고리", example = "NORMAL", required = true)
 	private BoardCategory category;
 
@@ -34,19 +39,19 @@ public class BoardArticleCreationWebCommand {
 
 	@Valid
 	@Schema(description = "첨부파일 목록")
-	private List<BoardAttachmentCreationWebCommand> attachments = Collections.emptyList();
+	private List<CreateBoardAttachmentWebCommand> attachments = Collections.emptyList();
 
 
-	public BoardArticleCreationInCommand toInCommand() {
-		List<BoardAttachmentCreationInCommand> attachmentInCommand = attachments
+	public CreateBoardArticleInCommand toInCommand() {
+		List<CreateBoardAttachmentInCommand> attachmentInCommand = attachments
 			.stream()
-			.map(attachment -> BoardAttachmentCreationInCommand.builder()
+			.map(attachment -> CreateBoardAttachmentInCommand.builder()
 				.path(attachment.getPath())
 				.name(attachment.getName())
 				.build())
 			.collect(Collectors.toList());
 
-		return BoardArticleCreationInCommand.builder()
+		return CreateBoardArticleInCommand.builder()
 			.title(title)
 			.category(category)
 			.contents(contents)

@@ -5,5 +5,5 @@ import me.gogosing.board.domain.BoardDomainEntity;
 
 public interface CreateBoardArticlePort {
 
-	BoardDomainEntity createBoardArticle(final @NotNull BoardDomainEntity source);
+	BoardDomainEntity createBoardArticle(final @NotNull BoardDomainEntity outCommand);
 }

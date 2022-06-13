@@ -30,10 +30,14 @@ public class CreateBoardArticlePersistenceAdapter implements CreateBoardArticleP
 
 	@Override
 	@BoardJpaTransactional
-	public BoardDomainEntity createBoardArticle(final BoardDomainEntity source) {
-		BoardJpaEntity boardJpaEntity = boardArticleMapper.mapToJpaEntity(source);
-		BoardContentsJpaEntity boardContentsJpaEntity = boardArticleMapper.mapToContentsJpaEntity(source);
-		List<BoardAttachmentJpaEntity> boardAttachmentJpaEntities = boardArticleMapper.mapToAttachmentJpaEntities(source);
+	public BoardDomainEntity createBoardArticle(final BoardDomainEntity outCommand) {
+		BoardJpaEntity boardJpaEntity = boardArticleMapper.mapToJpaEntity(outCommand);
+
+		BoardContentsJpaEntity boardContentsJpaEntity = boardArticleMapper
+			.mapToContentsJpaEntity(outCommand);
+
+		List<BoardAttachmentJpaEntity> boardAttachmentJpaEntities = boardArticleMapper
+			.mapToAttachmentJpaEntities(outCommand);
 
 		boardJpaRepository.save(boardJpaEntity);
 

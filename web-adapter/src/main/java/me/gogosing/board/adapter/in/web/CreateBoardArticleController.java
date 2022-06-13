@@ -4,11 +4,11 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import me.gogosing.board.adapter.in.web.request.command.BoardArticleCreationWebCommand;
+import me.gogosing.board.adapter.in.web.request.command.CreateBoardArticleWebCommand;
 import me.gogosing.board.adapter.in.web.response.CreateBoardArticleWebResponse;
 import me.gogosing.board.adapter.in.web.response.converter.CreateBoardArticleWebResponseConverter;
 import me.gogosing.board.application.port.in.CreateBoardArticleUseCase;
-import me.gogosing.board.application.port.in.request.command.BoardArticleCreationInCommand;
+import me.gogosing.board.application.port.in.request.command.CreateBoardArticleInCommand;
 import me.gogosing.board.application.port.in.response.CreateBoardArticleInResponse;
 import me.gogosing.support.dto.ApiResponse;
 import me.gogosing.support.dto.ApiResponseGenerator;
@@ -30,9 +30,9 @@ public class CreateBoardArticleController {
 	@Operation(summary = "게시물 생성", description = "특정 게시물을 생성할 수 있습니다.")
 	@PostMapping
 	public ApiResponse<CreateBoardArticleWebResponse> postBoardArticle(
-		final @RequestBody @Valid BoardArticleCreationWebCommand webCommand
+		final @RequestBody @Valid CreateBoardArticleWebCommand webCommand
 	) {
-		BoardArticleCreationInCommand inCommand = webCommand.toInCommand();
+		CreateBoardArticleInCommand inCommand = webCommand.toInCommand();
 		CreateBoardArticleInResponse inResponse = createBoardArticleUseCase.createBoardArticle(inCommand);
 
 		CreateBoardArticleWebResponse webResponse = new CreateBoardArticleWebResponseConverter().convert(inResponse);

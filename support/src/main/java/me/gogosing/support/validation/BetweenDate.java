@@ -16,7 +16,7 @@ import javax.validation.Payload;
 @Constraint(validatedBy = BetweenDateValidator.class)
 public @interface BetweenDate {
 
-	int maximumDateRangeLimit();
+	int maximumDateRangeLimit() default 14;
 
 	String message() default "유효한 날짜검색 범위가 아닙니다.";
 

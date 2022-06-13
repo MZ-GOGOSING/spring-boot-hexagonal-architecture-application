@@ -4,12 +4,12 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import me.gogosing.board.adapter.in.web.request.query.BoardPaginationWebQuery;
+import me.gogosing.board.adapter.in.web.request.query.GetPaginatedBoardArticleWebQuery;
 import me.gogosing.board.adapter.in.web.response.GetBoardArticleItemWebResponse;
 import me.gogosing.board.adapter.in.web.response.converter.GetBoardArticleItemWebResponseConverter;
 import me.gogosing.board.application.port.in.GetPaginatedBoardArticleQuery;
-import me.gogosing.board.application.port.in.request.query.BoardArticlePaginationInQuery;
-import me.gogosing.board.application.port.in.response.GetBoardArticleInResponse;
+import me.gogosing.board.application.port.in.request.query.GetPaginatedBoardArticleInQuery;
+import me.gogosing.board.application.port.in.response.GetBoardArticleItemInResponse;
 import me.gogosing.support.dto.ApiResponse;
 import me.gogosing.support.dto.ApiResponseGenerator;
 import me.gogosing.support.dto.PageResponse;
@@ -35,19 +35,19 @@ public class GetPaginatedBoardArticleController {
 	@Operation(summary = "페이징 처리된 게시물 목록 조회", description = "페이징 처리된 게시물 목록을 조회할 수 있습니다.")
 	@GetMapping
 	public ApiResponse<PageResponse<GetBoardArticleItemWebResponse>> getPaginatedBoard(
-		final @Valid BoardPaginationWebQuery webQuery,
+		final @Valid GetPaginatedBoardArticleWebQuery webQuery,
 		final @ParameterObject @PageableDefault(
 			size = 5,
 			sort = "boardId",
 			direction = Direction.DESC
 		) Pageable pageable
 	) {
-		BoardArticlePaginationInQuery inQuery = webQuery.toInQuery();
-		Page<GetBoardArticleInResponse> paginatedResult = getPaginatedBoardArticleQuery.getPaginatedBoardArticle(inQuery, pageable);
+		GetPaginatedBoardArticleInQuery inQuery = webQuery.toInQuery();
+		Page<GetBoardArticleItemInResponse> inResponse = getPaginatedBoardArticleQuery.getPaginatedBoardArticle(inQuery, pageable);
 
 		GetBoardArticleItemWebResponseConverter webResponseConverter = new GetBoardArticleItemWebResponseConverter();
-		Page<GetBoardArticleItemWebResponse> convertedResult = paginatedResult.map(webResponseConverter::convert);
+		Page<GetBoardArticleItemWebResponse> webResponse = inResponse.map(webResponseConverter::convert);
 
-		return ApiResponseGenerator.success(PageResponse.convert(convertedResult));
+		return ApiResponseGenerator.success(PageResponse.convert(webResponse));
 	}
 }

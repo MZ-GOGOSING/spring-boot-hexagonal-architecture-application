@@ -2,10 +2,10 @@ package me.gogosing.board.application;
 
 import lombok.RequiredArgsConstructor;
 import me.gogosing.board.application.port.in.GetPaginatedBoardArticleQuery;
-import me.gogosing.board.application.port.in.request.query.BoardArticlePaginationInQuery;
-import me.gogosing.board.application.port.in.response.GetBoardArticleInResponse;
+import me.gogosing.board.application.port.in.request.query.GetPaginatedBoardArticleInQuery;
+import me.gogosing.board.application.port.in.response.GetBoardArticleItemInResponse;
 import me.gogosing.board.application.port.out.LoadPaginatedBoardArticlePort;
-import me.gogosing.board.application.port.out.request.query.BoardArticlePaginationOutQuery;
+import me.gogosing.board.application.port.out.request.query.GetPaginatedBoardArticleOutQuery;
 import me.gogosing.board.domain.BoardDomainEntity;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -23,20 +23,20 @@ public class GetPaginatedBoardArticleService implements GetPaginatedBoardArticle
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Page<GetBoardArticleInResponse> getPaginatedBoardArticle(
-		final BoardArticlePaginationInQuery query,
+	public Page<GetBoardArticleItemInResponse> getPaginatedBoardArticle(
+		final GetPaginatedBoardArticleInQuery inQuery,
 		final Pageable pageable
 	) {
-		BoardArticlePaginationOutQuery jpaCondition = convertToJpaCondition(query);
+		GetPaginatedBoardArticleOutQuery outQuery = convertToOutQuery(inQuery);
 
-		Page<BoardDomainEntity> paginatedDomainEntities = loadPaginatedBoardArticlePort
-			.loadPaginatedBoardArticle(jpaCondition, pageable);
+		Page<BoardDomainEntity> outResponse = loadPaginatedBoardArticlePort
+			.loadPaginatedBoardArticle(outQuery, pageable);
 
-		return paginatedDomainEntities.map(this::convertToOutResponse);
+		return outResponse.map(this::convertToInResponse);
 	}
 
-	private BoardArticlePaginationOutQuery convertToJpaCondition(final BoardArticlePaginationInQuery inQuery) {
-		return BoardArticlePaginationOutQuery.builder()
+	private GetPaginatedBoardArticleOutQuery convertToOutQuery(final GetPaginatedBoardArticleInQuery inQuery) {
+		return GetPaginatedBoardArticleOutQuery.builder()
 			.title(inQuery.getTitle())
 			.category(inQuery.getCategory())
 			.contents(inQuery.getContents())
@@ -44,12 +44,11 @@ public class GetPaginatedBoardArticleService implements GetPaginatedBoardArticle
 			.build();
 	}
 
-	private GetBoardArticleInResponse convertToOutResponse(final BoardDomainEntity domainEntity) {
-		return GetBoardArticleInResponse.builder()
+	private GetBoardArticleItemInResponse convertToInResponse(final BoardDomainEntity domainEntity) {
+		return GetBoardArticleItemInResponse.builder()
 			.id(domainEntity.getId())
 			.title(domainEntity.getTitle())
 			.category(domainEntity.getCategory())
-			.contents(domainEntity.getContents())
 			.createDate(domainEntity.getCreateDate())
 			.updateDate(domainEntity.getUpdateDate())
 			.build();

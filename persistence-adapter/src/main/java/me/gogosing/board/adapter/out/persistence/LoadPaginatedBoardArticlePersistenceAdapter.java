@@ -3,7 +3,7 @@ package me.gogosing.board.adapter.out.persistence;
 import lombok.RequiredArgsConstructor;
 import me.gogosing.board.adapter.out.persistence.mapper.BoardArticleMapper;
 import me.gogosing.board.application.port.out.LoadPaginatedBoardArticlePort;
-import me.gogosing.board.application.port.out.request.query.BoardArticlePaginationOutQuery;
+import me.gogosing.board.application.port.out.request.query.GetPaginatedBoardArticleOutQuery;
 import me.gogosing.board.domain.BoardDomainEntity;
 import me.gogosing.jpa.board.config.BoardJpaTransactional;
 import me.gogosing.jpa.board.entity.BoardJpaEntity;
@@ -25,10 +25,10 @@ public class LoadPaginatedBoardArticlePersistenceAdapter implements LoadPaginate
 	@Override
 	@BoardJpaTransactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Page<BoardDomainEntity> loadPaginatedBoardArticle(
-		final BoardArticlePaginationOutQuery query,
+		final GetPaginatedBoardArticleOutQuery outQuery,
 		final Pageable pageable
 	) {
-		BoardPaginationJpaCondition jpaQuery = convertToJpaQuery(query);
+		BoardPaginationJpaCondition jpaQuery = convertToJpaQuery(outQuery);
 
 		Page<BoardJpaEntity> paginatedJpaEntities = boardJpaRepository
 			.findAllByQuery(jpaQuery, pageable);
@@ -36,7 +36,7 @@ public class LoadPaginatedBoardArticlePersistenceAdapter implements LoadPaginate
 		return paginatedJpaEntities.map(boardArticleMapper::mapToDomainEntity);
 	}
 
-	private BoardPaginationJpaCondition convertToJpaQuery(final BoardArticlePaginationOutQuery outQuery) {
+	private BoardPaginationJpaCondition convertToJpaQuery(final GetPaginatedBoardArticleOutQuery outQuery) {
 		return BoardPaginationJpaCondition.builder()
 			.title(outQuery.getTitle())
 			.category(outQuery.getCategory())

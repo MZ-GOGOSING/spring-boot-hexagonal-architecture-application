@@ -11,7 +11,6 @@ import java.time.LocalTime;
 import java.util.Optional;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 import me.gogosing.support.converter.DefaultDateTimeFormat;
 import org.springdoc.api.annotations.ParameterObject;
@@ -21,7 +20,6 @@ import org.springframework.format.annotation.DateTimeFormat;
 @ParameterObject
 @Getter
 @Setter
-@NoArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = false)
 public class LocalDateRangeQuery implements Serializable {
 
@@ -35,8 +33,11 @@ public class LocalDateRangeQuery implements Serializable {
   @Parameter(description = "yyyy-MM-dd 형식의 검색 종료일 (loe)")
   private LocalDate endDate;
 
+  public LocalDateRangeQuery() {
+    this(6);
+  }
 
-  public LocalDateRangeQuery(final int defaultPeriodDays) {
+  public LocalDateRangeQuery(final Integer defaultPeriodDays) {
     this.startDate = LocalDate.now().minusDays(defaultPeriodDays);
     this.endDate = LocalDate.now();
   }
