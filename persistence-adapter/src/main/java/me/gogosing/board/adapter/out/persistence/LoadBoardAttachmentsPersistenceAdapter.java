@@ -1,0 +1,32 @@
+package me.gogosing.board.adapter.out.persistence;
+
+import java.util.List;
+import lombok.RequiredArgsConstructor;
+import me.gogosing.board.adapter.out.persistence.mapper.BoardAttachmentMapper;
+import me.gogosing.board.application.port.out.LoadBoardAttachmentsPort;
+import me.gogosing.board.domain.BoardAttachmentDomainEntity;
+import me.gogosing.jpa.board.config.BoardJpaTransactional;
+import me.gogosing.jpa.board.entity.BoardAttachmentJpaEntity;
+import me.gogosing.jpa.board.repository.BoardAttachmentJpaRepository;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.validation.annotation.Validated;
+
+@Service
+@Validated
+@RequiredArgsConstructor
+public class LoadBoardAttachmentsPersistenceAdapter implements LoadBoardAttachmentsPort {
+
+	private final BoardAttachmentMapper boardAttachmentMapper;
+
+	private final BoardAttachmentJpaRepository boardAttachmentJpaRepository;
+
+	@Override
+	@BoardJpaTransactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<BoardAttachmentDomainEntity> loadBoardAttachments(final Long boardId) {
+		List<BoardAttachmentJpaEntity> boardAttachmentJpaEntities =
+			boardAttachmentJpaRepository.findAllByBoardId(boardId);
+
+		return boardAttachmentMapper.mapToDomainEntities(boardAttachmentJpaEntities);
+	}
+}

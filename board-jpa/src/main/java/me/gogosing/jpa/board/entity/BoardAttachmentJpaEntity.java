@@ -7,7 +7,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -21,13 +20,11 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity(name = "board_attachment")
-@EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = false)
 public class BoardAttachmentJpaEntity extends BaseJpaEntity {
 
 	/**
 	 * 게시물 첨부파일 번호.
 	 */
-	@EqualsAndHashCode.Include
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "board_attachment_id", nullable = false)
@@ -42,14 +39,12 @@ public class BoardAttachmentJpaEntity extends BaseJpaEntity {
 	/**
 	 * 첨부파일경로.
 	 */
-	@EqualsAndHashCode.Include
 	@Column(name = "board_attachment_path", nullable = false)
 	private String boardAttachmentPath;
 
 	/**
 	 * 첨부파일명.
 	 */
-	@EqualsAndHashCode.Include
 	@Column(name = "board_attachment_name", nullable = false)
 	private String boardAttachmentName;
 }

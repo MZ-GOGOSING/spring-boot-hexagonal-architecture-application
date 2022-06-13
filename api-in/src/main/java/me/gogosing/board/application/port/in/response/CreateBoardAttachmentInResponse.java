@@ -12,6 +12,8 @@ public class CreateBoardAttachmentInResponse {
 
 	private final Long id;
 
+	private final Long boardId;
+
 	private final String path;
 
 	private final String name;

@@ -20,15 +20,15 @@ import me.gogosing.support.validation.board.BoardCategorySubset;
 public class CreateBoardArticleInCommand {
 
 	@NotBlank
-	private String title;
+	private final String title;
 
 	@NotNull
 	@BoardCategorySubset(anyOf = {NOTICE, NORMAL})
-	private BoardCategory category;
+	private final BoardCategory category;
 
 	@NotBlank
-	private String contents;
+	private final String contents;
 
 	@Valid
-	private List<CreateBoardAttachmentInCommand> attachments;
+	private final List<CreateBoardAttachmentInCommand> attachments;
 }

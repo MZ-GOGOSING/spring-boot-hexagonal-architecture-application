@@ -11,7 +11,7 @@ import lombok.Getter;
 @Builder
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = false)
-public class CreateBoardAttachmentInCommand {
+public class UpdateBoardAttachmentInCommand {
 
 	@NotBlank
 	@EqualsAndHashCode.Include

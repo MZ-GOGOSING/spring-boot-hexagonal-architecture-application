@@ -3,7 +3,7 @@ package me.gogosing.board.adapter.out.persistence;
 import java.time.LocalDateTime;
 import lombok.RequiredArgsConstructor;
 import me.gogosing.board.adapter.out.persistence.mapper.BoardArticleMapper;
-import me.gogosing.board.application.port.out.CreateBoardArticlePort;
+import me.gogosing.board.application.port.out.UpdateBoardArticlePort;
 import me.gogosing.board.domain.BoardDomainEntity;
 import me.gogosing.jpa.board.config.BoardJpaTransactional;
 import me.gogosing.jpa.board.entity.BoardContentsJpaEntity;
@@ -16,7 +16,7 @@ import org.springframework.validation.annotation.Validated;
 @Service
 @Validated
 @RequiredArgsConstructor
-public class CreateBoardArticlePersistenceAdapter implements CreateBoardArticlePort {
+public class UpdateBoardArticlePersistenceAdapter implements UpdateBoardArticlePort {
 
 	private final BoardArticleMapper boardArticleMapper;
 
@@ -26,19 +26,14 @@ public class CreateBoardArticlePersistenceAdapter implements CreateBoardArticleP
 
 	@Override
 	@BoardJpaTransactional
-	public BoardDomainEntity createBoardArticle(final BoardDomainEntity outCommand) {
+	public BoardDomainEntity updateBoardArticle(final BoardDomainEntity outCommand) {
 		BoardJpaEntity boardJpaEntity = boardArticleMapper.mapToJpaEntity(outCommand);
-
 		BoardContentsJpaEntity boardContentsJpaEntity = boardArticleMapper
 			.mapToContentsJpaEntity(outCommand);
 
-		boardJpaEntity.setCreateDate(LocalDateTime.now());
 		boardJpaEntity.setUpdateDate(LocalDateTime.now());
 
 		boardJpaRepository.save(boardJpaEntity);
-
-		boardContentsJpaEntity.setBoardId(boardJpaEntity.getBoardId());
-
 		boardContentsJpaRepository.save(boardContentsJpaEntity);
 
 		return boardArticleMapper.mapToDomainEntity(

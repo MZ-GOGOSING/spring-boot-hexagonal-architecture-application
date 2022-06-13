@@ -6,11 +6,11 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 
-@Schema(description = "게시물 첨부파일 생성 응답 모델")
+@Schema(description = "게시물 첨부파일 수정 응답 모델")
 @Getter
 @Builder
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-public class CreateBoardAttachmentWebResponse {
+public class UpdateBoardAttachmentWebResponse {
 
 	@Schema(description = "첨부파일 식별자", example = "1", required = true)
 	private final Long id;

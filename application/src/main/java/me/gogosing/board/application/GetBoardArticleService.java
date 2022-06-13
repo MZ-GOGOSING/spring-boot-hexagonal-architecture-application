@@ -7,6 +7,8 @@ import me.gogosing.board.application.port.in.GetBoardArticleQuery;
 import me.gogosing.board.application.port.in.response.GetBoardArticleInResponse;
 import me.gogosing.board.application.port.in.response.GetBoardAttachmentInResponse;
 import me.gogosing.board.application.port.out.LoadBoardArticlePort;
+import me.gogosing.board.application.port.out.LoadBoardAttachmentsPort;
+import me.gogosing.board.domain.BoardAttachmentDomainEntity;
 import me.gogosing.board.domain.BoardDomainEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -20,31 +22,40 @@ public class GetBoardArticleService implements GetBoardArticleQuery {
 
 	private final LoadBoardArticlePort loadBoardArticlePort;
 
+	private final LoadBoardAttachmentsPort loadBoardAttachmentsPort;
+
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public GetBoardArticleInResponse getBoardArticle(final Long id) {
-		BoardDomainEntity outResponse = loadBoardArticlePort.loadBoardArticle(id);
+		BoardDomainEntity boardDomainEntity = loadBoardArticlePort.loadBoardArticle(id);
 
-		return convertToInResponse(outResponse);
+		List<BoardAttachmentDomainEntity> boardAttachmentDomainEntities =
+			loadBoardAttachmentsPort.loadBoardAttachments(id);
+
+		return convertToInResponse(boardDomainEntity, boardAttachmentDomainEntities);
 	}
 
-	private GetBoardArticleInResponse convertToInResponse(final BoardDomainEntity boardDomainEntity) {
-		List<GetBoardAttachmentInResponse> attachmentResponseList = boardDomainEntity.getAttachments()
+	private GetBoardArticleInResponse convertToInResponse(
+		final BoardDomainEntity boardArticleOutResponse,
+		final List<BoardAttachmentDomainEntity> boardAttachmentOutResponse
+	) {
+		List<GetBoardAttachmentInResponse> attachmentResponseList = boardAttachmentOutResponse
 			.stream()
 			.map(domainEntity -> GetBoardAttachmentInResponse.builder()
 				.id(domainEntity.getId())
+				.boardId(domainEntity.getBoardId())
 				.path(domainEntity.getPath())
 				.name(domainEntity.getName())
 				.build())
 			.collect(Collectors.toList());
 
 		return GetBoardArticleInResponse.builder()
-			.id(boardDomainEntity.getId())
-			.title(boardDomainEntity.getTitle())
-			.category(boardDomainEntity.getCategory())
-			.contents(boardDomainEntity.getContents())
-			.createDate(boardDomainEntity.getCreateDate())
-			.updateDate(boardDomainEntity.getUpdateDate())
+			.id(boardArticleOutResponse.getId())
+			.title(boardArticleOutResponse.getTitle())
+			.category(boardArticleOutResponse.getCategory())
+			.contents(boardArticleOutResponse.getContents())
+			.createDate(boardArticleOutResponse.getCreateDate())
+			.updateDate(boardArticleOutResponse.getUpdateDate())
 			.attachments(attachmentResponseList)
 			.build();
 	}

@@ -22,7 +22,7 @@ public class DeleteBoardArticleController {
 
 	private final DeleteBoardArticleUseCase deleteBoardArticleUseCase;
 
-	@Operation(summary = "게시물 삭제", description = "특정 게시물을 삭제처리 할 수 있습니다.")
+	@Operation(summary = "특정 게시물 삭제", description = "특정 게시물을 삭제처리 할 수 있습니다.")
 	@DeleteMapping("/{id}")
 	public ApiResponse<Void> deleteBoardArticle(
 		final @PathVariable @Min(1L) Long id

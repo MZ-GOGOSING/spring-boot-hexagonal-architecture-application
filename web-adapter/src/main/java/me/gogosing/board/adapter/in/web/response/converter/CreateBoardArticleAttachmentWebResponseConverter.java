@@ -13,6 +13,8 @@ public class CreateBoardArticleAttachmentWebResponseConverter
 	public CreateBoardAttachmentWebResponse convert(final @Nullable CreateBoardAttachmentInResponse source) {
 		return Optional.ofNullable(source)
 			.map(inResponse -> CreateBoardAttachmentWebResponse.builder()
+				.id(inResponse.getId())
+				.boardId(inResponse.getBoardId())
 				.path(inResponse.getPath())
 				.name(inResponse.getName())
 				.build())

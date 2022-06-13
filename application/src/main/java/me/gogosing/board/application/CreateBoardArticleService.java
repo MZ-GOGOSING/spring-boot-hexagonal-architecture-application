@@ -8,6 +8,7 @@ import me.gogosing.board.application.port.in.request.command.CreateBoardArticleI
 import me.gogosing.board.application.port.in.response.CreateBoardArticleInResponse;
 import me.gogosing.board.application.port.in.response.CreateBoardAttachmentInResponse;
 import me.gogosing.board.application.port.out.CreateBoardArticlePort;
+import me.gogosing.board.application.port.out.CreateBoardAttachmentsPort;
 import me.gogosing.board.domain.BoardAttachmentDomainEntity;
 import me.gogosing.board.domain.BoardDomainEntity;
 import org.springframework.stereotype.Service;
@@ -21,50 +22,69 @@ public class CreateBoardArticleService implements CreateBoardArticleUseCase {
 
     private final CreateBoardArticlePort createBoardArticlePort;
 
+    private final CreateBoardAttachmentsPort createBoardAttachmentsPort;
+
     @Override
     @Transactional
     public CreateBoardArticleInResponse createBoardArticle(final CreateBoardArticleInCommand inCommand) {
-        BoardDomainEntity outCommand = convertToOutCommand(inCommand);
-        BoardDomainEntity outResponse = createBoardArticlePort
-            .createBoardArticle(outCommand);
+        BoardDomainEntity boardDomainCreationOutCommand = this.convertToOutCommand(inCommand);
+        BoardDomainEntity createdBoardDomainEntity = createBoardArticlePort
+            .createBoardArticle(boardDomainCreationOutCommand);
 
-        return convertToInResponse(outResponse);
+        List<BoardAttachmentDomainEntity> boardAttachmentsCreationOutCommand =
+            this.convertToOutCommand(boardDomainCreationOutCommand.getId(), inCommand);
+
+        List<BoardAttachmentDomainEntity> createdBoardAttachmentDomainEntities =
+            createBoardAttachmentsPort.createBoardAttachments(boardAttachmentsCreationOutCommand);
+
+        return convertToInResponse(createdBoardDomainEntity, createdBoardAttachmentDomainEntities);
     }
 
-    private BoardDomainEntity convertToOutCommand(final CreateBoardArticleInCommand inCommand) {
-        List<BoardAttachmentDomainEntity> attachments = inCommand.getAttachments()
+    private BoardDomainEntity convertToOutCommand(
+        final CreateBoardArticleInCommand inCommand
+    ) {
+        return BoardDomainEntity.withoutId(
+            inCommand.getTitle(),
+            inCommand.getCategory(),
+            inCommand.getContents()
+        );
+    }
+
+    private List<BoardAttachmentDomainEntity> convertToOutCommand(
+        final Long boardId,
+        final CreateBoardArticleInCommand inCommand
+    ) {
+        return inCommand.getAttachments()
             .stream()
             .map(attachment -> BoardAttachmentDomainEntity.withoutId(
+                boardId,
                 attachment.getPath(),
                 attachment.getName()
             ))
             .collect(Collectors.toList());
-
-        return BoardDomainEntity.withoutId(
-            inCommand.getTitle(),
-            inCommand.getCategory(),
-            inCommand.getContents(),
-            attachments
-        );
     }
 
-    private CreateBoardArticleInResponse convertToInResponse(final BoardDomainEntity outResponse) {
-        List<CreateBoardAttachmentInResponse> attachmentResponseList = outResponse.getAttachments()
+    private CreateBoardArticleInResponse convertToInResponse(
+        final BoardDomainEntity boardArticleOutResponse,
+        final List<BoardAttachmentDomainEntity> boardAttachmentOutResponse
+    ) {
+        List<CreateBoardAttachmentInResponse> attachmentResponseList = boardAttachmentOutResponse
             .stream()
             .map(domainEntity -> CreateBoardAttachmentInResponse.builder()
                 .id(domainEntity.getId())
+                .boardId(domainEntity.getBoardId())
                 .path(domainEntity.getPath())
                 .name(domainEntity.getName())
                 .build())
             .collect(Collectors.toList());
 
         return CreateBoardArticleInResponse.builder()
-            .id(outResponse.getId())
-            .title(outResponse.getTitle())
-            .category(outResponse.getCategory())
-            .contents(outResponse.getContents())
-            .createDate(outResponse.getCreateDate())
-            .updateDate(outResponse.getUpdateDate())
+            .id(boardArticleOutResponse.getId())
+            .title(boardArticleOutResponse.getTitle())
+            .category(boardArticleOutResponse.getCategory())
+            .contents(boardArticleOutResponse.getContents())
+            .createDate(boardArticleOutResponse.getCreateDate())
+            .updateDate(boardArticleOutResponse.getUpdateDate())
             .attachments(attachmentResponseList)
             .build();
     }

@@ -1,15 +1,12 @@
 package me.gogosing.board.adapter.out.persistence;
 
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import me.gogosing.board.adapter.out.persistence.mapper.BoardArticleMapper;
 import me.gogosing.board.application.port.out.LoadBoardArticlePort;
 import me.gogosing.board.domain.BoardDomainEntity;
 import me.gogosing.jpa.board.config.BoardJpaTransactional;
-import me.gogosing.jpa.board.entity.BoardAttachmentJpaEntity;
 import me.gogosing.jpa.board.entity.BoardContentsJpaEntity;
 import me.gogosing.jpa.board.entity.BoardJpaEntity;
-import me.gogosing.jpa.board.repository.BoardAttachmentJpaRepository;
 import me.gogosing.jpa.board.repository.BoardContentsJpaRepository;
 import me.gogosing.jpa.board.repository.BoardJpaRepository;
 import me.gogosing.support.exception.EntityNotFoundException;
@@ -28,8 +25,6 @@ public class LoadBoardArticlePersistenceAdapter implements LoadBoardArticlePort 
 
 	private final BoardContentsJpaRepository boardContentsJpaRepository;
 
-	private final BoardAttachmentJpaRepository boardAttachmentJpaRepository;
-
 	@Override
 	@BoardJpaTransactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public BoardDomainEntity loadBoardArticle(final Long id) {
@@ -39,12 +34,9 @@ public class LoadBoardArticlePersistenceAdapter implements LoadBoardArticlePort 
 		BoardContentsJpaEntity boardContentsJpaEntity = boardContentsJpaRepository.findByBoardId(id)
 			.orElseThrow(EntityNotFoundException::new);
 
-		List<BoardAttachmentJpaEntity> boardAttachmentJpaEntities = boardAttachmentJpaRepository.findAllByBoardId(id);
-
 		return boardArticleMapper.mapToDomainEntity(
 			boardJpaEntity,
-			boardContentsJpaEntity,
-			boardAttachmentJpaEntities
+			boardContentsJpaEntity
 		);
 	}
 }

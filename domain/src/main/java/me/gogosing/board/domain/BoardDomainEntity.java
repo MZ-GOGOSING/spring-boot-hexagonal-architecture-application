@@ -4,14 +4,11 @@ import static org.apache.commons.lang3.ObjectUtils.defaultIfNull;
 import static org.apache.commons.lang3.math.NumberUtils.LONG_ZERO;
 
 import java.time.LocalDateTime;
-import java.util.Collections;
-import java.util.List;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import me.gogosing.support.code.board.BoardCategory;
 import org.springframework.util.Assert;
-import org.springframework.util.CollectionUtils;
 
 @Getter
 @Builder(access = AccessLevel.PRIVATE)
@@ -29,7 +26,6 @@ public class BoardDomainEntity {
 
 	private final LocalDateTime updateDate;
 
-	private final List<BoardAttachmentDomainEntity> attachments;
 
 	private BoardDomainEntity(
 		final Long id,
@@ -37,8 +33,7 @@ public class BoardDomainEntity {
 		final BoardCategory category,
 		final String contents,
 		final LocalDateTime createDate,
-		final LocalDateTime updateDate,
-		final List<BoardAttachmentDomainEntity> attachments
+		final LocalDateTime updateDate
 	) {
 		Assert.hasText(title, "게시물 제목은 빈 문자열일 수 없습니다.");
 		Assert.notNull(category, "게시물 카테고리는 반드시 지정되어야 합니다.");
@@ -50,20 +45,17 @@ public class BoardDomainEntity {
 		this.contents = contents;
 		this.createDate = createDate;
 		this.updateDate = updateDate;
-		this.attachments = attachments;
 	}
 
 	public static BoardDomainEntity withoutId(
 		final String title,
 		final BoardCategory category,
-		final String contents,
-		final List<BoardAttachmentDomainEntity> attachments
+		final String contents
 	) {
 		return BoardDomainEntity.builder()
 			.title(title)
 			.category(category)
 			.contents(contents)
-			.attachments(CollectionUtils.isEmpty(attachments) ? Collections.emptyList() : attachments)
 			.build();
 	}
 
@@ -73,8 +65,7 @@ public class BoardDomainEntity {
 		final BoardCategory category,
 		final LocalDateTime createDate,
 		final LocalDateTime updateDate,
-		final String contents,
-		final List<BoardAttachmentDomainEntity> attachments
+		final String contents
 	) {
 		Assert.state(defaultIfNull(id, LONG_ZERO) > 0, "게시물 아이디는 0 이하 일 수 없습니다.");
 		Assert.notNull(createDate, "게시물 생성일시는 null 일 수 없습니다.");
@@ -87,7 +78,6 @@ public class BoardDomainEntity {
 			.createDate(createDate)
 			.updateDate(updateDate)
 			.contents(contents)
-			.attachments(CollectionUtils.isEmpty(attachments) ? Collections.emptyList() : attachments)
 			.build();
 	}
 }
