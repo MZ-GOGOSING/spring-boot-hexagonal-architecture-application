@@ -1,5 +1,6 @@
 package me.gogosing.board.adapter.out.persistence;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import me.gogosing.board.adapter.out.persistence.mapper.BoardArticleMapper;
@@ -32,6 +33,9 @@ public class CreateBoardArticlePersistenceAdapter implements CreateBoardArticleP
 	@BoardJpaTransactional
 	public BoardDomainEntity createBoardArticle(final BoardDomainEntity outCommand) {
 		BoardJpaEntity boardJpaEntity = boardArticleMapper.mapToJpaEntity(outCommand);
+
+		boardJpaEntity.setCreateDate(LocalDateTime.now());
+		boardJpaEntity.setUpdateDate(LocalDateTime.now());
 
 		BoardContentsJpaEntity boardContentsJpaEntity = boardArticleMapper
 			.mapToContentsJpaEntity(outCommand);

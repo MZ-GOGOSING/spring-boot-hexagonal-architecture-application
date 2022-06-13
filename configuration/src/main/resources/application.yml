@@ -33,4 +33,3 @@ springdoc:
     disable-swagger-default-url: true
   show-actuator: false
   default-produces-media-type: application/json
-  writer-with-default-pretty-printer: true

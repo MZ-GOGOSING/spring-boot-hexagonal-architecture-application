@@ -9,11 +9,12 @@ import me.gogosing.jpa.board.entity.BoardAttachmentJpaEntity;
 import me.gogosing.jpa.board.entity.BoardContentsJpaEntity;
 import me.gogosing.jpa.board.entity.BoardJpaEntity;
 import org.apache.commons.collections4.CollectionUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 
 @Component
 public class BoardArticleMapper {
+
+	private static final String CONTENTS_PADDING_VALUE = "*";
 
 	public BoardDomainEntity mapToDomainEntity(final BoardJpaEntity boardJpaEntity) {
 		return BoardDomainEntity.withId(
@@ -22,7 +23,7 @@ public class BoardArticleMapper {
 			boardJpaEntity.getBoardCategory(),
 			boardJpaEntity.getCreateDate(),
 			boardJpaEntity.getUpdateDate(),
-			StringUtils.EMPTY,
+			CONTENTS_PADDING_VALUE,
 			Collections.emptyList()
 		);
 	}
