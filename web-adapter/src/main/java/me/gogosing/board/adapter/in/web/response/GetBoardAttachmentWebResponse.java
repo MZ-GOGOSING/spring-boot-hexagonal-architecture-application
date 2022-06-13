@@ -12,6 +12,12 @@ import lombok.Getter;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class GetBoardAttachmentWebResponse {
 
+	@Schema(description = "첨부파일 식별자", example = "1", required = true)
+	private final Long id;
+
+	@Schema(description = "소속 게시물 식별자", example = "1", required = true)
+	private final Long boardId;
+
 	@Schema(description = "경로", example = "https://host.com/foo/bar/", required = true)
 	private final String path;
 

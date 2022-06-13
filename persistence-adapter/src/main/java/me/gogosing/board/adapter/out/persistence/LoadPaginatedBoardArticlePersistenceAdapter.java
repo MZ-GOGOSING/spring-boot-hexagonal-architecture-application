@@ -28,7 +28,7 @@ public class LoadPaginatedBoardArticlePersistenceAdapter implements LoadPaginate
 		final GetPaginatedBoardArticleOutQuery outQuery,
 		final Pageable pageable
 	) {
-		BoardPaginationJpaCondition jpaQuery = convertToJpaQuery(outQuery);
+		BoardPaginationJpaCondition jpaQuery = this.convertToJpaQuery(outQuery);
 
 		Page<BoardJpaEntity> paginatedJpaEntities = boardJpaRepository
 			.findAllByQuery(jpaQuery, pageable);

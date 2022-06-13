@@ -42,29 +42,27 @@ public class UpdateBoardArticleService implements UpdateBoardArticleUseCase {
     ) {
         BoardDomainEntity storedBoardDomainEntity = loadBoardArticlePort.loadBoardArticle(id);
 
-        BoardDomainEntity boardArticleOutCommand = convertToOutCommand(storedBoardDomainEntity, inCommand);
+        BoardDomainEntity boardArticleOutCommand = this.convertToOutCommand(storedBoardDomainEntity, inCommand);
         BoardDomainEntity boardArticleOutResponse = updateBoardArticlePort
             .updateBoardArticle(boardArticleOutCommand);
 
         List<BoardAttachmentDomainEntity> boardAttachmentOutCommand =
-            convertToOutCommand(id, inCommand.getAttachments());
+            this.convertToOutCommand(id, inCommand.getAttachments());
         List<BoardAttachmentDomainEntity> boardAttachmentOutResponse =
-            updateBoardAttachments(id, boardAttachmentOutCommand);
+            this.updateBoardAttachments(id, boardAttachmentOutCommand);
 
-        return convertToInResponse(boardArticleOutResponse, boardAttachmentOutResponse);
+        return this.convertToInResponse(boardArticleOutResponse, boardAttachmentOutResponse);
     }
 
     private List<BoardAttachmentDomainEntity> updateBoardAttachments(
         final Long boardId,
         final List<BoardAttachmentDomainEntity> boardAttachmentOutCommand
     ) {
-        if (CollectionUtils.isEmpty(boardAttachmentOutCommand)) {
-            return Collections.emptyList();
-        }
-
         deleteBoardAttachmentsPort.deleteBoardAttachments(boardId);
 
-        return createBoardAttachmentsPort.createBoardAttachments(boardAttachmentOutCommand);
+        return CollectionUtils.isEmpty(boardAttachmentOutCommand)
+            ? Collections.emptyList()
+            : createBoardAttachmentsPort.createBoardAttachments(boardAttachmentOutCommand);
     }
 
     private BoardDomainEntity convertToOutCommand(

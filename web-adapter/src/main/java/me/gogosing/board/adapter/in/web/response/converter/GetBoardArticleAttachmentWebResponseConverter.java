@@ -12,6 +12,8 @@ public class GetBoardArticleAttachmentWebResponseConverter implements Converter<
 	public GetBoardAttachmentWebResponse convert(final @Nullable GetBoardAttachmentInResponse source) {
 		return Optional.ofNullable(source)
 			.map(inResponse -> GetBoardAttachmentWebResponse.builder()
+				.id(inResponse.getId())
+				.boardId(inResponse.getBoardId())
 				.path(inResponse.getPath())
 				.name(inResponse.getName())
 				.build())

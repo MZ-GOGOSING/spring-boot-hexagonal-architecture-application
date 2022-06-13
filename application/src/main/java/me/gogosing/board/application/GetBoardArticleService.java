@@ -32,7 +32,7 @@ public class GetBoardArticleService implements GetBoardArticleQuery {
 		List<BoardAttachmentDomainEntity> boardAttachmentDomainEntities =
 			loadBoardAttachmentsPort.loadBoardAttachments(id);
 
-		return convertToInResponse(boardDomainEntity, boardAttachmentDomainEntities);
+		return this.convertToInResponse(boardDomainEntity, boardAttachmentDomainEntities);
 	}
 
 	private GetBoardArticleInResponse convertToInResponse(

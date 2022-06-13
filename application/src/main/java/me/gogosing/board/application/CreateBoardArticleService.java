@@ -5,12 +5,14 @@ import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import me.gogosing.board.application.port.in.CreateBoardArticleUseCase;
 import me.gogosing.board.application.port.in.request.command.CreateBoardArticleInCommand;
+import me.gogosing.board.application.port.in.request.command.CreateBoardAttachmentInCommand;
 import me.gogosing.board.application.port.in.response.CreateBoardArticleInResponse;
 import me.gogosing.board.application.port.in.response.CreateBoardAttachmentInResponse;
 import me.gogosing.board.application.port.out.CreateBoardArticlePort;
 import me.gogosing.board.application.port.out.CreateBoardAttachmentsPort;
 import me.gogosing.board.domain.BoardAttachmentDomainEntity;
 import me.gogosing.board.domain.BoardDomainEntity;
+import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
@@ -32,12 +34,12 @@ public class CreateBoardArticleService implements CreateBoardArticleUseCase {
             .createBoardArticle(boardDomainCreationOutCommand);
 
         List<BoardAttachmentDomainEntity> boardAttachmentsCreationOutCommand =
-            this.convertToOutCommand(boardDomainCreationOutCommand.getId(), inCommand);
+            this.convertToOutCommand(createdBoardDomainEntity.getId(), inCommand.getAttachments());
 
         List<BoardAttachmentDomainEntity> createdBoardAttachmentDomainEntities =
             createBoardAttachmentsPort.createBoardAttachments(boardAttachmentsCreationOutCommand);
 
-        return convertToInResponse(createdBoardDomainEntity, createdBoardAttachmentDomainEntities);
+        return this.convertToInResponse(createdBoardDomainEntity, createdBoardAttachmentDomainEntities);
     }
 
     private BoardDomainEntity convertToOutCommand(
@@ -52,9 +54,9 @@ public class CreateBoardArticleService implements CreateBoardArticleUseCase {
 
     private List<BoardAttachmentDomainEntity> convertToOutCommand(
         final Long boardId,
-        final CreateBoardArticleInCommand inCommand
+        final List<CreateBoardAttachmentInCommand> inCommand
     ) {
-        return inCommand.getAttachments()
+        return CollectionUtils.emptyIfNull(inCommand)
             .stream()
             .map(attachment -> BoardAttachmentDomainEntity.withoutId(
                 boardId,
