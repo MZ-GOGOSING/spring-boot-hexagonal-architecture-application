@@ -30,21 +30,20 @@ public class CreateBoardArticleService implements CreateBoardArticleUseCase {
     @Override
     @Transactional
     public CreateBoardArticleInResponse createBoardArticle(final CreateBoardArticleInCommand inCommand) {
-        BoardDomainEntity createdBoardDomainEntity = this.createBoard(inCommand);
-
-        List<BoardAttachmentDomainEntity> createdBoardAttachmentDomainEntities =
-            this.createBoardAttachments(createdBoardDomainEntity.getId(), inCommand.getAttachments());
+        final var createdBoardDomainEntity = this.saveBoard(inCommand);
+        final var createdBoardAttachmentDomainEntities =
+            this.saveBoardAttachments(createdBoardDomainEntity.getId(), inCommand.getAttachments());
 
         return this.convertToInResponse(createdBoardDomainEntity, createdBoardAttachmentDomainEntities);
     }
 
-    private BoardDomainEntity createBoard(final CreateBoardArticleInCommand inCommand) {
-        BoardDomainEntity boardDomainCreationOutCommand = this.convertToOutCommand(inCommand);
+    private BoardDomainEntity saveBoard(final CreateBoardArticleInCommand inCommand) {
+        final var boardDomainCreationOutCommand = this.convertToOutCommand(inCommand);
 
         return createBoardArticlePort.createBoardArticle(boardDomainCreationOutCommand);
     }
 
-    private List<BoardAttachmentDomainEntity> createBoardAttachments(
+    private List<BoardAttachmentDomainEntity> saveBoardAttachments(
         final Long boardId,
         final List<CreateBoardAttachmentInCommand> inCommand
     ) {
@@ -52,7 +51,7 @@ public class CreateBoardArticleService implements CreateBoardArticleUseCase {
             return Collections.emptyList();
         }
 
-        List<BoardAttachmentDomainEntity> boardAttachmentsCreationOutCommand =
+        final var boardAttachmentsCreationOutCommand =
             this.convertToOutCommand(boardId, inCommand);
 
         return createBoardAttachmentsPort.createBoardAttachments(boardAttachmentsCreationOutCommand);
@@ -86,7 +85,7 @@ public class CreateBoardArticleService implements CreateBoardArticleUseCase {
         final BoardDomainEntity boardArticleOutResponse,
         final List<BoardAttachmentDomainEntity> boardAttachmentOutResponse
     ) {
-        List<CreateBoardAttachmentInResponse> attachmentResponseList = boardAttachmentOutResponse
+        final var attachmentResponseList = boardAttachmentOutResponse
             .stream()
             .map(domainEntity -> CreateBoardAttachmentInResponse.builder()
                 .id(domainEntity.getId())

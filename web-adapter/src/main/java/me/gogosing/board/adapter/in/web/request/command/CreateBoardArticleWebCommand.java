@@ -43,7 +43,7 @@ public class CreateBoardArticleWebCommand {
 
 
 	public CreateBoardArticleInCommand toInCommand() {
-		List<CreateBoardAttachmentInCommand> attachmentInCommand = attachments
+		final var attachmentInCommand = attachments
 			.stream()
 			.map(attachment -> CreateBoardAttachmentInCommand.builder()
 				.path(attachment.getPath())

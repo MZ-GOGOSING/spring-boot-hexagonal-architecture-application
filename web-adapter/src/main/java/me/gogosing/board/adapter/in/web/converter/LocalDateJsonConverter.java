@@ -8,26 +8,34 @@ import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import java.io.IOException;
 import java.time.LocalDate;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import me.gogosing.support.converter.DefaultDateTimeConverter;
 import org.springframework.boot.jackson.JsonComponent;
 
 @JsonComponent
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class LocalDateJsonConverter {
 
-    private LocalDateJsonConverter() {
-
-    }
-
     public static class Serializer extends JsonSerializer<LocalDate> {
+
         @Override
-        public void serialize(LocalDate localDate, JsonGenerator jsonGenerator, SerializerProvider serializerProvider) throws IOException {
+        public void serialize(
+            final LocalDate localDate,
+            final JsonGenerator jsonGenerator,
+            final SerializerProvider serializerProvider
+        ) throws IOException {
             jsonGenerator.writeString(DefaultDateTimeConverter.convertDate(localDate));
         }
     }
 
     public static class Deserializer extends JsonDeserializer<LocalDate> {
+
         @Override
-        public LocalDate deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException {
+        public LocalDate deserialize(
+            final JsonParser jsonParser,
+            final DeserializationContext deserializationContext
+        ) throws IOException {
             return DefaultDateTimeConverter.convertDate(jsonParser.getText());
         }
     }

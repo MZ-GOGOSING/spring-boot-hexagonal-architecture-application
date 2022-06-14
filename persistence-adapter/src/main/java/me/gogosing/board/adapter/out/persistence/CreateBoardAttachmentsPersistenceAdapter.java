@@ -31,13 +31,13 @@ public class CreateBoardAttachmentsPersistenceAdapter implements CreateBoardAtta
 			return Collections.emptyList();
 		}
 
-		List<BoardAttachmentJpaEntity> storedBoardAttachmentJpaEntities = this.saveAll(outCommand);
+		final var storedBoardAttachmentJpaEntities = this.saveAll(outCommand);
 
 		return boardAttachmentMapper.mapToDomainEntities(storedBoardAttachmentJpaEntities);
 	}
 
 	private List<BoardAttachmentJpaEntity> saveAll(final List<BoardAttachmentDomainEntity> outCommand) {
-		List<BoardAttachmentJpaEntity> generatedBoardAttachmentJpaEntities =
+		final var generatedBoardAttachmentJpaEntities =
 			boardAttachmentMapper.mapToJpaEntities(outCommand);
 
 		return boardAttachmentJpaRepository.saveAll(generatedBoardAttachmentJpaEntities);

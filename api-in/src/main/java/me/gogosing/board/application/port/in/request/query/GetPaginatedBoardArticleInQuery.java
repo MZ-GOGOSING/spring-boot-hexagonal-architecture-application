@@ -18,14 +18,14 @@ import me.gogosing.support.validation.board.BoardCategorySubset;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class GetPaginatedBoardArticleInQuery {
 
-	private String title;
+	private final String title;
 
 	@BoardCategorySubset(anyOf = {NOTICE, NORMAL})
-	private BoardCategory category;
+	private final BoardCategory category;
 
-	private String contents;
+	private final String contents;
 
 	@Valid
 	@BetweenDate
-	private LocalDateRangeQuery registeredPeriod;
+	private final LocalDateRangeQuery registeredPeriod;
 }

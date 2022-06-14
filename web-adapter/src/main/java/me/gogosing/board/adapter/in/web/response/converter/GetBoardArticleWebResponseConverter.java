@@ -29,7 +29,7 @@ public class GetBoardArticleWebResponseConverter implements Converter<GetBoardAr
 	}
 
 	private List<GetBoardAttachmentWebResponse> convert(final List<GetBoardAttachmentInResponse> sources) {
-		GetBoardArticleAttachmentWebResponseConverter attachmentWebConverter = new GetBoardArticleAttachmentWebResponseConverter();
+		final var attachmentWebConverter = new GetBoardArticleAttachmentWebResponseConverter();
 
 		return CollectionUtils.emptyIfNull(sources)
 			.stream()

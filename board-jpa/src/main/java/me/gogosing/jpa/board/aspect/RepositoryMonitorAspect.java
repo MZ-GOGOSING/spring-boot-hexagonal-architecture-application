@@ -34,11 +34,11 @@ public class RepositoryMonitorAspect {
 	}
 
 	@Around("repositoryExecutionPointcut()")
-	public Object aroundRepositoryExecution(ProceedingJoinPoint proceedingJoinPoint)
+	public Object aroundRepositoryExecution(final ProceedingJoinPoint proceedingJoinPoint)
 		throws Throwable {
 		long startTime = System.nanoTime();
 		try {
-			Object result = proceedingJoinPoint.proceed(proceedingJoinPoint.getArgs());
+			final var result = proceedingJoinPoint.proceed(proceedingJoinPoint.getArgs());
 
 			logSlowMessage(proceedingJoinPoint, startTime, "Successfully");
 
@@ -49,15 +49,19 @@ public class RepositoryMonitorAspect {
 		}
 	}
 
-	private static void logSlowMessage(ProceedingJoinPoint proceedingJoinPoint, long startTime,
-		String result) {
-		long elapsedTime = (System.nanoTime() - startTime) / 1000_000;
+	private static void logSlowMessage(
+		final ProceedingJoinPoint proceedingJoinPoint,
+		final long startTime,
+		final String result
+	) {
+		final var elapsedTime = (System.nanoTime() - startTime) / 1000_000;
 		if (elapsedTime > 5000) {
 			LOGGER.info(SLOW_REPOSITORY_EXECUTION_MESSAGE,
 				result,
 				proceedingJoinPoint.getSignature(),
 				Arrays.stream(proceedingJoinPoint.getArgs()).collect(Collectors.toList()),
-				elapsedTime);
+				elapsedTime
+			);
 		}
 	}
 }

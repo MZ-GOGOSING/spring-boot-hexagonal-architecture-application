@@ -6,8 +6,6 @@ import java.time.LocalDateTime;
 import lombok.RequiredArgsConstructor;
 import me.gogosing.board.application.port.out.DeleteBoardArticlePort;
 import me.gogosing.jpa.board.config.BoardJpaTransactional;
-import me.gogosing.jpa.board.entity.BoardContentsJpaEntity;
-import me.gogosing.jpa.board.entity.BoardJpaEntity;
 import me.gogosing.jpa.board.repository.BoardContentsJpaRepository;
 import me.gogosing.jpa.board.repository.BoardJpaRepository;
 import me.gogosing.support.exception.EntityNotFoundException;
@@ -31,7 +29,7 @@ public class DeleteBoardArticlePersistenceAdapter implements DeleteBoardArticleP
 	}
 
 	private void deleteBoard(final Long id) {
-		BoardJpaEntity boardJpaEntity = boardJpaRepository.findByBoardIdAndDeletedFalse(id)
+		final var boardJpaEntity = boardJpaRepository.findByBoardIdAndDeletedFalse(id)
 			.orElseThrow(EntityNotFoundException::new);
 
 		boardJpaEntity.setDeleted(TRUE);
@@ -41,7 +39,7 @@ public class DeleteBoardArticlePersistenceAdapter implements DeleteBoardArticleP
 	}
 
 	private void deleteBoardContents(final Long id) {
-		BoardContentsJpaEntity boardContentsJpaEntity = boardContentsJpaRepository.findByBoardId(id)
+		final var boardContentsJpaEntity = boardContentsJpaRepository.findByBoardId(id)
 			.orElseThrow(EntityNotFoundException::new);
 
 		boardContentsJpaRepository.delete(boardContentsJpaEntity);

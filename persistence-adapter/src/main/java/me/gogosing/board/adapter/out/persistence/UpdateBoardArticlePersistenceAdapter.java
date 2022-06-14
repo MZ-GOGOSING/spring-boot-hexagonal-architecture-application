@@ -27,8 +27,8 @@ public class UpdateBoardArticlePersistenceAdapter implements UpdateBoardArticleP
 	@Override
 	@BoardJpaTransactional
 	public BoardDomainEntity updateBoardArticle(final BoardDomainEntity outCommand) {
-		BoardJpaEntity storedBoardJpaEntity = this.saveBoard(outCommand);
-		BoardContentsJpaEntity storedBoardContentsJpaEntity = this.saveBoardContents(outCommand);
+		final var storedBoardJpaEntity = this.saveBoard(outCommand);
+		final var storedBoardContentsJpaEntity = this.saveBoardContents(outCommand);
 
 		return boardArticleMapper.mapToDomainEntity(
 			storedBoardJpaEntity,
@@ -37,7 +37,7 @@ public class UpdateBoardArticlePersistenceAdapter implements UpdateBoardArticleP
 	}
 
 	private BoardJpaEntity saveBoard(final BoardDomainEntity outCommand) {
-		BoardJpaEntity generatedBoardJpaEntity = boardArticleMapper.mapToJpaEntity(outCommand);
+		final var generatedBoardJpaEntity = boardArticleMapper.mapToJpaEntity(outCommand);
 
 		generatedBoardJpaEntity.setUpdateDate(LocalDateTime.now());
 
@@ -45,7 +45,7 @@ public class UpdateBoardArticlePersistenceAdapter implements UpdateBoardArticleP
 	}
 
 	private BoardContentsJpaEntity saveBoardContents(final BoardDomainEntity outCommand) {
-		BoardContentsJpaEntity generatedBoardContentsJpaEntity =
+		final var generatedBoardContentsJpaEntity =
 			boardArticleMapper.mapToContentsJpaEntity(outCommand);
 
 		return boardContentsJpaRepository.save(generatedBoardContentsJpaEntity);

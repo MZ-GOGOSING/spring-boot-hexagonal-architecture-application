@@ -30,8 +30,8 @@ public class GetBoardArticleController {
 		@Parameter(description = "게시물 식별자")
 		final @PathVariable @Min(1L) Long id
 	) {
-		GetBoardArticleInResponse inResponse = getBoardArticleQuery.getBoardArticle(id);
-		GetBoardArticleWebResponse webResponse = new GetBoardArticleWebResponseConverter().convert(inResponse);
+		final var inResponse = getBoardArticleQuery.getBoardArticle(id);
+		final var webResponse = new GetBoardArticleWebResponseConverter().convert(inResponse);
 
 		return ApiResponseGenerator.success(webResponse);
 	}

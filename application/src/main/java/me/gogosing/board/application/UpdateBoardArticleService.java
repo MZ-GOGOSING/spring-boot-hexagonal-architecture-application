@@ -40,9 +40,8 @@ public class UpdateBoardArticleService implements UpdateBoardArticleUseCase {
         final Long id,
         final UpdateBoardArticleInCommand inCommand
     ) {
-        BoardDomainEntity boardArticleOutResponse = this.updateBoard(id, inCommand);
-
-        List<BoardAttachmentDomainEntity> boardAttachmentOutResponse =
+        final var boardArticleOutResponse = this.updateBoard(id, inCommand);
+        final var boardAttachmentOutResponse =
             this.updateBoardAttachments(id, inCommand.getAttachments());
 
         return this.convertToInResponse(boardArticleOutResponse, boardAttachmentOutResponse);
@@ -52,9 +51,9 @@ public class UpdateBoardArticleService implements UpdateBoardArticleUseCase {
         final Long id,
         final UpdateBoardArticleInCommand inCommand
     ) {
-        BoardDomainEntity storedBoardDomainEntity = loadBoardArticlePort.loadBoardArticle(id);
+        final var storedBoardDomainEntity = loadBoardArticlePort.loadBoardArticle(id);
 
-        BoardDomainEntity boardArticleOutCommand = this.convertToOutCommand(storedBoardDomainEntity, inCommand);
+        final var boardArticleOutCommand = this.convertToOutCommand(storedBoardDomainEntity, inCommand);
 
         return updateBoardArticlePort.updateBoardArticle(boardArticleOutCommand);
     }
@@ -63,8 +62,7 @@ public class UpdateBoardArticleService implements UpdateBoardArticleUseCase {
         final Long boardId,
         final List<UpdateBoardAttachmentInCommand> inCommand
     ) {
-        List<BoardAttachmentDomainEntity> boardAttachmentOutCommand =
-            this.convertToOutCommand(boardId, inCommand);
+        final var boardAttachmentOutCommand = this.convertToOutCommand(boardId, inCommand);
 
         deleteBoardAttachmentsPort.deleteBoardAttachments(boardId);
 
@@ -105,7 +103,7 @@ public class UpdateBoardArticleService implements UpdateBoardArticleUseCase {
         final BoardDomainEntity boardArticleOutResponse,
         final List<BoardAttachmentDomainEntity> boardAttachmentOutResponse
     ) {
-        List<UpdateBoardAttachmentInResponse> attachmentResponseList = boardAttachmentOutResponse
+        final var attachmentResponseList = boardAttachmentOutResponse
             .stream()
             .map(domainEntity -> UpdateBoardAttachmentInResponse.builder()
                 .id(domainEntity.getId())

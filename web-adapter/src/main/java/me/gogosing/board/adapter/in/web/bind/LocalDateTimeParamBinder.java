@@ -7,7 +7,7 @@ import org.springframework.core.convert.converter.Converter;
 public class LocalDateTimeParamBinder implements Converter<String, LocalDateTime> {
 
     @Override
-    public LocalDateTime convert(String dateTime) {
+    public LocalDateTime convert(final String dateTime) {
         return DefaultDateTimeConverter.convertDateTime(dateTime);
     }
 }

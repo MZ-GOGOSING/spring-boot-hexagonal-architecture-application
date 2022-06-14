@@ -37,10 +37,10 @@ public class UpdateBoardArticleController {
 		final @PathVariable @Min(1L) Long id,
 		final @RequestBody @Valid UpdateBoardArticleWebCommand webCommand
 	) {
-		UpdateBoardArticleInCommand inCommand = webCommand.toInCommand();
-		UpdateBoardArticleInResponse inResponse = updateBoardArticleUseCase.updateBoardArticle(id, inCommand);
+		final var inCommand = webCommand.toInCommand();
+		final var inResponse = updateBoardArticleUseCase.updateBoardArticle(id, inCommand);
 
-		UpdateBoardArticleWebResponse webResponse = new UpdateBoardArticleWebResponseConverter().convert(inResponse);
+		final var webResponse = new UpdateBoardArticleWebResponseConverter().convert(inResponse);
 
 		return ApiResponseGenerator.success(webResponse);
 	}

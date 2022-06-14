@@ -15,7 +15,7 @@ public class SpringdocConfig {
 
 	@Bean
 	public OpenAPI springBootHexagonalArchitectureOpenAPI() {
-		Info info = new Info()
+		final var info = new Info()
 			.title("spring-boot-hexagonal-architecture-application API")
 			.description("Hexagonal Architecture Sample Application")
 			.version("v0.0.1")

@@ -5,8 +5,6 @@ import me.gogosing.board.adapter.out.persistence.mapper.BoardArticleMapper;
 import me.gogosing.board.application.port.out.LoadBoardArticlePort;
 import me.gogosing.board.domain.BoardDomainEntity;
 import me.gogosing.jpa.board.config.BoardJpaTransactional;
-import me.gogosing.jpa.board.entity.BoardContentsJpaEntity;
-import me.gogosing.jpa.board.entity.BoardJpaEntity;
 import me.gogosing.jpa.board.repository.BoardContentsJpaRepository;
 import me.gogosing.jpa.board.repository.BoardJpaRepository;
 import me.gogosing.support.exception.EntityNotFoundException;
@@ -28,10 +26,10 @@ public class LoadBoardArticlePersistenceAdapter implements LoadBoardArticlePort 
 	@Override
 	@BoardJpaTransactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public BoardDomainEntity loadBoardArticle(final Long id) {
-		BoardJpaEntity boardJpaEntity = boardJpaRepository.findByBoardIdAndDeletedFalse(id)
+		final var boardJpaEntity = boardJpaRepository.findByBoardIdAndDeletedFalse(id)
 			.orElseThrow(EntityNotFoundException::new);
 
-		BoardContentsJpaEntity boardContentsJpaEntity = boardContentsJpaRepository.findByBoardId(id)
+		final var boardContentsJpaEntity = boardContentsJpaRepository.findByBoardId(id)
 			.orElseThrow(EntityNotFoundException::new);
 
 		return boardArticleMapper.mapToDomainEntity(

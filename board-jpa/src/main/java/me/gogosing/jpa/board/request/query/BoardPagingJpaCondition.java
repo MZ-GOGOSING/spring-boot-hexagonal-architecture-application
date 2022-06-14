@@ -12,11 +12,11 @@ import me.gogosing.support.dto.LocalDateRangeQuery;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class BoardPagingJpaCondition {
 
-	private String title;
+	private final String title;
 
-	private BoardCategory category;
+	private final BoardCategory category;
 
-	private String contents;
+	private final String contents;
 
-	private LocalDateRangeQuery registeredPeriod;
+	private final LocalDateRangeQuery registeredPeriod;
 }

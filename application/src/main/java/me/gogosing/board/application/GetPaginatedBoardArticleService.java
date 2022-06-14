@@ -27,9 +27,9 @@ public class GetPaginatedBoardArticleService implements GetPaginatedBoardArticle
 		final GetPaginatedBoardArticleInQuery inQuery,
 		final Pageable pageable
 	) {
-		GetPaginatedBoardArticleOutQuery outQuery = this.convertToOutQuery(inQuery);
+		final var outQuery = this.convertToOutQuery(inQuery);
 
-		Page<BoardDomainEntity> outResponse = loadPaginatedBoardArticlePort
+		final var outResponse = loadPaginatedBoardArticlePort
 			.loadPaginatedBoardArticle(outQuery, pageable);
 
 		return outResponse.map(this::convertToInResponse);

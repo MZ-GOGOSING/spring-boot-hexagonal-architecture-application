@@ -72,13 +72,15 @@ public class BoardJpaDataSourceConfig {
 
 	@Bean(name = BOARD_PERSISTENCE_TRANSACTION_MANAGER)
 	public PlatformTransactionManager boardPersistenceTransactionManager(
-		final @Autowired @Qualifier(BOARD_PERSISTENCE_ENTITY_MANAGER_FACTORY) EntityManagerFactory boardJpaEntityManagerFactory) {
+		final @Autowired @Qualifier(BOARD_PERSISTENCE_ENTITY_MANAGER_FACTORY) EntityManagerFactory boardJpaEntityManagerFactory
+	) {
 		return new JpaTransactionManager(boardJpaEntityManagerFactory);
 	}
 
 	@Bean(name = BOARD_PERSISTENCE_JDBC_TEMPLATE)
 	public JdbcTemplate boardPersistenceJdbcTemplate(
-		final @Qualifier("boardPersistenceDataSource") DataSource dataSource) {
+		final @Qualifier("boardPersistenceDataSource") DataSource dataSource
+	) {
 		return new JdbcTemplate(dataSource);
 	}
 }

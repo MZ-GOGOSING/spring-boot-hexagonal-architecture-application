@@ -27,9 +27,8 @@ public class GetBoardArticleService implements GetBoardArticleQuery {
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public GetBoardArticleInResponse getBoardArticle(final Long id) {
-		BoardDomainEntity boardDomainEntity = loadBoardArticlePort.loadBoardArticle(id);
-
-		List<BoardAttachmentDomainEntity> boardAttachmentDomainEntities =
+		final var boardDomainEntity = loadBoardArticlePort.loadBoardArticle(id);
+		final var boardAttachmentDomainEntities =
 			loadBoardAttachmentsPort.loadBoardAttachments(id);
 
 		return this.convertToInResponse(boardDomainEntity, boardAttachmentDomainEntities);
@@ -39,7 +38,7 @@ public class GetBoardArticleService implements GetBoardArticleQuery {
 		final BoardDomainEntity boardArticleOutResponse,
 		final List<BoardAttachmentDomainEntity> boardAttachmentOutResponse
 	) {
-		List<GetBoardAttachmentInResponse> attachmentResponseList = boardAttachmentOutResponse
+		final var attachmentResponseList = boardAttachmentOutResponse
 			.stream()
 			.map(domainEntity -> GetBoardAttachmentInResponse.builder()
 				.id(domainEntity.getId())

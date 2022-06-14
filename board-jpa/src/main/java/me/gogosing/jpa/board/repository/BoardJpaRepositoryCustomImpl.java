@@ -4,7 +4,6 @@ import static java.util.Collections.emptyList;
 import static me.gogosing.support.query.QueryDslHelper.optionalWhen;
 
 import com.querydsl.jpa.JPQLQuery;
-import java.util.List;
 import me.gogosing.jpa.board.config.BoardJpaRepositorySupport;
 import me.gogosing.jpa.board.entity.BoardJpaEntity;
 import me.gogosing.jpa.board.entity.QBoardContentsJpaEntity;
@@ -31,16 +30,16 @@ public class BoardJpaRepositoryCustomImpl extends BoardJpaRepositorySupport
 		final BoardPagingJpaCondition jpaCondition,
 		final Pageable pageable
 	) {
-		JPQLQuery<BoardJpaEntity> jpqlQuery = getDefaultPaginationJpqlQuery();
+		final var jpqlQuery = getDefaultPaginationJpqlQuery();
 
 		applyPaginationWhereClause(jpqlQuery, jpaCondition);
 
-		long totalCount = jpqlQuery.fetchCount();
+		final var totalCount = jpqlQuery.fetchCount();
 		if (totalCount < 1L) {
 			return new PageImpl<>(emptyList(), pageable, totalCount);
 		}
 
-		List<BoardJpaEntity> content = getQuerydsl()
+		final var content = getQuerydsl()
 			.applyPagination(pageable, jpqlQuery)
 			.fetch();
 

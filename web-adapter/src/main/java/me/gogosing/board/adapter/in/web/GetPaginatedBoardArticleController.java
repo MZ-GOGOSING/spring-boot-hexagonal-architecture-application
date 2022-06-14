@@ -42,11 +42,11 @@ public class GetPaginatedBoardArticleController {
 			direction = Direction.DESC
 		) Pageable pageable
 	) {
-		GetPaginatedBoardArticleInQuery inQuery = webQuery.toInQuery();
-		Page<GetBoardArticleItemInResponse> inResponse = getPaginatedBoardArticleQuery.getPaginatedBoardArticle(inQuery, pageable);
+		final var inQuery = webQuery.toInQuery();
+		final var inResponse = getPaginatedBoardArticleQuery.getPaginatedBoardArticle(inQuery, pageable);
 
-		GetBoardArticleItemWebResponseConverter webResponseConverter = new GetBoardArticleItemWebResponseConverter();
-		Page<GetBoardArticleItemWebResponse> webResponse = inResponse.map(webResponseConverter::convert);
+		final var webResponseConverter = new GetBoardArticleItemWebResponseConverter();
+		final var webResponse = inResponse.map(webResponseConverter::convert);
 
 		return ApiResponseGenerator.success(PageResponse.convert(webResponse));
 	}

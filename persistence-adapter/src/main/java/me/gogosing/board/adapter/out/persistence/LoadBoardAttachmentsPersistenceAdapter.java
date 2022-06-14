@@ -6,7 +6,6 @@ import me.gogosing.board.adapter.out.persistence.mapper.BoardAttachmentMapper;
 import me.gogosing.board.application.port.out.LoadBoardAttachmentsPort;
 import me.gogosing.board.domain.BoardAttachmentDomainEntity;
 import me.gogosing.jpa.board.config.BoardJpaTransactional;
-import me.gogosing.jpa.board.entity.BoardAttachmentJpaEntity;
 import me.gogosing.jpa.board.repository.BoardAttachmentJpaRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -24,7 +23,7 @@ public class LoadBoardAttachmentsPersistenceAdapter implements LoadBoardAttachme
 	@Override
 	@BoardJpaTransactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<BoardAttachmentDomainEntity> loadBoardAttachments(final Long boardId) {
-		List<BoardAttachmentJpaEntity> boardAttachmentJpaEntities =
+		final var boardAttachmentJpaEntities =
 			boardAttachmentJpaRepository.findAllByBoardId(boardId);
 
 		return boardAttachmentMapper.mapToDomainEntities(boardAttachmentJpaEntities);

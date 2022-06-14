@@ -32,10 +32,10 @@ public class CreateBoardArticleController {
 	public ApiResponse<CreateBoardArticleWebResponse> postBoardArticle(
 		final @RequestBody @Valid CreateBoardArticleWebCommand webCommand
 	) {
-		CreateBoardArticleInCommand inCommand = webCommand.toInCommand();
-		CreateBoardArticleInResponse inResponse = createBoardArticleUseCase.createBoardArticle(inCommand);
+		final var inCommand = webCommand.toInCommand();
+		final var inResponse = createBoardArticleUseCase.createBoardArticle(inCommand);
 
-		CreateBoardArticleWebResponse webResponse = new CreateBoardArticleWebResponseConverter().convert(inResponse);
+		final var webResponse = new CreateBoardArticleWebResponseConverter().convert(inResponse);
 
 		return ApiResponseGenerator.success(webResponse);
 	}

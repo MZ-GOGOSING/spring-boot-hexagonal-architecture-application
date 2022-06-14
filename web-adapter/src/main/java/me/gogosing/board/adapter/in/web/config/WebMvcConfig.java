@@ -13,10 +13,10 @@ import lombok.RequiredArgsConstructor;
 import me.gogosing.board.adapter.in.web.bind.LocalDateParamBinder;
 import me.gogosing.board.adapter.in.web.bind.LocalDateTimeParamBinder;
 import me.gogosing.board.adapter.in.web.bind.LocalTimeParamBinder;
-import me.gogosing.support.code.DescriptionCode;
 import me.gogosing.board.adapter.in.web.converter.DescriptionCodeJsonConverter;
 import me.gogosing.board.adapter.in.web.converter.LocalDateJsonConverter;
 import me.gogosing.board.adapter.in.web.converter.LocalDateTimeJsonConverter;
+import me.gogosing.support.code.DescriptionCode;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.format.FormatterRegistry;
@@ -32,7 +32,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class WebMvcConfig implements WebMvcConfigurer {
 
 	@Override
-	public void addResourceHandlers(ResourceHandlerRegistry registry) {
+	public void addResourceHandlers(final ResourceHandlerRegistry registry) {
 		registry.addResourceHandler("/**")
 			.addResourceLocations("classpath:/META-INF/resources/")
 			.setCacheControl(CacheControl.noCache());
@@ -44,7 +44,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
 
 	@Bean
 	public ObjectMapper objectMapper() {
-		ObjectMapper objectMapper = new ObjectMapper();
+		final var objectMapper = new ObjectMapper();
 
 		objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 		objectMapper.configure(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT, true);
@@ -55,7 +55,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
 	}
 
 	@Override
-	public void addFormatters(FormatterRegistry registry) {
+	public void addFormatters(final FormatterRegistry registry) {
 		registry.addConverter(new LocalDateParamBinder());
 		registry.addConverter(new LocalTimeParamBinder());
 		registry.addConverter(new LocalDateTimeParamBinder());
@@ -72,9 +72,8 @@ public class WebMvcConfig implements WebMvcConfigurer {
 	}
 
 	@Override
-	public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
-		final MappingJackson2HttpMessageConverter converter = new MappingJackson2HttpMessageConverter(
-			this.objectMapper());
+	public void configureMessageConverters(final List<HttpMessageConverter<?>> converters) {
+		final var converter = new MappingJackson2HttpMessageConverter(this.objectMapper());
 		converters.add(converter);
 		converters.add(new StringHttpMessageConverter());
 	}

@@ -29,7 +29,7 @@ public class UpdateBoardArticleWebResponseConverter implements Converter<UpdateB
 	}
 
 	private List<UpdateBoardAttachmentWebResponse> convert(final List<UpdateBoardAttachmentInResponse> sources) {
-		UpdateBoardArticleAttachmentWebResponseConverter attachmentWebConverter = new UpdateBoardArticleAttachmentWebResponseConverter();
+		final var attachmentWebConverter = new UpdateBoardArticleAttachmentWebResponseConverter();
 
 		return CollectionUtils.emptyIfNull(sources)
 			.stream()

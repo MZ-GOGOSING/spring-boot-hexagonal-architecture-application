@@ -14,12 +14,12 @@ import org.springframework.util.Assert;
 public abstract class BoardJpaRepositorySupport extends QuerydslRepositorySupport implements
 	InitializingBean {
 
-	public BoardJpaRepositorySupport(Class<?> domainClass) {
+	public BoardJpaRepositorySupport(final Class<?> domainClass) {
 		super(domainClass);
 	}
 
 	@Override
-	public void afterPropertiesSet() throws Exception {
+	public void afterPropertiesSet() {
 		Assert.notNull(getQuerydsl(), "The QueryDsl must not be null.");
 	}
 
@@ -37,7 +37,7 @@ public abstract class BoardJpaRepositorySupport extends QuerydslRepositorySuppor
 
 	@Override
 	@PersistenceContext(unitName = BoardJpaDataSourceConfig.BOARD_PERSISTENCE_UNIT)
-	public void setEntityManager(@NotNull EntityManager entityManager) {
+	public void setEntityManager(final @NotNull EntityManager entityManager) {
 		super.setEntityManager(entityManager);
 	}
 }
