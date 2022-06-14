@@ -1,7 +1,7 @@
 version: '3'
 
 services:
-  mysql:
+  mariadb:
     image: mariadb:10.6
     container_name: mariadb106
     environment:
@@ -34,6 +34,7 @@ services:
       - ./docker/sonarqube/logs:/opt/sonarqube/logs
       - ./docker/sonarqube/extensions:/opt/sonarqube/extensions
   postgres:
+    platform: linux/amd64
     image: postgres
     container_name: postgres
     networks:
