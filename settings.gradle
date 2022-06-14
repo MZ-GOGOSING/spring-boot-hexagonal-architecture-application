@@ -9,7 +9,7 @@ include 'application'
 include 'domain'
 
 include 'api-out'
-include 'persistence-adapter'
+include 'board-persistence-adapter'
 
 include 'board-jpa'
 

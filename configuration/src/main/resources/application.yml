@@ -3,7 +3,7 @@ spring:
     include:
       - web
       - core
-      - persistence
+      - board-persistence
       - board-jpa
   devtools:
     add-properties: false

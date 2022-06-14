@@ -5,6 +5,6 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 @ComponentScan(basePackages = "me.gogosing.*.adapter.out.persistence")
-public class PersistenceAdapterConfig {
+public class BoardPersistenceAdapterConfig {
 
 }

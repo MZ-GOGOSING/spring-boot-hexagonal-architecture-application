@@ -6,7 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Import;
 
 @SpringBootApplication
-@Import({WebAdapterConfig.class, ApplicationConfig.class, PersistenceAdapterConfig.class, BoardJpaConfig.class})
+@Import({WebAdapterConfig.class, ApplicationConfig.class, BoardPersistenceAdapterConfig.class, BoardJpaConfig.class})
 public class ApplicationInitializr {
 
 	public static void main(String[] args) {
