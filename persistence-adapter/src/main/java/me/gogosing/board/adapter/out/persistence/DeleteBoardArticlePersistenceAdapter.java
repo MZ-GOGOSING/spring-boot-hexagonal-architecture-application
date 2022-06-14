@@ -26,16 +26,24 @@ public class DeleteBoardArticlePersistenceAdapter implements DeleteBoardArticleP
 	@Override
 	@BoardJpaTransactional
 	public void deleteBoardArticle(final Long id) {
-		BoardJpaEntity boardJpaEntity = boardJpaRepository.findByBoardIdAndDeletedFalse(id)
-			.orElseThrow(EntityNotFoundException::new);
+		this.deleteBoard(id);
+		this.deleteBoardContents(id);
+	}
 
-		BoardContentsJpaEntity boardContentsJpaEntity = boardContentsJpaRepository.findByBoardId(id)
+	private void deleteBoard(final Long id) {
+		BoardJpaEntity boardJpaEntity = boardJpaRepository.findByBoardIdAndDeletedFalse(id)
 			.orElseThrow(EntityNotFoundException::new);
 
 		boardJpaEntity.setDeleted(TRUE);
 		boardJpaEntity.setUpdateDate(LocalDateTime.now());
 
 		boardJpaRepository.save(boardJpaEntity);
+	}
+
+	private void deleteBoardContents(final Long id) {
+		BoardContentsJpaEntity boardContentsJpaEntity = boardContentsJpaRepository.findByBoardId(id)
+			.orElseThrow(EntityNotFoundException::new);
+
 		boardContentsJpaRepository.delete(boardContentsJpaEntity);
 	}
 }

@@ -9,7 +9,7 @@ import me.gogosing.jpa.board.config.BoardJpaRepositorySupport;
 import me.gogosing.jpa.board.entity.BoardJpaEntity;
 import me.gogosing.jpa.board.entity.QBoardContentsJpaEntity;
 import me.gogosing.jpa.board.entity.QBoardJpaEntity;
-import me.gogosing.jpa.board.request.query.BoardPaginationJpaCondition;
+import me.gogosing.jpa.board.request.query.BoardPagingJpaCondition;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -28,7 +28,7 @@ public class BoardJpaRepositoryCustomImpl extends BoardJpaRepositorySupport
 
 	@Override
 	public Page<BoardJpaEntity> findAllByQuery(
-		final BoardPaginationJpaCondition jpaCondition,
+		final BoardPagingJpaCondition jpaCondition,
 		final Pageable pageable
 	) {
 		JPQLQuery<BoardJpaEntity> jpqlQuery = getDefaultPaginationJpqlQuery();
@@ -58,7 +58,7 @@ public class BoardJpaRepositoryCustomImpl extends BoardJpaRepositorySupport
 
 	private void applyPaginationWhereClause(
 		final JPQLQuery<BoardJpaEntity> jpqlQuery,
-		final BoardPaginationJpaCondition jpaCondition
+		final BoardPagingJpaCondition jpaCondition
 	) {
 		optionalWhen(jpaCondition.getTitle()).then(
 			it -> jpqlQuery.where(Q_BOARD_JPA_ENTITY.boardTitle.containsIgnoreCase(it))

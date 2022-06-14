@@ -23,8 +23,10 @@ public class DeleteBoardAttachmentsPersistenceAdapter implements DeleteBoardAtta
 		List<BoardAttachmentJpaEntity> boardAttachmentJpaEntities =
 			boardAttachmentJpaRepository.findAllByBoardId(boardId);
 
-		if (CollectionUtils.isNotEmpty(boardAttachmentJpaEntities)) {
-			boardAttachmentJpaRepository.deleteAll(boardAttachmentJpaEntities);
+		if (CollectionUtils.isEmpty(boardAttachmentJpaEntities)) {
+			return;
 		}
+
+		boardAttachmentJpaRepository.deleteAll(boardAttachmentJpaEntities);
 	}
 }

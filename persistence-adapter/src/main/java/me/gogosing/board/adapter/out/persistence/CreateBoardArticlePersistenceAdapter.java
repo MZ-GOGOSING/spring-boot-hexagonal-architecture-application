@@ -27,23 +27,31 @@ public class CreateBoardArticlePersistenceAdapter implements CreateBoardArticleP
 	@Override
 	@BoardJpaTransactional
 	public BoardDomainEntity createBoardArticle(final BoardDomainEntity outCommand) {
-		BoardJpaEntity boardJpaEntity = boardArticleMapper.mapToJpaEntity(outCommand);
-
-		BoardContentsJpaEntity boardContentsJpaEntity = boardArticleMapper
-			.mapToContentsJpaEntity(outCommand);
-
-		boardJpaEntity.setCreateDate(LocalDateTime.now());
-		boardJpaEntity.setUpdateDate(LocalDateTime.now());
-
-		boardJpaRepository.save(boardJpaEntity);
-
-		boardContentsJpaEntity.setBoardId(boardJpaEntity.getBoardId());
-
-		boardContentsJpaRepository.save(boardContentsJpaEntity);
+		BoardJpaEntity storedBoardJpaEntity = this.saveBoard(outCommand);
+		BoardContentsJpaEntity storedBoardContentsJpaEntity =
+			this.saveBoardContents(storedBoardJpaEntity.getBoardId(), outCommand);
 
 		return boardArticleMapper.mapToDomainEntity(
-			boardJpaEntity,
-			boardContentsJpaEntity
+			storedBoardJpaEntity,
+			storedBoardContentsJpaEntity
 		);
+	}
+
+	private BoardJpaEntity saveBoard(final BoardDomainEntity outCommand) {
+		BoardJpaEntity generatedBoardJpaEntity = boardArticleMapper.mapToJpaEntity(outCommand);
+
+		generatedBoardJpaEntity.setCreateDate(LocalDateTime.now());
+		generatedBoardJpaEntity.setUpdateDate(LocalDateTime.now());
+
+		return boardJpaRepository.save(generatedBoardJpaEntity);
+	}
+
+	private BoardContentsJpaEntity saveBoardContents(final Long boardId, final BoardDomainEntity outCommand) {
+		BoardContentsJpaEntity generatedBoardContentsJpaEntity =
+			boardArticleMapper.mapToContentsJpaEntity(outCommand);
+
+		generatedBoardContentsJpaEntity.setBoardId(boardId);
+
+		return boardContentsJpaRepository.save(generatedBoardContentsJpaEntity);
 	}
 }

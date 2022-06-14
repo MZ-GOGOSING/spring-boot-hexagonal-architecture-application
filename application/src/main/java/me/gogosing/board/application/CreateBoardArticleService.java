@@ -1,5 +1,6 @@
 package me.gogosing.board.application;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
@@ -29,17 +30,32 @@ public class CreateBoardArticleService implements CreateBoardArticleUseCase {
     @Override
     @Transactional
     public CreateBoardArticleInResponse createBoardArticle(final CreateBoardArticleInCommand inCommand) {
-        BoardDomainEntity boardDomainCreationOutCommand = this.convertToOutCommand(inCommand);
-        BoardDomainEntity createdBoardDomainEntity = createBoardArticlePort
-            .createBoardArticle(boardDomainCreationOutCommand);
-
-        List<BoardAttachmentDomainEntity> boardAttachmentsCreationOutCommand =
-            this.convertToOutCommand(createdBoardDomainEntity.getId(), inCommand.getAttachments());
+        BoardDomainEntity createdBoardDomainEntity = this.createBoard(inCommand);
 
         List<BoardAttachmentDomainEntity> createdBoardAttachmentDomainEntities =
-            createBoardAttachmentsPort.createBoardAttachments(boardAttachmentsCreationOutCommand);
+            this.createBoardAttachments(createdBoardDomainEntity.getId(), inCommand.getAttachments());
 
         return this.convertToInResponse(createdBoardDomainEntity, createdBoardAttachmentDomainEntities);
+    }
+
+    private BoardDomainEntity createBoard(final CreateBoardArticleInCommand inCommand) {
+        BoardDomainEntity boardDomainCreationOutCommand = this.convertToOutCommand(inCommand);
+
+        return createBoardArticlePort.createBoardArticle(boardDomainCreationOutCommand);
+    }
+
+    private List<BoardAttachmentDomainEntity> createBoardAttachments(
+        final Long boardId,
+        final List<CreateBoardAttachmentInCommand> inCommand
+    ) {
+        if (CollectionUtils.isEmpty(inCommand)) {
+            return Collections.emptyList();
+        }
+
+        List<BoardAttachmentDomainEntity> boardAttachmentsCreationOutCommand =
+            this.convertToOutCommand(boardId, inCommand);
+
+        return createBoardAttachmentsPort.createBoardAttachments(boardAttachmentsCreationOutCommand);
     }
 
     private BoardDomainEntity convertToOutCommand(

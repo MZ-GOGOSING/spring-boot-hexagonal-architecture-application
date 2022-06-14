@@ -10,7 +10,7 @@ import me.gogosing.support.dto.LocalDateRangeQuery;
 @Getter
 @Builder
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-public class BoardPaginationJpaCondition {
+public class BoardPagingJpaCondition {
 
 	private String title;
 

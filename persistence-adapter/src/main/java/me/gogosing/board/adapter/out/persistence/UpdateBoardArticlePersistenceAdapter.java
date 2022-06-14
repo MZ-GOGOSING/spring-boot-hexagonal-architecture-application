@@ -27,18 +27,27 @@ public class UpdateBoardArticlePersistenceAdapter implements UpdateBoardArticleP
 	@Override
 	@BoardJpaTransactional
 	public BoardDomainEntity updateBoardArticle(final BoardDomainEntity outCommand) {
-		BoardJpaEntity boardJpaEntity = boardArticleMapper.mapToJpaEntity(outCommand);
-		BoardContentsJpaEntity boardContentsJpaEntity = boardArticleMapper
-			.mapToContentsJpaEntity(outCommand);
-
-		boardJpaEntity.setUpdateDate(LocalDateTime.now());
-
-		boardJpaRepository.save(boardJpaEntity);
-		boardContentsJpaRepository.save(boardContentsJpaEntity);
+		BoardJpaEntity storedBoardJpaEntity = this.saveBoard(outCommand);
+		BoardContentsJpaEntity storedBoardContentsJpaEntity = this.saveBoardContents(outCommand);
 
 		return boardArticleMapper.mapToDomainEntity(
-			boardJpaEntity,
-			boardContentsJpaEntity
+			storedBoardJpaEntity,
+			storedBoardContentsJpaEntity
 		);
+	}
+
+	private BoardJpaEntity saveBoard(final BoardDomainEntity outCommand) {
+		BoardJpaEntity generatedBoardJpaEntity = boardArticleMapper.mapToJpaEntity(outCommand);
+
+		generatedBoardJpaEntity.setUpdateDate(LocalDateTime.now());
+
+		return boardJpaRepository.save(generatedBoardJpaEntity);
+	}
+
+	private BoardContentsJpaEntity saveBoardContents(final BoardDomainEntity outCommand) {
+		BoardContentsJpaEntity generatedBoardContentsJpaEntity =
+			boardArticleMapper.mapToContentsJpaEntity(outCommand);
+
+		return boardContentsJpaRepository.save(generatedBoardContentsJpaEntity);
 	}
 }
