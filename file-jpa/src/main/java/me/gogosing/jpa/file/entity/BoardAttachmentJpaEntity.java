@@ -1,4 +1,4 @@
-package me.gogosing.jpa.board.entity;
+package me.gogosing.jpa.file.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

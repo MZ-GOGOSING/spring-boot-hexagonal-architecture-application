@@ -10,8 +10,9 @@ include 'domain'
 
 include 'api-out'
 include 'board-persistence-adapter'
+include 'file-persistence-adapter'
 
 include 'board-jpa'
+include 'file-jpa'
 
 include 'support'
-

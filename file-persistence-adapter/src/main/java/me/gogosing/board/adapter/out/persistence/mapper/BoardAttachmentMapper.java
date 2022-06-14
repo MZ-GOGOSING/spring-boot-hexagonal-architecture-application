@@ -3,7 +3,7 @@ package me.gogosing.board.adapter.out.persistence.mapper;
 import java.util.List;
 import java.util.stream.Collectors;
 import me.gogosing.board.domain.BoardAttachmentDomainEntity;
-import me.gogosing.jpa.board.entity.BoardAttachmentJpaEntity;
+import me.gogosing.jpa.file.entity.BoardAttachmentJpaEntity;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.stereotype.Component;
 

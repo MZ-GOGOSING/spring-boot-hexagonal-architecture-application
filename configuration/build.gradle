@@ -9,8 +9,10 @@ dependencies {
     implementation project(':api-out')
 
     implementation project(':board-persistence-adapter')
+    implementation project(':file-persistence-adapter')
 
     implementation project(':board-jpa')
+    implementation project(':file-jpa')
 }
 
 sourceSets {

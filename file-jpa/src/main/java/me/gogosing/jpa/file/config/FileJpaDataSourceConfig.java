@@ -1,0 +1,86 @@
+package me.gogosing.jpa.file.config;
+
+import com.zaxxer.hikari.HikariDataSource;
+import javax.persistence.EntityManagerFactory;
+import javax.sql.DataSource;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.autoconfigure.orm.jpa.HibernateProperties;
+import org.springframework.boot.autoconfigure.orm.jpa.HibernateSettings;
+import org.springframework.boot.autoconfigure.orm.jpa.JpaProperties;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.boot.jdbc.DataSourceBuilder;
+import org.springframework.boot.orm.jpa.EntityManagerFactoryBuilder;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.orm.jpa.JpaTransactionManager;
+import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
+import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
+
+@Configuration
+@EnableTransactionManagement
+@EnableJpaRepositories(
+	basePackages = {FileJpaDataSourceConfig.FILE_PERSISTENCE_PACKAGE},
+	transactionManagerRef = FileJpaDataSourceConfig.FILE_PERSISTENCE_TRANSACTION_MANAGER,
+	entityManagerFactoryRef = FileJpaDataSourceConfig.FILE_PERSISTENCE_ENTITY_MANAGER_FACTORY)
+public class FileJpaDataSourceConfig {
+
+	public static final String FILE_PERSISTENCE_ENTITY_MANAGER_FACTORY = "filePersistenceEntityManagerFactory";
+	public static final String FILE_PERSISTENCE_JPA_PROPERTIES = "filePersistenceJpaProperties";
+	public static final String FILE_PERSISTENCE_HIBERNATE_PROPERTIES = "filePersistenceHibernateProperties";
+	public static final String FILE_PERSISTENCE_DATA_SOURCE = "filePersistenceDataSource";
+	public static final String FILE_PERSISTENCE_TRANSACTION_MANAGER = "filePersistenceTransactionManager";
+	public static final String FILE_PERSISTENCE_UNIT = "filePersistence";
+	public static final String FILE_PERSISTENCE_PACKAGE = "me.gogosing.jpa.file";
+	public static final String FILE_PERSISTENCE_JDBC_TEMPLATE = "filePersistenceJdbcTemplate";
+
+	@Bean(name = FILE_PERSISTENCE_ENTITY_MANAGER_FACTORY)
+	public LocalContainerEntityManagerFactoryBean filePersistenceEntityManagerFactory() {
+		return new EntityManagerFactoryBuilder(new HibernateJpaVendorAdapter(),
+			filePersistenceJpaProperties().getProperties(), null)
+			.dataSource(filePersistenceDataSource())
+			.properties(filePersistenceHibernateProperties()
+				.determineHibernateProperties(filePersistenceJpaProperties().getProperties(),
+					new HibernateSettings()))
+			.persistenceUnit(FILE_PERSISTENCE_UNIT)
+			.packages(FILE_PERSISTENCE_PACKAGE)
+			.build();
+	}
+
+	@Bean(name = FILE_PERSISTENCE_JPA_PROPERTIES)
+	@ConfigurationProperties(prefix = "file.persistence.jpa")
+	public JpaProperties filePersistenceJpaProperties() {
+		return new JpaProperties();
+	}
+
+	@Bean(name = FILE_PERSISTENCE_HIBERNATE_PROPERTIES)
+	@ConfigurationProperties(prefix = "file.persistence.jpa.hibernate")
+	public HibernateProperties filePersistenceHibernateProperties() {
+		return new HibernateProperties();
+	}
+
+	@Bean
+	@Qualifier(FILE_PERSISTENCE_DATA_SOURCE)
+	@ConfigurationProperties("file.persistence.datasource")
+	public DataSource filePersistenceDataSource() {
+		return DataSourceBuilder.create().type(HikariDataSource.class).build();
+	}
+
+	@Bean(name = FILE_PERSISTENCE_TRANSACTION_MANAGER)
+	public PlatformTransactionManager filePersistenceTransactionManager(
+		final @Autowired @Qualifier(FILE_PERSISTENCE_ENTITY_MANAGER_FACTORY) EntityManagerFactory fileJpaEntityManagerFactory
+	) {
+		return new JpaTransactionManager(fileJpaEntityManagerFactory);
+	}
+
+	@Bean(name = FILE_PERSISTENCE_JDBC_TEMPLATE)
+	public JdbcTemplate filePersistenceJdbcTemplate(
+		final @Qualifier("filePersistenceDataSource") DataSource dataSource
+	) {
+		return new JdbcTemplate(dataSource);
+	}
+}

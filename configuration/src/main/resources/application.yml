@@ -4,7 +4,9 @@ spring:
       - web
       - core
       - board-persistence
+      - file-persistence
       - board-jpa
+      - file-jpa
   devtools:
     add-properties: false
     restart:

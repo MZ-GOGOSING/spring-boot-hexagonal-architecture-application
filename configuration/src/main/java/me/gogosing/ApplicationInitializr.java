@@ -1,12 +1,20 @@
 package me.gogosing;
 
 import me.gogosing.jpa.board.BoardJpaConfig;
+import me.gogosing.jpa.file.FileJpaConfig;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Import;
 
 @SpringBootApplication
-@Import({WebAdapterConfig.class, ApplicationConfig.class, BoardPersistenceAdapterConfig.class, BoardJpaConfig.class})
+@Import({
+	WebAdapterConfig.class,
+	ApplicationConfig.class,
+	BoardPersistenceAdapterConfig.class,
+	FilePersistenceAdapterConfig.class,
+	BoardJpaConfig.class,
+	FileJpaConfig.class
+})
 public class ApplicationInitializr {
 
 	public static void main(String[] args) {

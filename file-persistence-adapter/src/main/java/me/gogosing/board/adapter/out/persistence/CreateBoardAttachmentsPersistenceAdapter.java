@@ -6,9 +6,9 @@ import lombok.RequiredArgsConstructor;
 import me.gogosing.board.adapter.out.persistence.mapper.BoardAttachmentMapper;
 import me.gogosing.board.application.port.out.CreateBoardAttachmentsPort;
 import me.gogosing.board.domain.BoardAttachmentDomainEntity;
-import me.gogosing.jpa.board.config.BoardJpaTransactional;
-import me.gogosing.jpa.board.entity.BoardAttachmentJpaEntity;
-import me.gogosing.jpa.board.repository.BoardAttachmentJpaRepository;
+import me.gogosing.jpa.file.config.FileJpaTransactional;
+import me.gogosing.jpa.file.entity.BoardAttachmentJpaEntity;
+import me.gogosing.jpa.file.repository.BoardAttachmentJpaRepository;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
@@ -23,7 +23,7 @@ public class CreateBoardAttachmentsPersistenceAdapter implements CreateBoardAtta
 	private final BoardAttachmentJpaRepository boardAttachmentJpaRepository;
 
 	@Override
-	@BoardJpaTransactional
+	@FileJpaTransactional
 	public List<BoardAttachmentDomainEntity> createBoardAttachments(
 		final List<BoardAttachmentDomainEntity> outCommand
 	) {

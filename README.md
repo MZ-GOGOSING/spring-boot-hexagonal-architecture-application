@@ -24,6 +24,7 @@ docker-compose up -d
 docker exec -it mariadb106 bash
 mysql --protocol=tcp -hlocalhost -P3306 -uroot -proot
 mysql> CREATE DATABASE board DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+mysql> CREATE DATABASE file DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 ```
 
 MariaDB 접속 정보
