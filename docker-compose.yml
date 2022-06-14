@@ -3,7 +3,7 @@ version: '3'
 services:
   mariadb:
     image: mariadb:10.6
-    container_name: mariadb106
+    container_name: mariadb10.6
     environment:
       - MARIADB_ROOT_PASSWORD=root
       - MARIADB_ROOT_HOST=%
@@ -15,8 +15,8 @@ services:
     volumes:
     - ./docker/mariadb/sql:/data/sql
   sonarqube:
-    image: sonarqube:9.5.0-community
-    container_name: sonarqube9.5
+    image: amd64/sonarqube:7.9.1-community
+    container_name: sonarqube7.9.1
     ports:
       - "9000:9000"
     depends_on:
