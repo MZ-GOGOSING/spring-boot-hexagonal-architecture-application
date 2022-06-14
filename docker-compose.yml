@@ -15,8 +15,8 @@ services:
     volumes:
     - ./docker/mariadb/sql:/data/sql
   sonarqube:
-    image: sonarqube:7.9.1-community
-    container_name: sonarqube7.9
+    image: sonarqube:9.5.0-community
+    container_name: sonarqube9.5
     ports:
       - "9000:9000"
     depends_on:
@@ -34,7 +34,6 @@ services:
       - ./docker/sonarqube/logs:/opt/sonarqube/logs
       - ./docker/sonarqube/extensions:/opt/sonarqube/extensions
   postgres:
-    platform: linux/amd64
     image: postgres
     container_name: postgres
     networks:
