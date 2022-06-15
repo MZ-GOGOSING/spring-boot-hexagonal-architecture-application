@@ -6,5 +6,5 @@ import me.gogosing.board.domain.BoardAttachmentDomainEntity;
 
 public interface CreateBoardAttachmentsPort {
 
-	List<BoardAttachmentDomainEntity> createBoardAttachments(final @Size(min = 1) List<BoardAttachmentDomainEntity> attachments);
+	List<BoardAttachmentDomainEntity> saveAll(final @Size(min = 1) List<BoardAttachmentDomainEntity> attachments);
 }

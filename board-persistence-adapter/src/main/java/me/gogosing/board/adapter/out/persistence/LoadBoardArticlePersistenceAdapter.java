@@ -25,7 +25,7 @@ public class LoadBoardArticlePersistenceAdapter implements LoadBoardArticlePort 
 
 	@Override
 	@BoardJpaTransactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public BoardDomainEntity loadBoardArticle(final Long id) {
+	public BoardDomainEntity findById(final Long id) {
 		final var boardJpaEntity = boardJpaRepository.findByBoardIdAndDeletedFalse(id)
 			.orElseThrow(EntityNotFoundException::new);
 

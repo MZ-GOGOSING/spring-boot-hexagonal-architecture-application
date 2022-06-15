@@ -8,13 +8,10 @@ import me.gogosing.board.adapter.in.web.request.query.GetPaginatedBoardArticleWe
 import me.gogosing.board.adapter.in.web.response.GetBoardArticleItemWebResponse;
 import me.gogosing.board.adapter.in.web.response.converter.GetBoardArticleItemWebResponseConverter;
 import me.gogosing.board.application.port.in.GetPaginatedBoardArticleQuery;
-import me.gogosing.board.application.port.in.request.query.GetPaginatedBoardArticleInQuery;
-import me.gogosing.board.application.port.in.response.GetBoardArticleItemInResponse;
 import me.gogosing.support.dto.ApiResponse;
 import me.gogosing.support.dto.ApiResponseGenerator;
 import me.gogosing.support.dto.PageResponse;
 import org.springdoc.api.annotations.ParameterObject;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.web.PageableDefault;
@@ -43,7 +40,7 @@ public class GetPaginatedBoardArticleController {
 		) Pageable pageable
 	) {
 		final var inQuery = webQuery.toInQuery();
-		final var inResponse = getPaginatedBoardArticleQuery.getPaginatedBoardArticle(inQuery, pageable);
+		final var inResponse = getPaginatedBoardArticleQuery.loadAll(inQuery, pageable);
 
 		final var webResponseConverter = new GetBoardArticleItemWebResponseConverter();
 		final var webResponse = inResponse.map(webResponseConverter::convert);

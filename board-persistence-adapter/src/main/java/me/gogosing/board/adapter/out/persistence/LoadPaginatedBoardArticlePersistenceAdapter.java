@@ -24,7 +24,7 @@ public class LoadPaginatedBoardArticlePersistenceAdapter implements LoadPaginate
 
 	@Override
 	@BoardJpaTransactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Page<BoardDomainEntity> loadPaginatedBoardArticle(
+	public Page<BoardDomainEntity> findAll(
 		final GetPaginatedBoardArticleOutQuery outQuery,
 		final Pageable pageable
 	) {

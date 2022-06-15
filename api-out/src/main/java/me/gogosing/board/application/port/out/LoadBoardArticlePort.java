@@ -5,5 +5,5 @@ import me.gogosing.board.domain.BoardDomainEntity;
 
 public interface LoadBoardArticlePort {
 
-	BoardDomainEntity loadBoardArticle(final @Min(1L) Long id);
+	BoardDomainEntity findById(final @Min(1L) Long id);
 }

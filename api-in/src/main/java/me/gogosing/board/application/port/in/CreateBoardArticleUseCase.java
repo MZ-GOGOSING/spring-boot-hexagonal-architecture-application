@@ -6,5 +6,5 @@ import me.gogosing.board.application.port.in.response.CreateBoardArticleInRespon
 
 public interface CreateBoardArticleUseCase {
 
-	CreateBoardArticleInResponse createBoardArticle(final @Valid CreateBoardArticleInCommand inCommand);
+	CreateBoardArticleInResponse save(final @Valid CreateBoardArticleInCommand inCommand);
 }

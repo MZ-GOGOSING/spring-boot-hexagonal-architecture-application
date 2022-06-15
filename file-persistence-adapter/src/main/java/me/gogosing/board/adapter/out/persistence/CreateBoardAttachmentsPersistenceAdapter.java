@@ -22,21 +22,20 @@ public class CreateBoardAttachmentsPersistenceAdapter implements CreateBoardAtta
 
 	private final BoardAttachmentJpaRepository boardAttachmentJpaRepository;
 
-	@Override
 	@FileJpaTransactional
-	public List<BoardAttachmentDomainEntity> createBoardAttachments(
+	public List<BoardAttachmentDomainEntity> saveAll(
 		final List<BoardAttachmentDomainEntity> outCommand
 	) {
 		if (CollectionUtils.isEmpty(outCommand)) {
 			return Collections.emptyList();
 		}
 
-		final var storedBoardAttachmentJpaEntities = this.saveAll(outCommand);
+		final var storedBoardAttachmentJpaEntities = this.saveAllJpaEntities(outCommand);
 
 		return boardAttachmentMapper.mapToDomainEntities(storedBoardAttachmentJpaEntities);
 	}
 
-	private List<BoardAttachmentJpaEntity> saveAll(final List<BoardAttachmentDomainEntity> outCommand) {
+	private List<BoardAttachmentJpaEntity> saveAllJpaEntities(final List<BoardAttachmentDomainEntity> outCommand) {
 		final var generatedBoardAttachmentJpaEntities =
 			boardAttachmentMapper.mapToJpaEntities(outCommand);
 

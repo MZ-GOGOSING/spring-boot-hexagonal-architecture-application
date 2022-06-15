@@ -8,7 +8,6 @@ import lombok.RequiredArgsConstructor;
 import me.gogosing.board.adapter.in.web.response.GetBoardArticleWebResponse;
 import me.gogosing.board.adapter.in.web.response.converter.GetBoardArticleWebResponseConverter;
 import me.gogosing.board.application.port.in.GetBoardArticleQuery;
-import me.gogosing.board.application.port.in.response.GetBoardArticleInResponse;
 import me.gogosing.support.dto.ApiResponse;
 import me.gogosing.support.dto.ApiResponseGenerator;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,7 +29,7 @@ public class GetBoardArticleController {
 		@Parameter(description = "게시물 식별자")
 		final @PathVariable @Min(1L) Long id
 	) {
-		final var inResponse = getBoardArticleQuery.getBoardArticle(id);
+		final var inResponse = getBoardArticleQuery.loadById(id);
 		final var webResponse = new GetBoardArticleWebResponseConverter().convert(inResponse);
 
 		return ApiResponseGenerator.success(webResponse);

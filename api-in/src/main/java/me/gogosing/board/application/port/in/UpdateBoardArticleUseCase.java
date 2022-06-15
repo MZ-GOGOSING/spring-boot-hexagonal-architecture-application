@@ -7,7 +7,7 @@ import me.gogosing.board.application.port.in.response.UpdateBoardArticleInRespon
 
 public interface UpdateBoardArticleUseCase {
 
-	UpdateBoardArticleInResponse updateBoardArticle(
+	UpdateBoardArticleInResponse save(
 		final @Min(1L) Long id,
 		final @Valid UpdateBoardArticleInCommand inCommand
 	);

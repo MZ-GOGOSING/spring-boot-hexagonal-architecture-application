@@ -22,7 +22,7 @@ public class LoadBoardAttachmentsPersistenceAdapter implements LoadBoardAttachme
 
 	@Override
 	@FileJpaTransactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<BoardAttachmentDomainEntity> loadBoardAttachments(final Long boardId) {
+	public List<BoardAttachmentDomainEntity> findAllByBoardId(final Long boardId) {
 		final var boardAttachmentJpaEntities =
 			boardAttachmentJpaRepository.findAllByBoardId(boardId);
 

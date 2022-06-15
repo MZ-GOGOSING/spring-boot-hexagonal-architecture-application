@@ -22,10 +22,10 @@ public class GetBoardArticleService implements GetBoardArticleQuery {
 
 	@Override
 	@JtaTransactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public GetBoardArticleInResponse getBoardArticle(final Long id) {
-		final var boardDomainEntity = loadBoardArticlePort.loadBoardArticle(id);
+	public GetBoardArticleInResponse loadById(final Long id) {
+		final var boardDomainEntity = loadBoardArticlePort.findById(id);
 		final var boardAttachmentDomainEntities =
-			loadBoardAttachmentsPort.loadBoardAttachments(id);
+			loadBoardAttachmentsPort.findAllByBoardId(id);
 
 		return new GetBoardArticleInResponseConverter()
 			.convert(boardDomainEntity, boardAttachmentDomainEntities);

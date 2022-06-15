@@ -29,7 +29,7 @@ public class DeleteBoardArticleController {
 		@Parameter(description = "게시물 식별자")
 		final @PathVariable @Min(1L) Long id
 	) {
-		deleteBoardArticleUseCase.deleteBoardArticle(id);
+		deleteBoardArticleUseCase.delete(id);
 
 		return ApiResponseGenerator.success();
 	}

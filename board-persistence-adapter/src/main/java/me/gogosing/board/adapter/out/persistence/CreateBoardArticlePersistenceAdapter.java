@@ -26,7 +26,7 @@ public class CreateBoardArticlePersistenceAdapter implements CreateBoardArticleP
 
 	@Override
 	@BoardJpaTransactional
-	public BoardDomainEntity createBoardArticle(final BoardDomainEntity outCommand) {
+	public BoardDomainEntity save(final BoardDomainEntity outCommand) {
 		final var storedBoardJpaEntity = this.saveBoard(outCommand);
 		final var storedBoardContentsJpaEntity =
 			this.saveBoardContents(storedBoardJpaEntity.getBoardId(), outCommand);

@@ -23,7 +23,7 @@ public class DeleteBoardArticlePersistenceAdapter implements DeleteBoardArticleP
 
 	@Override
 	@BoardJpaTransactional
-	public void deleteBoardArticle(final Long id) {
+	public void delete(final Long id) {
 		this.deleteBoard(id);
 		this.deleteBoardContents(id);
 	}

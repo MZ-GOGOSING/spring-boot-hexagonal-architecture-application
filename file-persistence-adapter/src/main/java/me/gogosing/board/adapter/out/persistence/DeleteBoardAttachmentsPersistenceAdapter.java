@@ -17,7 +17,7 @@ public class DeleteBoardAttachmentsPersistenceAdapter implements DeleteBoardAtta
 
 	@Override
 	@FileJpaTransactional
-	public void deleteBoardAttachments(final Long boardId) {
+	public void deleteAllByBoardId(final Long boardId) {
 		final var boardAttachmentJpaEntities =
 			boardAttachmentJpaRepository.findAllByBoardId(boardId);
 

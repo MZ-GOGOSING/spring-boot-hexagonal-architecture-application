@@ -29,7 +29,7 @@ public class CreateBoardArticleService implements CreateBoardArticleUseCase {
 
     @Override
     @JtaTransactional
-    public CreateBoardArticleInResponse createBoardArticle(final CreateBoardArticleInCommand inCommand) {
+    public CreateBoardArticleInResponse save(final CreateBoardArticleInCommand inCommand) {
         final var createdBoardDomainEntity = this.saveBoard(inCommand);
         final var createdBoardAttachmentDomainEntities =
             this.saveAllBoardAttachments(createdBoardDomainEntity.getId(), inCommand.getAttachments());
@@ -41,7 +41,7 @@ public class CreateBoardArticleService implements CreateBoardArticleUseCase {
     private BoardDomainEntity saveBoard(final CreateBoardArticleInCommand inCommand) {
         final var outCommand = this.convertToOutCommand(inCommand);
 
-        return createBoardArticlePort.createBoardArticle(outCommand);
+        return createBoardArticlePort.save(outCommand);
     }
 
     private List<BoardAttachmentDomainEntity> saveAllBoardAttachments(
@@ -54,7 +54,7 @@ public class CreateBoardArticleService implements CreateBoardArticleUseCase {
 
         final var outCommand = this.convertToOutCommand(boardId, inCommand);
 
-        return createBoardAttachmentsPort.createBoardAttachments(outCommand);
+        return createBoardAttachmentsPort.saveAll(outCommand);
     }
 
     private BoardDomainEntity convertToOutCommand(

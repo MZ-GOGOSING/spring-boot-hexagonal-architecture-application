@@ -36,7 +36,7 @@ public class UpdateBoardArticleService implements UpdateBoardArticleUseCase {
 
     @Override
     @JtaTransactional
-    public UpdateBoardArticleInResponse updateBoardArticle(
+    public UpdateBoardArticleInResponse save(
         final Long id,
         final UpdateBoardArticleInCommand inCommand
     ) {
@@ -52,11 +52,11 @@ public class UpdateBoardArticleService implements UpdateBoardArticleUseCase {
         final Long id,
         final UpdateBoardArticleInCommand inCommand
     ) {
-        final var storedBoardDomainEntity = loadBoardArticlePort.loadBoardArticle(id);
+        final var storedBoardDomainEntity = loadBoardArticlePort.findById(id);
 
         final var outCommand = this.convertToOutCommand(storedBoardDomainEntity, inCommand);
 
-        return updateBoardArticlePort.updateBoardArticle(outCommand);
+        return updateBoardArticlePort.save(outCommand);
     }
 
     private List<BoardAttachmentDomainEntity> saveAllBoardAttachments(
@@ -65,11 +65,11 @@ public class UpdateBoardArticleService implements UpdateBoardArticleUseCase {
     ) {
         final var outCommand = this.convertToOutCommand(boardId, inCommand);
 
-        deleteBoardAttachmentsPort.deleteBoardAttachments(boardId);
+        deleteBoardAttachmentsPort.deleteAllByBoardId(boardId);
 
         return CollectionUtils.isEmpty(outCommand)
             ? Collections.emptyList()
-            : createBoardAttachmentsPort.createBoardAttachments(outCommand);
+            : createBoardAttachmentsPort.saveAll(outCommand);
     }
 
     private BoardDomainEntity convertToOutCommand(

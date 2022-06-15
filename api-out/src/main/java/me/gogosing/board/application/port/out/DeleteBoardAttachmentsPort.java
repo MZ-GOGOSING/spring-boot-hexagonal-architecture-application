@@ -4,5 +4,5 @@ import javax.validation.constraints.Min;
 
 public interface DeleteBoardAttachmentsPort {
 
-	void deleteBoardAttachments(final @Min(1L) Long boardId);
+	void deleteAllByBoardId(final @Min(1L) Long boardId);
 }

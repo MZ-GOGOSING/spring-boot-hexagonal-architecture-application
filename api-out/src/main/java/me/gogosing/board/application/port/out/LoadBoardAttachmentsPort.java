@@ -6,5 +6,5 @@ import me.gogosing.board.domain.BoardAttachmentDomainEntity;
 
 public interface LoadBoardAttachmentsPort {
 
-	List<BoardAttachmentDomainEntity> loadBoardAttachments(final @Min(1L) Long boardId);
+	List<BoardAttachmentDomainEntity> findAllByBoardId(final @Min(1L) Long boardId);
 }

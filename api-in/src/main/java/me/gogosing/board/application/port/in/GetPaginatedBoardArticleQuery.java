@@ -9,7 +9,7 @@ import org.springframework.data.domain.Pageable;
 
 public interface GetPaginatedBoardArticleQuery {
 
-	Page<GetBoardArticleItemInResponse> getPaginatedBoardArticle(
+	Page<GetBoardArticleItemInResponse> loadAll(
 		final @Valid GetPaginatedBoardArticleInQuery inQuery,
 		final @NotNull Pageable pageable
 	);

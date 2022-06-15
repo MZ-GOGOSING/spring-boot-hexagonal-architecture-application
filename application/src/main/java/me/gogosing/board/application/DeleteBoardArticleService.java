@@ -19,8 +19,8 @@ public class DeleteBoardArticleService implements DeleteBoardArticleUseCase {
 
 	@Override
 	@JtaTransactional
-	public void deleteBoardArticle(final Long id) {
-		deleteBoardArticlePort.deleteBoardArticle(id);
-		deleteBoardAttachmentsPort.deleteBoardAttachments(id);
+	public void delete(final Long id) {
+		deleteBoardArticlePort.delete(id);
+		deleteBoardAttachmentsPort.deleteAllByBoardId(id);
 	}
 }

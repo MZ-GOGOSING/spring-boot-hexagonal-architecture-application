@@ -31,7 +31,7 @@ public class CreateBoardArticleController {
 		final @RequestBody @Valid CreateBoardArticleWebCommand webCommand
 	) {
 		final var inCommand = webCommand.toInCommand();
-		final var inResponse = createBoardArticleUseCase.createBoardArticle(inCommand);
+		final var inResponse = createBoardArticleUseCase.save(inCommand);
 
 		final var webResponse = new CreateBoardArticleWebResponseConverter().convert(inResponse);
 
