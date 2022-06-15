@@ -5,7 +5,6 @@ spring:
       enabled: true
 
   jta:
-    enabled: true
     atomikos:
       datasource:
         board:

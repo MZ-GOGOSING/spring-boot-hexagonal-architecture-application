@@ -26,7 +26,8 @@ public class JtaDataManagerConfig {
 
 	@Bean
 	public JpaVendorAdapter jpaVendorAdapter() {
-		HibernateJpaVendorAdapter hibernateJpaVendorAdapter = new HibernateJpaVendorAdapter();
+		final var hibernateJpaVendorAdapter = new HibernateJpaVendorAdapter();
+
 		hibernateJpaVendorAdapter.setShowSql(true);
 		hibernateJpaVendorAdapter.setGenerateDdl(false);
 		hibernateJpaVendorAdapter.setDatabase(Database.MYSQL);
@@ -36,7 +37,8 @@ public class JtaDataManagerConfig {
 
 	@Bean(name = JTA_USER_TRANSACTION)
 	public UserTransaction userTransaction() throws Throwable {
-		UserTransactionImp userTransactionImp = new UserTransactionImp();
+		final var userTransactionImp = new UserTransactionImp();
+
 		userTransactionImp.setTransactionTimeout(10000);
 
 		return userTransactionImp;
@@ -44,7 +46,8 @@ public class JtaDataManagerConfig {
 
 	@Bean(name = JTA_ATOMIKOS_TRANSACTION_MANAGER, initMethod = "init", destroyMethod = "close")
 	public TransactionManager atomikosTransactionManager() {
-		UserTransactionManager userTransactionManager = new UserTransactionManager();
+		final var userTransactionManager = new UserTransactionManager();
+
 		userTransactionManager.setForceShutdown(false);
 
 		AtomikosJtaPlatform.transactionManager = userTransactionManager;
@@ -59,7 +62,7 @@ public class JtaDataManagerConfig {
 	})
 	@DependsOn({JTA_USER_TRANSACTION, JTA_ATOMIKOS_TRANSACTION_MANAGER})
 	public PlatformTransactionManager transactionManager() throws Throwable {
-		UserTransaction userTransaction = userTransaction();
+		final var userTransaction = userTransaction();
 
 		AtomikosJtaPlatform.transaction = userTransaction;
 

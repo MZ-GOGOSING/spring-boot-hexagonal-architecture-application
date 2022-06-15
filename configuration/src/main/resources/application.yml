@@ -12,6 +12,9 @@ spring:
     restart:
       enabled: false
 
+  jta:
+    enabled: true
+
 springdoc:
   api-docs:
     groups:
