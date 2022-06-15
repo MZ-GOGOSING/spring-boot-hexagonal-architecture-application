@@ -4,6 +4,21 @@ spring:
     restart:
       enabled: true
 
+  jta:
+    enabled: true
+    atomikos:
+      datasource:
+        board:
+          xa-properties:
+            user: root
+            password: root
+            url: "jdbc:mariadb://localhost:3306/board"
+        file:
+          xa-properties:
+            user: root
+            password: root
+            url: "jdbc:mariadb://localhost:3306/file"
+
 springdoc:
   swagger-ui:
     enabled: true

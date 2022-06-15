@@ -3,8 +3,15 @@ package me.gogosing.jpa.file.config;
 import com.zaxxer.hikari.HikariDataSource;
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
+import me.gogosing.support.jta.JtaDataSourceConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceTransactionManagerAutoConfiguration;
+import org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration;
 import org.springframework.boot.autoconfigure.orm.jpa.HibernateProperties;
 import org.springframework.boot.autoconfigure.orm.jpa.HibernateSettings;
 import org.springframework.boot.autoconfigure.orm.jpa.JpaProperties;
@@ -22,11 +29,17 @@ import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
+@ConditionalOnMissingBean({JtaDataSourceConfig.class})
+@EnableAutoConfiguration(exclude = {
+	DataSourceAutoConfiguration.class,
+	DataSourceTransactionManagerAutoConfiguration.class,
+	HibernateJpaAutoConfiguration.class})
 @EnableTransactionManagement
 @EnableJpaRepositories(
 	basePackages = {FileJpaDataSourceConfig.FILE_PERSISTENCE_PACKAGE},
 	transactionManagerRef = FileJpaDataSourceConfig.FILE_PERSISTENCE_TRANSACTION_MANAGER,
 	entityManagerFactoryRef = FileJpaDataSourceConfig.FILE_PERSISTENCE_ENTITY_MANAGER_FACTORY)
+@EntityScan(basePackages = {FileJpaDataSourceConfig.FILE_PERSISTENCE_PACKAGE})
 public class FileJpaDataSourceConfig {
 
 	public static final String FILE_PERSISTENCE_ENTITY_MANAGER_FACTORY = "filePersistenceEntityManagerFactory";
@@ -79,7 +92,7 @@ public class FileJpaDataSourceConfig {
 
 	@Bean(name = FILE_PERSISTENCE_JDBC_TEMPLATE)
 	public JdbcTemplate filePersistenceJdbcTemplate(
-		final @Qualifier("filePersistenceDataSource") DataSource dataSource
+		final @Qualifier(FILE_PERSISTENCE_DATA_SOURCE) DataSource dataSource
 	) {
 		return new JdbcTemplate(dataSource);
 	}

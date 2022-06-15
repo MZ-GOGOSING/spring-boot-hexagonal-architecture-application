@@ -88,3 +88,7 @@ node_modules
 .localstack
 
 .env*.local
+
+# atomikos jta
+*.lck
+*.log

@@ -13,9 +13,9 @@ import me.gogosing.board.application.port.out.CreateBoardArticlePort;
 import me.gogosing.board.application.port.out.CreateBoardAttachmentsPort;
 import me.gogosing.board.domain.BoardAttachmentDomainEntity;
 import me.gogosing.board.domain.BoardDomainEntity;
+import me.gogosing.support.jta.JtaTransactional;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 
 @Service
@@ -28,7 +28,7 @@ public class CreateBoardArticleService implements CreateBoardArticleUseCase {
     private final CreateBoardAttachmentsPort createBoardAttachmentsPort;
 
     @Override
-    @Transactional
+    @JtaTransactional
     public CreateBoardArticleInResponse createBoardArticle(final CreateBoardArticleInCommand inCommand) {
         final var createdBoardDomainEntity = this.saveBoard(inCommand);
         final var createdBoardAttachmentDomainEntities =

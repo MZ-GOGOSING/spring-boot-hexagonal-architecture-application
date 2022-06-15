@@ -31,7 +31,6 @@
   <logger name="org.hibernate" level="INFO"/>
   <logger name="org.hibernate.type" level="INFO"/>
   <logger name="org.hibernate.type.descriptor.sql.BasicBinder" level="TRACE"/>
-  <logger name="org.hibernate.SQL" level="TRACE"/>
   <logger name="org.apache.http" level="INFO"/>
   <logger name="com.querydsl" level="INFO"/>
 

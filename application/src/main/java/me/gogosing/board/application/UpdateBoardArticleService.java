@@ -16,9 +16,9 @@ import me.gogosing.board.application.port.out.LoadBoardArticlePort;
 import me.gogosing.board.application.port.out.UpdateBoardArticlePort;
 import me.gogosing.board.domain.BoardAttachmentDomainEntity;
 import me.gogosing.board.domain.BoardDomainEntity;
+import me.gogosing.support.jta.JtaTransactional;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 
 @Service
@@ -35,7 +35,7 @@ public class UpdateBoardArticleService implements UpdateBoardArticleUseCase {
     private final CreateBoardAttachmentsPort createBoardAttachmentsPort;
 
     @Override
-    @Transactional
+    @JtaTransactional
     public UpdateBoardArticleInResponse updateBoardArticle(
         final Long id,
         final UpdateBoardArticleInCommand inCommand

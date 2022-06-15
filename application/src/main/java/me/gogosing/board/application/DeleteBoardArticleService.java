@@ -4,8 +4,8 @@ import lombok.RequiredArgsConstructor;
 import me.gogosing.board.application.port.in.DeleteBoardArticleUseCase;
 import me.gogosing.board.application.port.out.DeleteBoardArticlePort;
 import me.gogosing.board.application.port.out.DeleteBoardAttachmentsPort;
+import me.gogosing.support.jta.JtaTransactional;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 
 @Service
@@ -18,7 +18,7 @@ public class DeleteBoardArticleService implements DeleteBoardArticleUseCase {
 	private final DeleteBoardAttachmentsPort deleteBoardAttachmentsPort;
 
 	@Override
-	@Transactional
+	@JtaTransactional
 	public void deleteBoardArticle(final Long id) {
 		deleteBoardArticlePort.deleteBoardArticle(id);
 		deleteBoardAttachmentsPort.deleteBoardAttachments(id);

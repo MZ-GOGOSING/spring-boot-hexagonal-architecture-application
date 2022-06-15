@@ -10,9 +10,9 @@ import me.gogosing.board.application.port.out.LoadBoardArticlePort;
 import me.gogosing.board.application.port.out.LoadBoardAttachmentsPort;
 import me.gogosing.board.domain.BoardAttachmentDomainEntity;
 import me.gogosing.board.domain.BoardDomainEntity;
+import me.gogosing.support.jta.JtaTransactional;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 
 @Service
@@ -25,7 +25,7 @@ public class GetBoardArticleService implements GetBoardArticleQuery {
 	private final LoadBoardAttachmentsPort loadBoardAttachmentsPort;
 
 	@Override
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	@JtaTransactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public GetBoardArticleInResponse getBoardArticle(final Long id) {
 		final var boardDomainEntity = loadBoardArticlePort.loadBoardArticle(id);
 		final var boardAttachmentDomainEntities =

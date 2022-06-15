@@ -3,8 +3,15 @@ package me.gogosing.jpa.board.config;
 import com.zaxxer.hikari.HikariDataSource;
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
+import me.gogosing.support.jta.JtaDataSourceConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceTransactionManagerAutoConfiguration;
+import org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration;
 import org.springframework.boot.autoconfigure.orm.jpa.HibernateProperties;
 import org.springframework.boot.autoconfigure.orm.jpa.HibernateSettings;
 import org.springframework.boot.autoconfigure.orm.jpa.JpaProperties;
@@ -22,11 +29,17 @@ import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
+@ConditionalOnMissingBean({JtaDataSourceConfig.class})
+@EnableAutoConfiguration(exclude = {
+	DataSourceAutoConfiguration.class,
+	DataSourceTransactionManagerAutoConfiguration.class,
+	HibernateJpaAutoConfiguration.class})
 @EnableTransactionManagement
 @EnableJpaRepositories(
 	basePackages = {BoardJpaDataSourceConfig.BOARD_PERSISTENCE_PACKAGE},
 	transactionManagerRef = BoardJpaDataSourceConfig.BOARD_PERSISTENCE_TRANSACTION_MANAGER,
 	entityManagerFactoryRef = BoardJpaDataSourceConfig.BOARD_PERSISTENCE_ENTITY_MANAGER_FACTORY)
+@EntityScan(basePackages = {BoardJpaDataSourceConfig.BOARD_PERSISTENCE_PACKAGE})
 public class BoardJpaDataSourceConfig {
 
 	public static final String BOARD_PERSISTENCE_ENTITY_MANAGER_FACTORY = "boardPersistenceEntityManagerFactory";
@@ -79,7 +92,7 @@ public class BoardJpaDataSourceConfig {
 
 	@Bean(name = BOARD_PERSISTENCE_JDBC_TEMPLATE)
 	public JdbcTemplate boardPersistenceJdbcTemplate(
-		final @Qualifier("boardPersistenceDataSource") DataSource dataSource
+		final @Qualifier(BOARD_PERSISTENCE_DATA_SOURCE) DataSource dataSource
 	) {
 		return new JdbcTemplate(dataSource);
 	}

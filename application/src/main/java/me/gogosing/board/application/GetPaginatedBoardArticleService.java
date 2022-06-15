@@ -7,11 +7,11 @@ import me.gogosing.board.application.port.in.response.GetBoardArticleItemInRespo
 import me.gogosing.board.application.port.out.LoadPaginatedBoardArticlePort;
 import me.gogosing.board.application.port.out.request.query.GetPaginatedBoardArticleOutQuery;
 import me.gogosing.board.domain.BoardDomainEntity;
+import me.gogosing.support.jta.JtaTransactional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 
 @Service
@@ -22,7 +22,7 @@ public class GetPaginatedBoardArticleService implements GetPaginatedBoardArticle
 	private final LoadPaginatedBoardArticlePort loadPaginatedBoardArticlePort;
 
 	@Override
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	@JtaTransactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Page<GetBoardArticleItemInResponse> getPaginatedBoardArticle(
 		final GetPaginatedBoardArticleInQuery inQuery,
 		final Pageable pageable

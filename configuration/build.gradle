@@ -13,6 +13,11 @@ dependencies {
 
     implementation project(':board-jpa')
     implementation project(':file-jpa')
+
+    implementation project(':support')
+
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-jta-atomikos'
 }
 
 sourceSets {
