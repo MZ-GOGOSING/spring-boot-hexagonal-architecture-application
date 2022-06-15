@@ -15,4 +15,5 @@ include 'file-persistence-adapter'
 include 'board-jpa'
 include 'file-jpa'
 
+include 'feign'
 include 'support'
