@@ -31,12 +31,12 @@ public class FeignResponseUtils {
 	}
 
 	public static String getRequestBody(Response response) {
-		if (response.request().body() == null) {
+		if (response.request().requestBody().asBytes() == null) {
 			return "";
 		}
 
 		try {
-			return new String(response.request().body(), StandardCharsets.UTF_8.name());
+			return new String(response.request().requestBody().asBytes(), StandardCharsets.UTF_8.name());
 		} catch (UnsupportedEncodingException e) {
 			log.error(format("feign request body converting error - response: %s", response), e);
 			return "";
