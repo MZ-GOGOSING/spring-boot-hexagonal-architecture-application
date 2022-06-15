@@ -21,7 +21,7 @@ docker-compose up -d
 ### MariaDB Create Database
 
 ```
-docker exec -it mariadb106 bash
+docker exec -it mariadb10.6 bash
 mysql --protocol=tcp -hlocalhost -P3306 -uroot -proot
 mysql> CREATE DATABASE board DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 mysql> CREATE DATABASE file DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -51,6 +51,7 @@ Local MariaDB 접속 정보
 
 ```
 ./gradlew board-persistence-adapter:flywayMigrate
+./gradlew file-persistence-adapter:flywayMigrate
 ```
 
 ### IntegrationTest
