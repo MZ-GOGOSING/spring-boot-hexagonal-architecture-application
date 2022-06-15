@@ -50,8 +50,8 @@ Local MariaDB 접속 정보
 특정 도메인에 대해 스키마 변경을 진행하기 위해서는 모메인 모듈 명을 표기하여 실행합니다.
 
 ```
-./gradlew board-persistence-adapter:flywayMigrate
-./gradlew file-persistence-adapter:flywayMigrate
+./gradlew board-jpa:flywayMigrate
+./gradlew file-jpa:flywayMigrate
 ```
 
 ### IntegrationTest
