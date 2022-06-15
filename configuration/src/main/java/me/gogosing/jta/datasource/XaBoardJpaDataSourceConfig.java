@@ -108,8 +108,10 @@ public class XaBoardJpaDataSourceConfig extends JtaDataSourceConfig {
 
 	@Override
 	protected Map<String, Object> jpaPropertyMap() {
-		final var propertiesMap = boardPersistenceHibernateProperties()
-			.determineHibernateProperties(boardPersistenceJpaProperties().getProperties(), new HibernateSettings());
+		final var propertiesMap = boardPersistenceHibernateProperties().determineHibernateProperties(
+			boardPersistenceJpaProperties().getProperties(),
+			new HibernateSettings()
+		);
 
 		propertiesMap.putAll(super.jpaPropertyMap());
 

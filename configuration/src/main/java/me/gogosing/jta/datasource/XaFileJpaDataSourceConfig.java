@@ -108,8 +108,10 @@ public class XaFileJpaDataSourceConfig extends JtaDataSourceConfig {
 
 	@Override
 	protected Map<String, Object> jpaPropertyMap() {
-		final var propertiesMap = filePersistenceHibernateProperties()
-			.determineHibernateProperties(filePersistenceJpaProperties().getProperties(), new HibernateSettings());
+		final var propertiesMap = filePersistenceHibernateProperties().determineHibernateProperties(
+			filePersistenceJpaProperties().getProperties(),
+			new HibernateSettings()
+		);
 
 		propertiesMap.putAll(super.jpaPropertyMap());
 

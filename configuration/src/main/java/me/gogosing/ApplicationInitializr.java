@@ -4,12 +4,8 @@ import me.gogosing.jpa.board.BoardJpaConfig;
 import me.gogosing.jpa.file.FileJpaConfig;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Import;
 
-@SpringBootApplication
-@ComponentScan(basePackages = "me.gogosing.*")
-@Import({
+@SpringBootApplication(scanBasePackageClasses = {
 	WebAdapterConfig.class,
 	ApplicationConfig.class,
 	BoardPersistenceAdapterConfig.class,
