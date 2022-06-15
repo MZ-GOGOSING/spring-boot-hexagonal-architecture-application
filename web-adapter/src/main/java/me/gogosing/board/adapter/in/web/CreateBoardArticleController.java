@@ -33,7 +33,8 @@ public class CreateBoardArticleController {
 		final var inCommand = webCommand.toInCommand();
 		final var inResponse = createBoardArticleUseCase.save(inCommand);
 
-		final var webResponse = new CreateBoardArticleWebResponseConverter().convert(inResponse);
+		final var webResponseConverter = new CreateBoardArticleWebResponseConverter();
+		final var webResponse = webResponseConverter.convert(inResponse);
 
 		return ApiResponseGenerator.success(webResponse);
 	}

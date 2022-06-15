@@ -38,7 +38,8 @@ public class UpdateBoardArticleController {
 		final var inCommand = webCommand.toInCommand();
 		final var inResponse = updateBoardArticleUseCase.save(id, inCommand);
 
-		final var webResponse = new UpdateBoardArticleWebResponseConverter().convert(inResponse);
+		final var webResponseConverter = new UpdateBoardArticleWebResponseConverter();
+		final var webResponse = webResponseConverter.convert(inResponse);
 
 		return ApiResponseGenerator.success(webResponse);
 	}

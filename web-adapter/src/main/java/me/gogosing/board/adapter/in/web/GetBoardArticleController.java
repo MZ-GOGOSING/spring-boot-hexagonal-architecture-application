@@ -30,7 +30,9 @@ public class GetBoardArticleController {
 		final @PathVariable @Min(1L) Long id
 	) {
 		final var inResponse = getBoardArticleQuery.loadById(id);
-		final var webResponse = new GetBoardArticleWebResponseConverter().convert(inResponse);
+
+		final var webResponseConverter = new GetBoardArticleWebResponseConverter();
+		final var webResponse = webResponseConverter.convert(inResponse);
 
 		return ApiResponseGenerator.success(webResponse);
 	}
