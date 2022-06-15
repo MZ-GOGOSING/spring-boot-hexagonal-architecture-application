@@ -40,14 +40,14 @@ public class UpdateBoardArticleService implements UpdateBoardArticleUseCase {
         final Long id,
         final UpdateBoardArticleInCommand inCommand
     ) {
-        final var boardArticleOutResponse = this.updateBoard(id, inCommand);
+        final var boardArticleOutResponse = this.saveBoard(id, inCommand);
         final var boardAttachmentOutResponse =
-            this.updateBoardAttachments(id, inCommand.getAttachments());
+            this.saveAllBoardAttachments(id, inCommand.getAttachments());
 
         return this.convertToInResponse(boardArticleOutResponse, boardAttachmentOutResponse);
     }
 
-    private BoardDomainEntity updateBoard(
+    private BoardDomainEntity saveBoard(
         final Long id,
         final UpdateBoardArticleInCommand inCommand
     ) {
@@ -58,7 +58,7 @@ public class UpdateBoardArticleService implements UpdateBoardArticleUseCase {
         return updateBoardArticlePort.updateBoardArticle(boardArticleOutCommand);
     }
 
-    private List<BoardAttachmentDomainEntity> updateBoardAttachments(
+    private List<BoardAttachmentDomainEntity> saveAllBoardAttachments(
         final Long boardId,
         final List<UpdateBoardAttachmentInCommand> inCommand
     ) {

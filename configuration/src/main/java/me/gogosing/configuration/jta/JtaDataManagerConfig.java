@@ -1,4 +1,4 @@
-package me.gogosing.jta;
+package me.gogosing.configuration.jta;
 
 import static me.gogosing.jpa.board.config.BoardJpaDataSourceConfig.BOARD_PERSISTENCE_TRANSACTION_MANAGER;
 import static me.gogosing.jpa.file.config.FileJpaDataSourceConfig.FILE_PERSISTENCE_TRANSACTION_MANAGER;

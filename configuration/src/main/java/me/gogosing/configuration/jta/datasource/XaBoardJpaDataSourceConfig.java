@@ -1,4 +1,4 @@
-package me.gogosing.jta.datasource;
+package me.gogosing.configuration.jta.datasource;
 
 import static me.gogosing.jpa.board.config.BoardJpaDataSourceConfig.BOARD_PERSISTENCE_ENTITY_MANAGER_FACTORY;
 import static me.gogosing.jpa.board.config.BoardJpaDataSourceConfig.BOARD_PERSISTENCE_HIBERNATE_PROPERTIES;

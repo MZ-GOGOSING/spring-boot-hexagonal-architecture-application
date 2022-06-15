@@ -32,7 +32,7 @@ public class CreateBoardArticleService implements CreateBoardArticleUseCase {
     public CreateBoardArticleInResponse createBoardArticle(final CreateBoardArticleInCommand inCommand) {
         final var createdBoardDomainEntity = this.saveBoard(inCommand);
         final var createdBoardAttachmentDomainEntities =
-            this.saveBoardAttachments(createdBoardDomainEntity.getId(), inCommand.getAttachments());
+            this.saveAllBoardAttachments(createdBoardDomainEntity.getId(), inCommand.getAttachments());
 
         return this.convertToInResponse(createdBoardDomainEntity, createdBoardAttachmentDomainEntities);
     }
@@ -43,7 +43,7 @@ public class CreateBoardArticleService implements CreateBoardArticleUseCase {
         return createBoardArticlePort.createBoardArticle(boardDomainCreationOutCommand);
     }
 
-    private List<BoardAttachmentDomainEntity> saveBoardAttachments(
+    private List<BoardAttachmentDomainEntity> saveAllBoardAttachments(
         final Long boardId,
         final List<CreateBoardAttachmentInCommand> inCommand
     ) {

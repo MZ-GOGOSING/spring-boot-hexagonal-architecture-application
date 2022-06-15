@@ -1,4 +1,4 @@
-package me.gogosing.web.config;
+package me.gogosing.configuration.web.config;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -10,13 +10,13 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 import lombok.RequiredArgsConstructor;
-import me.gogosing.web.bind.LocalDateParamBinder;
-import me.gogosing.web.bind.LocalDateTimeParamBinder;
-import me.gogosing.web.bind.LocalTimeParamBinder;
-import me.gogosing.web.converter.DescriptionCodeJsonConverter;
-import me.gogosing.web.converter.LocalDateJsonConverter;
-import me.gogosing.web.converter.LocalDateTimeJsonConverter.Deserializer;
-import me.gogosing.web.converter.LocalDateTimeJsonConverter.Serializer;
+import me.gogosing.configuration.web.bind.LocalDateParamBinder;
+import me.gogosing.configuration.web.bind.LocalDateTimeParamBinder;
+import me.gogosing.configuration.web.bind.LocalTimeParamBinder;
+import me.gogosing.configuration.web.converter.DescriptionCodeJsonConverter;
+import me.gogosing.configuration.web.converter.LocalDateJsonConverter;
+import me.gogosing.configuration.web.converter.LocalDateTimeJsonConverter.Deserializer;
+import me.gogosing.configuration.web.converter.LocalDateTimeJsonConverter.Serializer;
 import me.gogosing.support.code.DescriptionCode;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
