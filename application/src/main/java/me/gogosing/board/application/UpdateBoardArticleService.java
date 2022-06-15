@@ -9,11 +9,11 @@ import me.gogosing.board.application.port.in.UpdateBoardArticleUseCase;
 import me.gogosing.board.application.port.in.request.command.UpdateBoardArticleInCommand;
 import me.gogosing.board.application.port.in.request.command.UpdateBoardAttachmentInCommand;
 import me.gogosing.board.application.port.in.response.UpdateBoardArticleInResponse;
-import me.gogosing.board.application.port.in.response.UpdateBoardAttachmentInResponse;
 import me.gogosing.board.application.port.out.CreateBoardAttachmentsPort;
 import me.gogosing.board.application.port.out.DeleteBoardAttachmentsPort;
 import me.gogosing.board.application.port.out.LoadBoardArticlePort;
 import me.gogosing.board.application.port.out.UpdateBoardArticlePort;
+import me.gogosing.board.application.port.in.response.converter.UpdateBoardArticleInResponseConverter;
 import me.gogosing.board.domain.BoardAttachmentDomainEntity;
 import me.gogosing.board.domain.BoardDomainEntity;
 import me.gogosing.support.jta.JtaTransactional;
@@ -44,7 +44,8 @@ public class UpdateBoardArticleService implements UpdateBoardArticleUseCase {
         final var boardAttachmentOutResponse =
             this.saveAllBoardAttachments(id, inCommand.getAttachments());
 
-        return this.convertToInResponse(boardArticleOutResponse, boardAttachmentOutResponse);
+        return new UpdateBoardArticleInResponseConverter()
+            .convert(boardArticleOutResponse, boardAttachmentOutResponse);
     }
 
     private BoardDomainEntity saveBoard(
@@ -53,22 +54,22 @@ public class UpdateBoardArticleService implements UpdateBoardArticleUseCase {
     ) {
         final var storedBoardDomainEntity = loadBoardArticlePort.loadBoardArticle(id);
 
-        final var boardArticleOutCommand = this.convertToOutCommand(storedBoardDomainEntity, inCommand);
+        final var outCommand = this.convertToOutCommand(storedBoardDomainEntity, inCommand);
 
-        return updateBoardArticlePort.updateBoardArticle(boardArticleOutCommand);
+        return updateBoardArticlePort.updateBoardArticle(outCommand);
     }
 
     private List<BoardAttachmentDomainEntity> saveAllBoardAttachments(
         final Long boardId,
         final List<UpdateBoardAttachmentInCommand> inCommand
     ) {
-        final var boardAttachmentOutCommand = this.convertToOutCommand(boardId, inCommand);
+        final var outCommand = this.convertToOutCommand(boardId, inCommand);
 
         deleteBoardAttachmentsPort.deleteBoardAttachments(boardId);
 
-        return CollectionUtils.isEmpty(boardAttachmentOutCommand)
+        return CollectionUtils.isEmpty(outCommand)
             ? Collections.emptyList()
-            : createBoardAttachmentsPort.createBoardAttachments(boardAttachmentOutCommand);
+            : createBoardAttachmentsPort.createBoardAttachments(outCommand);
     }
 
     private BoardDomainEntity convertToOutCommand(
@@ -97,30 +98,5 @@ public class UpdateBoardArticleService implements UpdateBoardArticleUseCase {
                 attachment.getName()
             ))
             .collect(Collectors.toList());
-    }
-
-    private UpdateBoardArticleInResponse convertToInResponse(
-        final BoardDomainEntity boardArticleOutResponse,
-        final List<BoardAttachmentDomainEntity> boardAttachmentOutResponse
-    ) {
-        final var attachmentResponseList = boardAttachmentOutResponse
-            .stream()
-            .map(domainEntity -> UpdateBoardAttachmentInResponse.builder()
-                .id(domainEntity.getId())
-                .boardId(domainEntity.getBoardId())
-                .path(domainEntity.getPath())
-                .name(domainEntity.getName())
-                .build())
-            .collect(Collectors.toList());
-
-        return UpdateBoardArticleInResponse.builder()
-            .id(boardArticleOutResponse.getId())
-            .title(boardArticleOutResponse.getTitle())
-            .category(boardArticleOutResponse.getCategory())
-            .contents(boardArticleOutResponse.getContents())
-            .createDate(boardArticleOutResponse.getCreateDate())
-            .updateDate(boardArticleOutResponse.getUpdateDate())
-            .attachments(attachmentResponseList)
-            .build();
     }
 }

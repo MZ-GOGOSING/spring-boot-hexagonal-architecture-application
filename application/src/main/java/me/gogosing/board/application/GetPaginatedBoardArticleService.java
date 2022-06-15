@@ -6,7 +6,7 @@ import me.gogosing.board.application.port.in.request.query.GetPaginatedBoardArti
 import me.gogosing.board.application.port.in.response.GetBoardArticleItemInResponse;
 import me.gogosing.board.application.port.out.LoadPaginatedBoardArticlePort;
 import me.gogosing.board.application.port.out.request.query.GetPaginatedBoardArticleOutQuery;
-import me.gogosing.board.domain.BoardDomainEntity;
+import me.gogosing.board.application.port.in.response.converter.GetBoardArticleItemInResponseConverter;
 import me.gogosing.support.jta.JtaTransactional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -28,11 +28,12 @@ public class GetPaginatedBoardArticleService implements GetPaginatedBoardArticle
 		final Pageable pageable
 	) {
 		final var outQuery = this.convertToOutQuery(inQuery);
-
 		final var outResponse = loadPaginatedBoardArticlePort
 			.loadPaginatedBoardArticle(outQuery, pageable);
 
-		return outResponse.map(this::convertToInResponse);
+		final var inResponseConverter = new GetBoardArticleItemInResponseConverter();
+
+		return outResponse.map(inResponseConverter::convert);
 	}
 
 	private GetPaginatedBoardArticleOutQuery convertToOutQuery(final GetPaginatedBoardArticleInQuery inQuery) {
@@ -41,16 +42,6 @@ public class GetPaginatedBoardArticleService implements GetPaginatedBoardArticle
 			.category(inQuery.getCategory())
 			.contents(inQuery.getContents())
 			.registeredPeriod(inQuery.getRegisteredPeriod())
-			.build();
-	}
-
-	private GetBoardArticleItemInResponse convertToInResponse(final BoardDomainEntity domainEntity) {
-		return GetBoardArticleItemInResponse.builder()
-			.id(domainEntity.getId())
-			.title(domainEntity.getTitle())
-			.category(domainEntity.getCategory())
-			.createDate(domainEntity.getCreateDate())
-			.updateDate(domainEntity.getUpdateDate())
 			.build();
 	}
 }

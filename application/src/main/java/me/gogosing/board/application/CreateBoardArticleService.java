@@ -8,9 +8,9 @@ import me.gogosing.board.application.port.in.CreateBoardArticleUseCase;
 import me.gogosing.board.application.port.in.request.command.CreateBoardArticleInCommand;
 import me.gogosing.board.application.port.in.request.command.CreateBoardAttachmentInCommand;
 import me.gogosing.board.application.port.in.response.CreateBoardArticleInResponse;
-import me.gogosing.board.application.port.in.response.CreateBoardAttachmentInResponse;
 import me.gogosing.board.application.port.out.CreateBoardArticlePort;
 import me.gogosing.board.application.port.out.CreateBoardAttachmentsPort;
+import me.gogosing.board.application.port.in.response.converter.CreateBoardArticleInResponseConverter;
 import me.gogosing.board.domain.BoardAttachmentDomainEntity;
 import me.gogosing.board.domain.BoardDomainEntity;
 import me.gogosing.support.jta.JtaTransactional;
@@ -34,13 +34,14 @@ public class CreateBoardArticleService implements CreateBoardArticleUseCase {
         final var createdBoardAttachmentDomainEntities =
             this.saveAllBoardAttachments(createdBoardDomainEntity.getId(), inCommand.getAttachments());
 
-        return this.convertToInResponse(createdBoardDomainEntity, createdBoardAttachmentDomainEntities);
+        return new CreateBoardArticleInResponseConverter()
+            .convert(createdBoardDomainEntity, createdBoardAttachmentDomainEntities);
     }
 
     private BoardDomainEntity saveBoard(final CreateBoardArticleInCommand inCommand) {
-        final var boardDomainCreationOutCommand = this.convertToOutCommand(inCommand);
+        final var outCommand = this.convertToOutCommand(inCommand);
 
-        return createBoardArticlePort.createBoardArticle(boardDomainCreationOutCommand);
+        return createBoardArticlePort.createBoardArticle(outCommand);
     }
 
     private List<BoardAttachmentDomainEntity> saveAllBoardAttachments(
@@ -51,10 +52,9 @@ public class CreateBoardArticleService implements CreateBoardArticleUseCase {
             return Collections.emptyList();
         }
 
-        final var boardAttachmentsCreationOutCommand =
-            this.convertToOutCommand(boardId, inCommand);
+        final var outCommand = this.convertToOutCommand(boardId, inCommand);
 
-        return createBoardAttachmentsPort.createBoardAttachments(boardAttachmentsCreationOutCommand);
+        return createBoardAttachmentsPort.createBoardAttachments(outCommand);
     }
 
     private BoardDomainEntity convertToOutCommand(
@@ -79,30 +79,5 @@ public class CreateBoardArticleService implements CreateBoardArticleUseCase {
                 attachment.getName()
             ))
             .collect(Collectors.toList());
-    }
-
-    private CreateBoardArticleInResponse convertToInResponse(
-        final BoardDomainEntity boardArticleOutResponse,
-        final List<BoardAttachmentDomainEntity> boardAttachmentOutResponse
-    ) {
-        final var attachmentResponseList = boardAttachmentOutResponse
-            .stream()
-            .map(domainEntity -> CreateBoardAttachmentInResponse.builder()
-                .id(domainEntity.getId())
-                .boardId(domainEntity.getBoardId())
-                .path(domainEntity.getPath())
-                .name(domainEntity.getName())
-                .build())
-            .collect(Collectors.toList());
-
-        return CreateBoardArticleInResponse.builder()
-            .id(boardArticleOutResponse.getId())
-            .title(boardArticleOutResponse.getTitle())
-            .category(boardArticleOutResponse.getCategory())
-            .contents(boardArticleOutResponse.getContents())
-            .createDate(boardArticleOutResponse.getCreateDate())
-            .updateDate(boardArticleOutResponse.getUpdateDate())
-            .attachments(attachmentResponseList)
-            .build();
     }
 }

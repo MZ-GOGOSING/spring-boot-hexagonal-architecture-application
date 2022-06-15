@@ -1,4 +1,4 @@
-package me.gogosing.configuration.web.config;
+package me.gogosing.configuration.web;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
