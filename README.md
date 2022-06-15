@@ -27,7 +27,7 @@ mysql> CREATE DATABASE board DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unico
 mysql> CREATE DATABASE file DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 ```
 
-MariaDB 접속 정보
+Local MariaDB 접속 정보
 
 * host / port: `localhost:3306`
 * username: `root`
@@ -58,6 +58,18 @@ MariaDB 접속 정보
 ```
 ./gradlew integrationTest
 ```
+
+### Run the Application
+
+```
+configuration/src/main/java/me/gogosing/ApplicationInitializr.java
+```
+
+### Available Profiles
+- 로컬 : local
+- 개발 : dev
+- 스테이징 : stage
+- 운영 : prod
 
 ### API Documentation
 
