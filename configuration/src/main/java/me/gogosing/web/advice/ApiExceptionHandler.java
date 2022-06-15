@@ -1,4 +1,4 @@
-package me.gogosing.board.adapter.in.web.advice;
+package me.gogosing.web.advice;
 
 import java.nio.file.AccessDeniedException;
 import java.util.List;

@@ -1,4 +1,4 @@
-package me.gogosing.board.adapter.in.web.converter;
+package me.gogosing.web.converter;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonParser;

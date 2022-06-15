@@ -1,17 +1,3 @@
-spring.jpa.open-in-view: false
-
-spring:
-  mvc:
-    contentnegotiation:
-      favor-parameter: true
-      media-types:
-        xls: application/vnd.ms-excel
-    log-request-details: true
-
-server:
-  port: 9090
-
----
 spring:
   config:
     activate:

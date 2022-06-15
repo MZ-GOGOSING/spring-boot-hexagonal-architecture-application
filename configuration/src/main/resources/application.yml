@@ -1,3 +1,6 @@
+server:
+  port: 9090
+
 spring:
   profiles:
     include:
@@ -12,8 +15,18 @@ spring:
     restart:
       enabled: false
 
+  mvc:
+    contentnegotiation:
+      favor-parameter: true
+      media-types:
+        xls: application/vnd.ms-excel
+    log-request-details: true
+
   jta:
     enabled: true
+
+  jpa:
+    open-in-view: false
 
 springdoc:
   api-docs:

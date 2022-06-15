@@ -1,4 +1,4 @@
-package me.gogosing.board.adapter.in.web.config;
+package me.gogosing.web.config;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -10,12 +10,13 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 import lombok.RequiredArgsConstructor;
-import me.gogosing.board.adapter.in.web.bind.LocalDateParamBinder;
-import me.gogosing.board.adapter.in.web.bind.LocalDateTimeParamBinder;
-import me.gogosing.board.adapter.in.web.bind.LocalTimeParamBinder;
-import me.gogosing.board.adapter.in.web.converter.DescriptionCodeJsonConverter;
-import me.gogosing.board.adapter.in.web.converter.LocalDateJsonConverter;
-import me.gogosing.board.adapter.in.web.converter.LocalDateTimeJsonConverter;
+import me.gogosing.web.bind.LocalDateParamBinder;
+import me.gogosing.web.bind.LocalDateTimeParamBinder;
+import me.gogosing.web.bind.LocalTimeParamBinder;
+import me.gogosing.web.converter.DescriptionCodeJsonConverter;
+import me.gogosing.web.converter.LocalDateJsonConverter;
+import me.gogosing.web.converter.LocalDateTimeJsonConverter.Deserializer;
+import me.gogosing.web.converter.LocalDateTimeJsonConverter.Serializer;
 import me.gogosing.support.code.DescriptionCode;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -63,8 +64,8 @@ public class WebMvcConfig implements WebMvcConfigurer {
 
 	private SimpleModule javaTimeModule() {
 		return new JavaTimeModule()
-			.addSerializer(LocalDateTime.class, new LocalDateTimeJsonConverter.Serializer())
-			.addDeserializer(LocalDateTime.class, new LocalDateTimeJsonConverter.Deserializer())
+			.addSerializer(LocalDateTime.class, new Serializer())
+			.addDeserializer(LocalDateTime.class, new Deserializer())
 			.addSerializer(LocalDate.class, new LocalDateJsonConverter.Serializer())
 			.addDeserializer(LocalDate.class, new LocalDateJsonConverter.Deserializer())
 			.addSerializer(DescriptionCode.class, new DescriptionCodeJsonConverter.Serializer())

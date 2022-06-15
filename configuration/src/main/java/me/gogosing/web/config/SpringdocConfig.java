@@ -1,4 +1,4 @@
-package me.gogosing.board.adapter.in.web.config;
+package me.gogosing.web.config;
 
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.models.OpenAPI;
