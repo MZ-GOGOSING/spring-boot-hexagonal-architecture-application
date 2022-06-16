@@ -12,7 +12,7 @@ import me.gogosing.board.domain.BoardAttachmentDomainEntity;
 import org.apache.commons.collections4.CollectionUtils;
 
 @Getter
-@Builder
+@Builder(access = AccessLevel.PRIVATE)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public final class UpdateBoardAttachmentInResponse {
 

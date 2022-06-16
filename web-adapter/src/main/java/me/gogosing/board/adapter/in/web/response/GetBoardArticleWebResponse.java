@@ -13,7 +13,7 @@ import me.gogosing.support.code.board.BoardCategory;
 
 @Schema(description = "특정 게시물 정보 응답 모델")
 @Getter
-@Builder
+@Builder(access = AccessLevel.PRIVATE)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public final class GetBoardArticleWebResponse {
 

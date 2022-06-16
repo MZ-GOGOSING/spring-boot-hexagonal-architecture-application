@@ -10,7 +10,7 @@ import me.gogosing.board.domain.BoardDomainEntity;
 import me.gogosing.support.code.board.BoardCategory;
 
 @Getter
-@Builder
+@Builder(access = AccessLevel.PRIVATE)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public final class GetBoardArticleItemInResponse {
 

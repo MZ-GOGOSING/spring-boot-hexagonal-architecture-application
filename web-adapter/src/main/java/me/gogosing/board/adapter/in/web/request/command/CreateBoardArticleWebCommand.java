@@ -43,7 +43,7 @@ public class CreateBoardArticleWebCommand {
 
 
 	public CreateBoardArticleInCommand toInCommand() {
-		final var attachmentInCommand = attachments
+		final var attachmentInCommand = this.attachments
 			.stream()
 			.map(attachment -> CreateBoardAttachmentInCommand.builder()
 				.path(attachment.getPath())
@@ -52,9 +52,9 @@ public class CreateBoardArticleWebCommand {
 			.collect(Collectors.toList());
 
 		return CreateBoardArticleInCommand.builder()
-			.title(title)
-			.category(category)
-			.contents(contents)
+			.title(this.title)
+			.category(this.category)
+			.contents(this.contents)
 			.attachments(attachmentInCommand)
 			.build();
 	}

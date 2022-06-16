@@ -14,7 +14,7 @@ import org.apache.commons.collections4.CollectionUtils;
 
 @Schema(description = "게시물 첨부파일 생성 응답 모델")
 @Getter
-@Builder
+@Builder(access = AccessLevel.PRIVATE)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public final class CreateBoardAttachmentWebResponse {
 

@@ -13,7 +13,7 @@ import org.springframework.lang.Nullable;
 
 @Schema(description = "게시판 항목 정보 응답 모델")
 @Getter
-@Builder
+@Builder(access = AccessLevel.PRIVATE)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public final class GetBoardArticleItemWebResponse {
 
