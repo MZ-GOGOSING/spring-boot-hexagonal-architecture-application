@@ -4,6 +4,7 @@ jar.enabled = true
 dependencies {
     implementation project(':api-in')
     implementation project(':support')
+    testImplementation project(':domain')
 
     implementation ('org.springframework.boot:spring-boot-starter-web') {
         exclude module: "spring-boot-starter-tomcat"

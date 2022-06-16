@@ -6,7 +6,7 @@ import me.gogosing.jpa.board.entity.BoardJpaEntity;
 import org.springframework.stereotype.Component;
 
 @Component
-public class BoardArticleMapper {
+public final class BoardArticleMapper {
 
 	private static final String CONTENTS_PADDING_VALUE = "*";
 

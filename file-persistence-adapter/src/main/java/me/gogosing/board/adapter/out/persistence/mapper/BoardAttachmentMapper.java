@@ -8,7 +8,7 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.stereotype.Component;
 
 @Component
-public class BoardAttachmentMapper {
+public final class BoardAttachmentMapper {
 
 	public BoardAttachmentDomainEntity mapToDomainEntity(
 		final BoardAttachmentJpaEntity boardAttachmentJpaEntity
