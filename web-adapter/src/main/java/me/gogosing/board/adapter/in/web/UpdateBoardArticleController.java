@@ -8,7 +8,6 @@ import javax.validation.constraints.Min;
 import lombok.RequiredArgsConstructor;
 import me.gogosing.board.adapter.in.web.request.command.UpdateBoardArticleWebCommand;
 import me.gogosing.board.adapter.in.web.response.UpdateBoardArticleWebResponse;
-import me.gogosing.board.adapter.in.web.response.converter.UpdateBoardArticleWebResponseConverter;
 import me.gogosing.board.application.port.in.UpdateBoardArticleUseCase;
 import me.gogosing.support.dto.ApiResponse;
 import me.gogosing.support.dto.ApiResponseGenerator;
@@ -38,8 +37,7 @@ public class UpdateBoardArticleController {
 		final var inCommand = webCommand.toInCommand();
 		final var inResponse = updateBoardArticleUseCase.save(id, inCommand);
 
-		final var webResponseConverter = new UpdateBoardArticleWebResponseConverter();
-		final var webResponse = webResponseConverter.convert(inResponse);
+		final var webResponse = UpdateBoardArticleWebResponse.of(inResponse);
 
 		return ApiResponseGenerator.success(webResponse);
 	}

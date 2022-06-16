@@ -6,7 +6,6 @@ import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import me.gogosing.board.adapter.in.web.request.command.CreateBoardArticleWebCommand;
 import me.gogosing.board.adapter.in.web.response.CreateBoardArticleWebResponse;
-import me.gogosing.board.adapter.in.web.response.converter.CreateBoardArticleWebResponseConverter;
 import me.gogosing.board.application.port.in.CreateBoardArticleUseCase;
 import me.gogosing.support.dto.ApiResponse;
 import me.gogosing.support.dto.ApiResponseGenerator;
@@ -33,8 +32,7 @@ public class CreateBoardArticleController {
 		final var inCommand = webCommand.toInCommand();
 		final var inResponse = createBoardArticleUseCase.save(inCommand);
 
-		final var webResponseConverter = new CreateBoardArticleWebResponseConverter();
-		final var webResponse = webResponseConverter.convert(inResponse);
+		final var webResponse = CreateBoardArticleWebResponse.of(inResponse);
 
 		return ApiResponseGenerator.success(webResponse);
 	}

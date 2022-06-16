@@ -1,4 +1,4 @@
-package me.gogosing.configuration.jta;
+package me.gogosing.container.jta;
 
 import javax.transaction.TransactionManager;
 import javax.transaction.UserTransaction;

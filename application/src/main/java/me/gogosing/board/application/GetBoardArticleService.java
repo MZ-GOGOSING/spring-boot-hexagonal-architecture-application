@@ -5,7 +5,6 @@ import me.gogosing.board.application.port.in.GetBoardArticleQuery;
 import me.gogosing.board.application.port.in.response.GetBoardArticleInResponse;
 import me.gogosing.board.application.port.out.LoadBoardArticlePort;
 import me.gogosing.board.application.port.out.LoadBoardAttachmentsPort;
-import me.gogosing.board.application.port.in.response.converter.GetBoardArticleInResponseConverter;
 import me.gogosing.support.jta.JtaTransactional;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -27,7 +26,6 @@ public class GetBoardArticleService implements GetBoardArticleQuery {
 		final var boardAttachmentDomainEntities =
 			loadBoardAttachmentsPort.findAllByBoardId(id);
 
-		return new GetBoardArticleInResponseConverter()
-			.convert(boardDomainEntity, boardAttachmentDomainEntities);
+		return GetBoardArticleInResponse.of(boardDomainEntity, boardAttachmentDomainEntities);
 	}
 }

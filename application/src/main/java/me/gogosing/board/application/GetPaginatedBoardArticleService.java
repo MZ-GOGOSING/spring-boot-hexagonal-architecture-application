@@ -4,7 +4,6 @@ import lombok.RequiredArgsConstructor;
 import me.gogosing.board.application.port.in.GetPaginatedBoardArticleQuery;
 import me.gogosing.board.application.port.in.request.query.GetPaginatedBoardArticleInQuery;
 import me.gogosing.board.application.port.in.response.GetBoardArticleItemInResponse;
-import me.gogosing.board.application.port.in.response.converter.GetBoardArticleItemInResponseConverter;
 import me.gogosing.board.application.port.out.LoadPaginatedBoardArticlePort;
 import me.gogosing.board.application.port.out.request.query.GetPaginatedBoardArticleOutQuery;
 import me.gogosing.support.jta.JtaTransactional;
@@ -30,9 +29,7 @@ public class GetPaginatedBoardArticleService implements GetPaginatedBoardArticle
 		final var outQuery = this.convertToOutQuery(inQuery);
 		final var outResponse = loadPaginatedBoardArticlePort.findAll(outQuery, pageable);
 
-		final var inResponseConverter = new GetBoardArticleItemInResponseConverter();
-
-		return outResponse.map(inResponseConverter::convert);
+		return outResponse.map(GetBoardArticleItemInResponse::of);
 	}
 
 	private GetPaginatedBoardArticleOutQuery convertToOutQuery(final GetPaginatedBoardArticleInQuery inQuery) {

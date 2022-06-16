@@ -13,7 +13,6 @@ import me.gogosing.board.application.port.out.CreateBoardAttachmentsPort;
 import me.gogosing.board.application.port.out.DeleteBoardAttachmentsPort;
 import me.gogosing.board.application.port.out.LoadBoardArticlePort;
 import me.gogosing.board.application.port.out.UpdateBoardArticlePort;
-import me.gogosing.board.application.port.in.response.converter.UpdateBoardArticleInResponseConverter;
 import me.gogosing.board.domain.BoardAttachmentDomainEntity;
 import me.gogosing.board.domain.BoardDomainEntity;
 import me.gogosing.support.jta.JtaTransactional;
@@ -44,8 +43,7 @@ public class UpdateBoardArticleService implements UpdateBoardArticleUseCase {
         final var boardAttachmentOutResponse =
             this.saveAllBoardAttachments(id, inCommand.getAttachments());
 
-        return new UpdateBoardArticleInResponseConverter()
-            .convert(boardArticleOutResponse, boardAttachmentOutResponse);
+        return UpdateBoardArticleInResponse.of(boardArticleOutResponse, boardAttachmentOutResponse);
     }
 
     private BoardDomainEntity saveBoard(

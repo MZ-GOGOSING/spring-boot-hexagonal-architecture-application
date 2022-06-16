@@ -1,4 +1,4 @@
-package me.gogosing.configuration.web;
+package me.gogosing.container.web;
 
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.models.OpenAPI;

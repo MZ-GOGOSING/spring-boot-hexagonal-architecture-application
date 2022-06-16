@@ -1,4 +1,4 @@
-package me.gogosing.configuration.web.converter;
+package me.gogosing.container.web.converter;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonParser;
@@ -7,7 +7,7 @@ import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import java.io.IOException;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import me.gogosing.support.converter.DefaultDateTimeConverter;
@@ -15,28 +15,28 @@ import org.springframework.boot.jackson.JsonComponent;
 
 @JsonComponent
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class LocalDateTimeJsonConverter {
+public class LocalDateJsonConverter {
 
-    public static class Serializer extends JsonSerializer<LocalDateTime> {
+    public static class Serializer extends JsonSerializer<LocalDate> {
 
         @Override
         public void serialize(
-            final LocalDateTime dateTime,
+            final LocalDate localDate,
             final JsonGenerator jsonGenerator,
             final SerializerProvider serializerProvider
         ) throws IOException {
-            jsonGenerator.writeString(DefaultDateTimeConverter.convertDateTime(dateTime));
+            jsonGenerator.writeString(DefaultDateTimeConverter.convertDate(localDate));
         }
     }
 
-    public static class Deserializer extends JsonDeserializer<LocalDateTime> {
+    public static class Deserializer extends JsonDeserializer<LocalDate> {
 
         @Override
-        public LocalDateTime deserialize(
+        public LocalDate deserialize(
             final JsonParser jsonParser,
             final DeserializationContext deserializationContext
         ) throws IOException {
-            return DefaultDateTimeConverter.convertDateTime(jsonParser.getText());
+            return DefaultDateTimeConverter.convertDate(jsonParser.getText());
         }
     }
 }

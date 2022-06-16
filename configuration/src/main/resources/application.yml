@@ -2,6 +2,9 @@ server:
   port: 9090
 
 spring:
+  application:
+    name: spring-boot-hexagonal-architecture-application
+
   profiles:
     include:
       - web
@@ -10,6 +13,7 @@ spring:
       - file-persistence
       - board-jpa
       - file-jpa
+
   devtools:
     add-properties: false
     restart:

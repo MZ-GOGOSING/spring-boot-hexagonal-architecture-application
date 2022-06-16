@@ -6,7 +6,6 @@ import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import me.gogosing.board.adapter.in.web.request.query.GetPaginatedBoardArticleWebQuery;
 import me.gogosing.board.adapter.in.web.response.GetBoardArticleItemWebResponse;
-import me.gogosing.board.adapter.in.web.response.converter.GetBoardArticleItemWebResponseConverter;
 import me.gogosing.board.application.port.in.GetPaginatedBoardArticleQuery;
 import me.gogosing.support.dto.ApiResponse;
 import me.gogosing.support.dto.ApiResponseGenerator;
@@ -42,8 +41,7 @@ public class GetPaginatedBoardArticleController {
 		final var inQuery = webQuery.toInQuery();
 		final var inResponse = getPaginatedBoardArticleQuery.loadAll(inQuery, pageable);
 
-		final var webResponseConverter = new GetBoardArticleItemWebResponseConverter();
-		final var webResponse = inResponse.map(webResponseConverter::convert);
+		final var webResponse = inResponse.map(GetBoardArticleItemWebResponse::of);
 
 		return ApiResponseGenerator.success(PageResponse.convert(webResponse));
 	}

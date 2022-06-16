@@ -10,7 +10,6 @@ import me.gogosing.board.application.port.in.request.command.CreateBoardAttachme
 import me.gogosing.board.application.port.in.response.CreateBoardArticleInResponse;
 import me.gogosing.board.application.port.out.CreateBoardArticlePort;
 import me.gogosing.board.application.port.out.CreateBoardAttachmentsPort;
-import me.gogosing.board.application.port.in.response.converter.CreateBoardArticleInResponseConverter;
 import me.gogosing.board.domain.BoardAttachmentDomainEntity;
 import me.gogosing.board.domain.BoardDomainEntity;
 import me.gogosing.support.jta.JtaTransactional;
@@ -34,8 +33,7 @@ public class CreateBoardArticleService implements CreateBoardArticleUseCase {
         final var createdBoardAttachmentDomainEntities =
             this.saveAllBoardAttachments(createdBoardDomainEntity.getId(), inCommand.getAttachments());
 
-        return new CreateBoardArticleInResponseConverter()
-            .convert(createdBoardDomainEntity, createdBoardAttachmentDomainEntities);
+        return CreateBoardArticleInResponse.of(createdBoardDomainEntity, createdBoardAttachmentDomainEntities);
     }
 
     private BoardDomainEntity saveBoard(final CreateBoardArticleInCommand inCommand) {

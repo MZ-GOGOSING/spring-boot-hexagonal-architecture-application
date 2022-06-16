@@ -1,16 +1,18 @@
 package me.gogosing.board.application.port.in.response;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import me.gogosing.board.domain.BoardDomainEntity;
 import me.gogosing.support.code.board.BoardCategory;
 
 @Getter
 @Builder
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-public class GetBoardArticleItemInResponse {
+public final class GetBoardArticleItemInResponse {
 
     private final Long id;
 
@@ -21,4 +23,16 @@ public class GetBoardArticleItemInResponse {
     private final LocalDateTime createDate;
 
     private final LocalDateTime updateDate;
+
+    public static GetBoardArticleItemInResponse of(final BoardDomainEntity boardDomainEntity) {
+        return Optional.ofNullable(boardDomainEntity)
+            .map(source -> GetBoardArticleItemInResponse.builder()
+                .id(source.getId())
+                .title(source.getTitle())
+                .category(source.getCategory())
+                .createDate(source.getCreateDate())
+                .updateDate(source.getUpdateDate())
+                .build())
+            .orElse(null);
+    }
 }

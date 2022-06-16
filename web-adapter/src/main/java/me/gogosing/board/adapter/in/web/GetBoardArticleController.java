@@ -6,7 +6,6 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import javax.validation.constraints.Min;
 import lombok.RequiredArgsConstructor;
 import me.gogosing.board.adapter.in.web.response.GetBoardArticleWebResponse;
-import me.gogosing.board.adapter.in.web.response.converter.GetBoardArticleWebResponseConverter;
 import me.gogosing.board.application.port.in.GetBoardArticleQuery;
 import me.gogosing.support.dto.ApiResponse;
 import me.gogosing.support.dto.ApiResponseGenerator;
@@ -31,8 +30,7 @@ public class GetBoardArticleController {
 	) {
 		final var inResponse = getBoardArticleQuery.loadById(id);
 
-		final var webResponseConverter = new GetBoardArticleWebResponseConverter();
-		final var webResponse = webResponseConverter.convert(inResponse);
+		final var webResponse = GetBoardArticleWebResponse.of(inResponse);
 
 		return ApiResponseGenerator.success(webResponse);
 	}

@@ -3,17 +3,19 @@ package me.gogosing.board.adapter.in.web.response;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import me.gogosing.board.application.port.in.response.UpdateBoardArticleInResponse;
 import me.gogosing.support.code.board.BoardCategory;
 
 @Schema(description = "특정 게시물 수정 응답 모델")
 @Getter
 @Builder
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-public class UpdateBoardArticleWebResponse {
+public final class UpdateBoardArticleWebResponse {
 
 	@Schema(description = "식별자", example = "1", required = true)
 	private final Long id;
@@ -35,4 +37,18 @@ public class UpdateBoardArticleWebResponse {
 
 	@Schema(description = "첨부파일 목록")
 	private final List<UpdateBoardAttachmentWebResponse> attachments;
+
+	public static UpdateBoardArticleWebResponse of(final UpdateBoardArticleInResponse inResponse) {
+		return Optional.ofNullable(inResponse)
+			.map(source -> UpdateBoardArticleWebResponse.builder()
+				.id(source.getId())
+				.title(source.getTitle())
+				.contents(source.getContents())
+				.category(source.getCategory())
+				.createDate(source.getCreateDate())
+				.updateDate(source.getUpdateDate())
+				.attachments(UpdateBoardAttachmentWebResponse.of(source.getAttachments()))
+				.build())
+			.orElse(null);
+	}
 }

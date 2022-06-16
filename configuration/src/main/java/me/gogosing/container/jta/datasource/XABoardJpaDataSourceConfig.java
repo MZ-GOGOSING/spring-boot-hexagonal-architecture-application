@@ -1,4 +1,4 @@
-package me.gogosing.configuration.jta.datasource;
+package me.gogosing.container.jta.datasource;
 
 import static me.gogosing.jpa.board.config.BoardJpaDataSourceConfig.BOARD_PERSISTENCE_ENTITY_MANAGER_FACTORY;
 import static me.gogosing.jpa.board.config.BoardJpaDataSourceConfig.BOARD_PERSISTENCE_HIBERNATE_PROPERTIES;
@@ -45,7 +45,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 )
 @DependsOn(JTA_PERSISTENCE_TRANSACTION_MANAGER)
 @EntityScan(basePackages = {BOARD_PERSISTENCE_PACKAGE})
-public class XaBoardJpaDataSourceConfig extends JtaDataSourceConfig {
+public class XABoardJpaDataSourceConfig extends JtaDataSourceConfig {
 
 	private static final int BOARD_PERSISTENCE_XA_DATA_SOURCE_POOL_SIZE = 5;
 	private static final String BOARD_PERSISTENCE_XA_PROPERTIES = "boardPersistenceXaProperties";

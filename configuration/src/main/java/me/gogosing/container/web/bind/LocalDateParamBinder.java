@@ -1,4 +1,4 @@
-package me.gogosing.configuration.web.bind;
+package me.gogosing.container.web.bind;
 
 import java.time.LocalDate;
 import me.gogosing.support.converter.DefaultDateTimeConverter;
