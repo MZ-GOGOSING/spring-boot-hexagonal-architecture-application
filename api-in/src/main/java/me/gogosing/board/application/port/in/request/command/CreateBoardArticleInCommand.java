@@ -10,6 +10,7 @@ import javax.validation.constraints.NotNull;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import me.gogosing.support.code.board.BoardCategory;
 import me.gogosing.support.validation.board.BoardCategorySubset;
@@ -17,6 +18,7 @@ import me.gogosing.support.validation.board.BoardCategorySubset;
 @Getter
 @Builder
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
+@EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = false)
 public class CreateBoardArticleInCommand {
 
 	@NotBlank

@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import me.gogosing.board.application.port.in.response.CreateBoardAttachmentInResponse;
 import org.apache.commons.collections4.CollectionUtils;
@@ -16,6 +17,7 @@ import org.apache.commons.collections4.CollectionUtils;
 @Getter
 @Builder(access = AccessLevel.PRIVATE)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
+@EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = false)
 public final class CreateBoardAttachmentWebResponse {
 
 	@Schema(description = "첨부파일 식별자", example = "1", required = true)

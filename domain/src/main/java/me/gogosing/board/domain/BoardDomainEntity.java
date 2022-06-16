@@ -6,12 +6,14 @@ import static org.apache.commons.lang3.math.NumberUtils.LONG_ZERO;
 import java.time.LocalDateTime;
 import lombok.AccessLevel;
 import lombok.Builder;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import me.gogosing.support.code.board.BoardCategory;
 import org.springframework.util.Assert;
 
 @Getter
 @Builder(access = AccessLevel.PRIVATE)
+@EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = false)
 public class BoardDomainEntity {
 
 	private final Long id;
