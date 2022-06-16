@@ -6,6 +6,9 @@ import static me.gogosing.support.code.board.BoardCategory.NOTICE;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Schema;
 import javax.validation.Valid;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -20,7 +23,9 @@ import org.springdoc.api.annotations.ParameterObject;
 @ParameterObject
 @Getter
 @Setter
+@Builder
 @NoArgsConstructor
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class GetPaginatedBoardArticleWebQuery {
 
 	@Parameter(description = "검색 제목 (like)")
