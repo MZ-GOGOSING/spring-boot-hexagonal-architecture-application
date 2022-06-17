@@ -10,12 +10,14 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.time.LocalDateTime;
-import java.util.Collections;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import me.gogosing.board.adapter.in.web.request.command.CreateBoardArticleWebCommand;
+import me.gogosing.board.adapter.in.web.request.command.CreateBoardAttachmentWebCommand;
 import me.gogosing.board.adapter.in.web.response.CreateBoardArticleWebResponse;
 import me.gogosing.board.application.port.in.CreateBoardArticleUseCase;
 import me.gogosing.board.application.port.in.response.CreateBoardArticleInResponse;
+import me.gogosing.board.domain.BoardAttachmentDomainEntity;
 import me.gogosing.board.domain.BoardDomainEntity;
 import me.gogosing.support.code.board.BoardCategory;
 import me.gogosing.support.dto.ApiResponseGenerator;
@@ -77,11 +79,21 @@ public class CreateBoardArticleControllerTests {
 	}
 
 	private CreateBoardArticleWebCommand buildWebCommand() {
+		final var attachments = List.of(
+			CreateBoardAttachmentWebCommand.builder()
+				.path("http://localhost:8080/foo/bar")
+				.name("file1.txt")
+				.build(),
+			CreateBoardAttachmentWebCommand.builder()
+				.path("http://localhost:8080/foo/bar")
+				.name("file2.txt")
+				.build()
+		);
 		return CreateBoardArticleWebCommand.builder()
 			.title("게시물")
 			.category(BoardCategory.NORMAL)
 			.contents("내용")
-			.attachments(Collections.emptyList())
+			.attachments(attachments)
 			.build();
 	}
 
@@ -95,6 +107,20 @@ public class CreateBoardArticleControllerTests {
 			LocalDateTime.now(),
 			webCommand.getContents()
 		);
-		return CreateBoardArticleInResponse.of(boardDomainEntity, Collections.emptyList());
+		final var boardAttachmentDomainEntities = List.of(
+			BoardAttachmentDomainEntity.withId(
+				1L,
+				1L,
+				"http://localhost:8080/foo/bar",
+				"file1.txt"
+			),
+			BoardAttachmentDomainEntity.withId(
+				2L,
+				1L,
+				"http://localhost:8080/foo/bar",
+				"file2.txt"
+			)
+		);
+		return CreateBoardArticleInResponse.of(boardDomainEntity, boardAttachmentDomainEntities);
 	}
 }

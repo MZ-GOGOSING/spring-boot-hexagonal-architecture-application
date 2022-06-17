@@ -1,4 +1,4 @@
-package me.gogosing.adapter.out.persistence;
+package me.gogosing.board.adapter.out.persistence;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertWith;
