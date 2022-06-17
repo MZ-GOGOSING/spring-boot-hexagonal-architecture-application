@@ -1,5 +1,6 @@
 bootJar.enabled = false
 jar.enabled = true
+jar.dependsOn test
 
 dependencies {
     implementation project(':api-in')
@@ -12,4 +13,8 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-undertow'
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
     implementation 'org.springframework.data:spring-data-commons'
+}
+
+test {
+    useJUnitPlatform()
 }

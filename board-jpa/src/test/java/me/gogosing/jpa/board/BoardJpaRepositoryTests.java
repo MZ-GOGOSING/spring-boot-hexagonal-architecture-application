@@ -8,7 +8,8 @@ import java.time.LocalDateTime;
 import lombok.RequiredArgsConstructor;
 import me.gogosing.jpa.board.entity.BoardJpaEntity;
 import me.gogosing.jpa.board.repository.BoardJpaRepository;
-import me.gogosing.jpa.board.request.query.BoardPagingJpaCondition;
+import me.gogosing.jpa.board.request.query.BoardJpaFetchQuery;
+import me.gogosing.jpa.support.JpaRepositoryTest;
 import me.gogosing.jpa.support.QueryDslRepositoryTest;
 import me.gogosing.support.code.board.BoardCategory;
 import org.junit.jupiter.api.DisplayName;
@@ -19,6 +20,7 @@ import org.springframework.data.domain.Sort.Order;
 import org.springframework.test.context.TestConstructor;
 import org.springframework.test.context.TestConstructor.AutowireMode;
 
+@JpaRepositoryTest
 @QueryDslRepositoryTest
 @TestConstructor(autowireMode = AutowireMode.ALL)
 @RequiredArgsConstructor
@@ -41,13 +43,13 @@ public class BoardJpaRepositoryTests {
 	}
 
 	@Test
-	@DisplayName("BoardJpaEntity 저장 동작 여부 확인")
+	@DisplayName("BoardJpaRepository 저장 동작 여부 확인")
 	public void testSave() {
 		// given
 		final var boardJpaEntity = BoardJpaEntity.builder()
 			.boardTitle("테스트 게시물 제목")
 			.boardCategory(BoardCategory.NORMAL)
-			.deleted(true)
+			.deleted(false)
 			.createDate(LocalDateTime.now())
 			.updateDate(LocalDateTime.now())
 			.build();
@@ -63,18 +65,41 @@ public class BoardJpaRepositoryTests {
 	}
 
 	@Test
-	@DisplayName("BoardJpaEntity 페이징 정상 동작 여부 확인")
+	@DisplayName("BoardJpaRepository Query method 동작 여부 확인")
+	public void testFindByBoardIdAndDeletedFalse() {
+		// given
+		final var boardJpaEntity = BoardJpaEntity.builder()
+			.boardTitle("테스트 게시물 제목")
+			.boardCategory(BoardCategory.NORMAL)
+			.deleted(true)
+			.createDate(LocalDateTime.now())
+			.updateDate(LocalDateTime.now())
+			.build();
+
+		final var storedJpaEntity = boardJpaRepository.save(boardJpaEntity);
+
+		// when
+		final var actualResult = boardJpaRepository
+			.findByBoardIdAndDeletedFalse(storedJpaEntity.getBoardId());
+
+		// then
+		assertThat(actualResult).isNotPresent();
+	}
+
+	@Test
+	@DisplayName("BoardJpaRepository QueryDsl 페이징 정상 동작 여부 확인")
 	public void testFindAllByQuery() {
 		// given
-		final var jpaCondition = BoardPagingJpaCondition.builder()
+		final var jpaFetchQuery = BoardJpaFetchQuery.builder()
 			.title("첫번째")
 			.build();
 
 		final var pageable = PageRequest
-			.of(0, 10, Sort.by(Order.asc("boardId")));
+			.of(0, 10, Sort.by(Order.desc("boardId")));
 
 		// when
-		final var paginatedResult = boardJpaRepository.findAllByQuery(jpaCondition, pageable);
+		final var paginatedResult = boardJpaRepository
+			.findAllByFetchQuery(jpaFetchQuery, pageable);
 
 		// then
 		assertThat(paginatedResult).isNotEmpty();

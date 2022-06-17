@@ -1,6 +1,11 @@
 bootJar.enabled = false
 jar.enabled = true
+jar.dependsOn test
 
 dependencies {
     implementation project(':support')
+}
+
+test {
+    useJUnitPlatform()
 }

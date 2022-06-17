@@ -7,12 +7,11 @@ import me.gogosing.board.application.port.out.request.query.GetPaginatedBoardArt
 import me.gogosing.board.domain.BoardDomainEntity;
 import me.gogosing.jpa.board.config.BoardJpaTransactional;
 import me.gogosing.jpa.board.repository.BoardJpaRepository;
-import me.gogosing.jpa.board.request.query.BoardPagingJpaCondition;
+import me.gogosing.jpa.board.request.query.BoardJpaFetchQuery;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -31,13 +30,13 @@ public class LoadPaginatedBoardArticlePersistenceAdapter implements LoadPaginate
 		final var jpaQuery = this.convertToJpaQuery(outQuery);
 
 		final var paginatedJpaEntities = boardJpaRepository
-			.findAllByQuery(jpaQuery, pageable);
+			.findAllByFetchQuery(jpaQuery, pageable);
 
 		return paginatedJpaEntities.map(boardArticleMapper::mapToDomainEntity);
 	}
 
-	private BoardPagingJpaCondition convertToJpaQuery(final GetPaginatedBoardArticleOutQuery outQuery) {
-		return BoardPagingJpaCondition.builder()
+	private BoardJpaFetchQuery convertToJpaQuery(final GetPaginatedBoardArticleOutQuery outQuery) {
+		return BoardJpaFetchQuery.builder()
 			.title(outQuery.getTitle())
 			.category(outQuery.getCategory())
 			.contents(outQuery.getContents())

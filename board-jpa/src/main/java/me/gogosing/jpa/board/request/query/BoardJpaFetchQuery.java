@@ -12,7 +12,7 @@ import me.gogosing.support.dto.LocalDateRangeQuery;
 @Builder
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = false)
-public class BoardPagingJpaCondition {
+public class BoardJpaFetchQuery {
 
 	private final String title;
 

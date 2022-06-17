@@ -40,6 +40,7 @@ public class GetPaginatedBoardArticleWebQuery {
 	@Parameter(description = "검색 내용 (like)")
 	private String contents;
 
+	@Builder.Default
 	@Valid
 	@BetweenDate
 	@Parameter(description = "검색 등록기간 (between)", required = true)

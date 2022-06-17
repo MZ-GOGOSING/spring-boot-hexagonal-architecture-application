@@ -20,6 +20,7 @@ import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.boot.orm.jpa.EntityManagerFactoryBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.orm.jpa.JpaTransactionManager;
@@ -51,6 +52,7 @@ public class FileJpaDataSourceConfig {
 	public static final String FILE_PERSISTENCE_PACKAGE = "me.gogosing.jpa.file";
 	public static final String FILE_PERSISTENCE_JDBC_TEMPLATE = "filePersistenceJdbcTemplate";
 
+	@Primary
 	@Bean(name = FILE_PERSISTENCE_ENTITY_MANAGER_FACTORY)
 	public LocalContainerEntityManagerFactoryBean filePersistenceEntityManagerFactory() {
 		return new EntityManagerFactoryBuilder(new HibernateJpaVendorAdapter(),
@@ -64,18 +66,21 @@ public class FileJpaDataSourceConfig {
 			.build();
 	}
 
+	@Primary
 	@Bean(name = FILE_PERSISTENCE_JPA_PROPERTIES)
 	@ConfigurationProperties(prefix = "file.persistence.jpa")
 	public JpaProperties filePersistenceJpaProperties() {
 		return new JpaProperties();
 	}
 
+	@Primary
 	@Bean(name = FILE_PERSISTENCE_HIBERNATE_PROPERTIES)
 	@ConfigurationProperties(prefix = "file.persistence.jpa.hibernate")
 	public HibernateProperties filePersistenceHibernateProperties() {
 		return new HibernateProperties();
 	}
 
+	@Primary
 	@Bean
 	@Qualifier(FILE_PERSISTENCE_DATA_SOURCE)
 	@ConfigurationProperties("file.persistence.datasource")
@@ -83,6 +88,7 @@ public class FileJpaDataSourceConfig {
 		return DataSourceBuilder.create().type(HikariDataSource.class).build();
 	}
 
+	@Primary
 	@Bean(name = FILE_PERSISTENCE_TRANSACTION_MANAGER)
 	public PlatformTransactionManager filePersistenceTransactionManager(
 		final @Autowired @Qualifier(FILE_PERSISTENCE_ENTITY_MANAGER_FACTORY) EntityManagerFactory fileJpaEntityManagerFactory
@@ -90,6 +96,7 @@ public class FileJpaDataSourceConfig {
 		return new JpaTransactionManager(fileJpaEntityManagerFactory);
 	}
 
+	@Primary
 	@Bean(name = FILE_PERSISTENCE_JDBC_TEMPLATE)
 	public JdbcTemplate filePersistenceJdbcTemplate(
 		final @Qualifier(FILE_PERSISTENCE_DATA_SOURCE) DataSource dataSource

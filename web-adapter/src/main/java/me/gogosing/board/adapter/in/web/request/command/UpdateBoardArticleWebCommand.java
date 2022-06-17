@@ -44,6 +44,7 @@ public class UpdateBoardArticleWebCommand {
 	@Schema(description = "내용", example = "게시물 내용", required = true)
 	private String contents;
 
+	@Builder.Default
 	@Valid
 	@Schema(description = "첨부파일 목록")
 	private List<UpdateBoardAttachmentWebCommand> attachments = Collections.emptyList();

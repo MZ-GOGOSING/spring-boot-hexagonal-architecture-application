@@ -8,7 +8,7 @@ import me.gogosing.jpa.board.config.BoardJpaRepositorySupport;
 import me.gogosing.jpa.board.entity.BoardJpaEntity;
 import me.gogosing.jpa.board.entity.QBoardContentsJpaEntity;
 import me.gogosing.jpa.board.entity.QBoardJpaEntity;
-import me.gogosing.jpa.board.request.query.BoardPagingJpaCondition;
+import me.gogosing.jpa.board.request.query.BoardJpaFetchQuery;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -26,13 +26,13 @@ public class BoardJpaRepositoryCustomImpl extends BoardJpaRepositorySupport
 	}
 
 	@Override
-	public Page<BoardJpaEntity> findAllByQuery(
-		final BoardPagingJpaCondition jpaCondition,
+	public Page<BoardJpaEntity> findAllByFetchQuery(
+		final BoardJpaFetchQuery jpaFetchQuery,
 		final Pageable pageable
 	) {
-		final var jpqlQuery = getDefaultPaginationJpqlQuery();
+		final var jpqlQuery = getDefaultFetchJpqlQuery();
 
-		applyPaginationWhereClause(jpqlQuery, jpaCondition);
+		applyFetchWhereClause(jpqlQuery, jpaFetchQuery);
 
 		final var totalCount = jpqlQuery.fetchCount();
 		if (totalCount < 1L) {
@@ -46,7 +46,7 @@ public class BoardJpaRepositoryCustomImpl extends BoardJpaRepositorySupport
 		return new PageImpl<>(content, pageable, totalCount);
 	}
 
-	private JPQLQuery<BoardJpaEntity> getDefaultPaginationJpqlQuery() {
+	private JPQLQuery<BoardJpaEntity> getDefaultFetchJpqlQuery() {
 		return getQuerydsl()
 			.createQuery()
 			.select(Q_BOARD_JPA_ENTITY)
@@ -55,17 +55,17 @@ public class BoardJpaRepositoryCustomImpl extends BoardJpaRepositorySupport
 			.on(Q_BOARD_JPA_ENTITY.boardId.eq(Q_BOARD_CONTENTS_JPA_ENTITY.boardId));
 	}
 
-	private void applyPaginationWhereClause(
+	private void applyFetchWhereClause(
 		final JPQLQuery<BoardJpaEntity> jpqlQuery,
-		final BoardPagingJpaCondition jpaCondition
+		final BoardJpaFetchQuery jpaFetchQuery
 	) {
-		optionalWhen(jpaCondition.getTitle()).then(
+		optionalWhen(jpaFetchQuery.getTitle()).then(
 			it -> jpqlQuery.where(Q_BOARD_JPA_ENTITY.boardTitle.containsIgnoreCase(it))
 		);
-		optionalWhen(jpaCondition.getCategory()).then(
+		optionalWhen(jpaFetchQuery.getCategory()).then(
 			it -> jpqlQuery.where(Q_BOARD_JPA_ENTITY.boardCategory.eq(it))
 		);
-		optionalWhen(jpaCondition.getRegisteredPeriod()).then(
+		optionalWhen(jpaFetchQuery.getRegisteredPeriod()).then(
 			period -> {
 				optionalWhen(period.getStartDateTime()).then(
 					startDateTime -> jpqlQuery.where(Q_BOARD_JPA_ENTITY.createDate.goe(startDateTime))
@@ -75,7 +75,7 @@ public class BoardJpaRepositoryCustomImpl extends BoardJpaRepositorySupport
 				);
 			}
 		);
-		optionalWhen(jpaCondition.getContents()).then(
+		optionalWhen(jpaFetchQuery.getContents()).then(
 			it -> jpqlQuery.where(Q_BOARD_CONTENTS_JPA_ENTITY.boardContents.containsIgnoreCase(it))
 		);
 	}

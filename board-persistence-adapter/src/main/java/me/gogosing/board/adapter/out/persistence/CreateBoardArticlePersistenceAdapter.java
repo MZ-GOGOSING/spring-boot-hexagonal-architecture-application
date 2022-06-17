@@ -40,6 +40,7 @@ public class CreateBoardArticlePersistenceAdapter implements CreateBoardArticleP
 	private BoardJpaEntity saveBoard(final BoardDomainEntity outCommand) {
 		final var generatedBoardJpaEntity = boardArticleMapper.mapToJpaEntity(outCommand);
 
+		generatedBoardJpaEntity.setBoardId(null);
 		generatedBoardJpaEntity.setCreateDate(LocalDateTime.now());
 		generatedBoardJpaEntity.setUpdateDate(LocalDateTime.now());
 

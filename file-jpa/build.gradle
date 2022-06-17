@@ -6,14 +6,13 @@ apply from: '../jpa.gradle'
 
 bootJar.enabled = false
 jar.enabled = true
+jar.dependsOn test
 
 dependencies {
     implementation project(':support')
 
     implementation 'org.mariadb.jdbc:mariadb-java-client:3.0.5'
 }
-
-jar.dependsOn test
 
 flyway {
     url = "jdbc:mariadb://localhost:3306/file?useSSL=false"
@@ -23,4 +22,8 @@ flyway {
     encoding = 'UTF-8'
     outOfOrder = true // 여러브랜치에서 서로 다른 날짜로 만들어도 작동하도록
     validateOnMigrate = true
+}
+
+test {
+    useJUnitPlatform()
 }

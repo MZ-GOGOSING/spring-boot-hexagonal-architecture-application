@@ -1,5 +1,6 @@
 bootJar.enabled = false
 jar.enabled = true
+jar.dependsOn test
 
 dependencies {
     implementation project(':api-in')
@@ -11,4 +12,8 @@ dependencies {
 
     implementation 'org.springframework:spring-tx'
     implementation 'org.springframework.data:spring-data-commons'
+}
+
+test {
+    useJUnitPlatform()
 }
