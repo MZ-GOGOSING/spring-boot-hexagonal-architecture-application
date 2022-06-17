@@ -63,7 +63,7 @@ Local MariaDB 접속 정보
 ### Run the Application
 
 ```
-configuration/src/main/java/me/gogosing/ApplicationInitializr.java
+app-container/src/main/java/me/gogosing/ApplicationInitializr.java
 ```
 
 ### Available Profiles
