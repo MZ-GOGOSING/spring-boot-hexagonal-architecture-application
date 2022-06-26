@@ -1,4 +1,4 @@
-package me.gogosing.board.application.port.out;
+package me.gogosing.board.domain.ports.outside;
 
 import javax.validation.constraints.Min;
 import me.gogosing.board.domain.BoardDomainEntity;

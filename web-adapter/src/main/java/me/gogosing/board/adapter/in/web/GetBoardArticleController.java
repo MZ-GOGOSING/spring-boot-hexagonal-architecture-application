@@ -8,7 +8,6 @@ import lombok.RequiredArgsConstructor;
 import me.gogosing.board.adapter.in.web.response.GetBoardArticleWebResponse;
 import me.gogosing.board.adapter.in.web.response.converter.GetBoardArticleWebResponseConverter;
 import me.gogosing.board.application.port.in.GetBoardArticleQuery;
-import me.gogosing.board.application.port.in.response.GetBoardArticleInResponse;
 import me.gogosing.support.dto.ApiResponse;
 import me.gogosing.support.dto.ApiResponseGenerator;
 import org.springframework.web.bind.annotation.GetMapping;

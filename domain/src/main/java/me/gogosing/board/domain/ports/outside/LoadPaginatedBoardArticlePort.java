@@ -1,4 +1,4 @@
-package me.gogosing.board.application.port.out;
+package me.gogosing.board.domain.ports.outside;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;

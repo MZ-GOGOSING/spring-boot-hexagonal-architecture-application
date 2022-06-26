@@ -1,4 +1,4 @@
-package me.gogosing.board.application.port.in;
+package me.gogosing.board.domain.ports.inside;
 
 import javax.validation.constraints.Min;
 import me.gogosing.board.application.port.in.response.GetBoardArticleInResponse;

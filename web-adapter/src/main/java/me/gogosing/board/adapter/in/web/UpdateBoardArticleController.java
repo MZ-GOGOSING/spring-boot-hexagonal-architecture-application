@@ -10,8 +10,6 @@ import me.gogosing.board.adapter.in.web.request.command.UpdateBoardArticleWebCom
 import me.gogosing.board.adapter.in.web.response.UpdateBoardArticleWebResponse;
 import me.gogosing.board.adapter.in.web.response.converter.UpdateBoardArticleWebResponseConverter;
 import me.gogosing.board.application.port.in.UpdateBoardArticleUseCase;
-import me.gogosing.board.application.port.in.request.command.UpdateBoardArticleInCommand;
-import me.gogosing.board.application.port.in.response.UpdateBoardArticleInResponse;
 import me.gogosing.support.dto.ApiResponse;
 import me.gogosing.support.dto.ApiResponseGenerator;
 import org.springframework.validation.annotation.Validated;

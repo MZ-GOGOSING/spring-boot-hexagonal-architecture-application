@@ -2,7 +2,7 @@ package me.gogosing.board.adapter.out.persistence;
 
 import lombok.RequiredArgsConstructor;
 import me.gogosing.board.adapter.out.persistence.mapper.BoardArticleMapper;
-import me.gogosing.board.application.port.out.LoadBoardArticlePort;
+import me.gogosing.board.domain.ports.outside.LoadBoardArticlePort;
 import me.gogosing.board.domain.BoardDomainEntity;
 import me.gogosing.jpa.board.config.BoardJpaTransactional;
 import me.gogosing.jpa.board.repository.BoardContentsJpaRepository;

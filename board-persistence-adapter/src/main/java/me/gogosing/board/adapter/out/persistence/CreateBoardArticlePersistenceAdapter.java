@@ -3,7 +3,7 @@ package me.gogosing.board.adapter.out.persistence;
 import java.time.LocalDateTime;
 import lombok.RequiredArgsConstructor;
 import me.gogosing.board.adapter.out.persistence.mapper.BoardArticleMapper;
-import me.gogosing.board.application.port.out.CreateBoardArticlePort;
+import me.gogosing.board.domain.ports.outside.CreateBoardArticlePort;
 import me.gogosing.board.domain.BoardDomainEntity;
 import me.gogosing.jpa.board.config.BoardJpaTransactional;
 import me.gogosing.jpa.board.entity.BoardContentsJpaEntity;

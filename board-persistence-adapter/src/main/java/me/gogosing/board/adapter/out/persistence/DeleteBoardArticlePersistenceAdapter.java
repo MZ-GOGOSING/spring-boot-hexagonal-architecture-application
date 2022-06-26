@@ -4,7 +4,7 @@ import static java.lang.Boolean.TRUE;
 
 import java.time.LocalDateTime;
 import lombok.RequiredArgsConstructor;
-import me.gogosing.board.application.port.out.DeleteBoardArticlePort;
+import me.gogosing.board.domain.ports.outside.DeleteBoardArticlePort;
 import me.gogosing.jpa.board.config.BoardJpaTransactional;
 import me.gogosing.jpa.board.repository.BoardContentsJpaRepository;
 import me.gogosing.jpa.board.repository.BoardJpaRepository;

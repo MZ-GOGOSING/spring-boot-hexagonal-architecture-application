@@ -1,10 +1,10 @@
 package me.gogosing.board.application;
 
 import lombok.RequiredArgsConstructor;
-import me.gogosing.board.application.port.in.GetPaginatedBoardArticleQuery;
+import me.gogosing.board.domain.ports.inside.GetPaginatedBoardArticleQuery;
 import me.gogosing.board.application.port.in.request.query.GetPaginatedBoardArticleInQuery;
 import me.gogosing.board.application.port.in.response.GetBoardArticleItemInResponse;
-import me.gogosing.board.application.port.out.LoadPaginatedBoardArticlePort;
+import me.gogosing.board.domain.ports.outside.LoadPaginatedBoardArticlePort;
 import me.gogosing.board.application.port.out.request.query.GetPaginatedBoardArticleOutQuery;
 import me.gogosing.board.domain.BoardDomainEntity;
 import me.gogosing.support.jta.JtaTransactional;

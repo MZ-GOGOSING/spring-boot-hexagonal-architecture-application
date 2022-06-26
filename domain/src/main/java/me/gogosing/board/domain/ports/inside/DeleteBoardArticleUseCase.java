@@ -1,8 +1,8 @@
-package me.gogosing.board.application.port.out;
+package me.gogosing.board.domain.ports.inside;
 
 import javax.validation.constraints.Min;
 
-public interface DeleteBoardArticlePort {
+public interface DeleteBoardArticleUseCase {
 
 	void deleteBoardArticle(final @Min(1L) Long id);
 }

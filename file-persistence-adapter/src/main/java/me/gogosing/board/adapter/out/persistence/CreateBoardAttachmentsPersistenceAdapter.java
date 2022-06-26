@@ -4,7 +4,7 @@ import java.util.Collections;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import me.gogosing.board.adapter.out.persistence.mapper.BoardAttachmentMapper;
-import me.gogosing.board.application.port.out.CreateBoardAttachmentsPort;
+import me.gogosing.board.domain.ports.outside.CreateBoardAttachmentsPort;
 import me.gogosing.board.domain.BoardAttachmentDomainEntity;
 import me.gogosing.jpa.file.config.FileJpaTransactional;
 import me.gogosing.jpa.file.entity.BoardAttachmentJpaEntity;

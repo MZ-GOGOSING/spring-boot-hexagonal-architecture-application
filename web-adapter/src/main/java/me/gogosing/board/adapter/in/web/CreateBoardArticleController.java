@@ -8,8 +8,6 @@ import me.gogosing.board.adapter.in.web.request.command.CreateBoardArticleWebCom
 import me.gogosing.board.adapter.in.web.response.CreateBoardArticleWebResponse;
 import me.gogosing.board.adapter.in.web.response.converter.CreateBoardArticleWebResponseConverter;
 import me.gogosing.board.application.port.in.CreateBoardArticleUseCase;
-import me.gogosing.board.application.port.in.request.command.CreateBoardArticleInCommand;
-import me.gogosing.board.application.port.in.response.CreateBoardArticleInResponse;
 import me.gogosing.support.dto.ApiResponse;
 import me.gogosing.support.dto.ApiResponseGenerator;
 import org.springframework.validation.annotation.Validated;

@@ -8,13 +8,10 @@ import me.gogosing.board.adapter.in.web.request.query.GetPaginatedBoardArticleWe
 import me.gogosing.board.adapter.in.web.response.GetBoardArticleItemWebResponse;
 import me.gogosing.board.adapter.in.web.response.converter.GetBoardArticleItemWebResponseConverter;
 import me.gogosing.board.application.port.in.GetPaginatedBoardArticleQuery;
-import me.gogosing.board.application.port.in.request.query.GetPaginatedBoardArticleInQuery;
-import me.gogosing.board.application.port.in.response.GetBoardArticleItemInResponse;
 import me.gogosing.support.dto.ApiResponse;
 import me.gogosing.support.dto.ApiResponseGenerator;
 import me.gogosing.support.dto.PageResponse;
 import org.springdoc.api.annotations.ParameterObject;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.web.PageableDefault;

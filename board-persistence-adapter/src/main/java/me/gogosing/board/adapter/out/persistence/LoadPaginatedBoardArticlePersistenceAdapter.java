@@ -2,7 +2,7 @@ package me.gogosing.board.adapter.out.persistence;
 
 import lombok.RequiredArgsConstructor;
 import me.gogosing.board.adapter.out.persistence.mapper.BoardArticleMapper;
-import me.gogosing.board.application.port.out.LoadPaginatedBoardArticlePort;
+import me.gogosing.board.domain.ports.outside.LoadPaginatedBoardArticlePort;
 import me.gogosing.board.application.port.out.request.query.GetPaginatedBoardArticleOutQuery;
 import me.gogosing.board.domain.BoardDomainEntity;
 import me.gogosing.jpa.board.config.BoardJpaTransactional;
@@ -12,7 +12,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
