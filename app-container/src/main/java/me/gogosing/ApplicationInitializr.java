@@ -1,11 +1,13 @@
 package me.gogosing;
 
+import me.gogosing.container.AppContainerConfig;
 import me.gogosing.jpa.board.BoardJpaConfig;
 import me.gogosing.jpa.file.FileJpaConfig;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication(scanBasePackageClasses = {
+	AppContainerConfig.class,
 	WebAdapterConfig.class,
 	ApplicationConfig.class,
 	BoardPersistenceAdapterConfig.class,

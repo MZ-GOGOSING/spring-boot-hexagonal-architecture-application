@@ -1,0 +1,19 @@
+spring:
+  profiles:
+    active: local
+    include:
+      - web
+      - core
+      - board-persistence
+      - file-persistence
+      - board-jpa
+      - file-jpa
+
+debug: true
+
+logging:
+  level:
+    web: DEBUG
+    org.springframework.orm.jpa: DEBUG
+    org.springframework.transaction: DEBUG
+    io.swagger.models.parameters.AbstractSerializableParameter: error

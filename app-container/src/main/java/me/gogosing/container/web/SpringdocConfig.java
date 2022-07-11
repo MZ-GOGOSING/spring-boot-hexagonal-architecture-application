@@ -14,7 +14,7 @@ import org.springframework.context.annotation.Profile;
 public class SpringdocConfig {
 
 	@Bean
-	public OpenAPI springBootHexagonalArchitectureOpenAPI() {
+	public OpenAPI openAPI() {
 		final var info = new Info()
 			.title("spring-boot-hexagonal-architecture-application API")
 			.description("Hexagonal Architecture Sample Application")
