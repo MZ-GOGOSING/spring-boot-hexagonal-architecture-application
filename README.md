@@ -55,11 +55,11 @@ Local MariaDB 접속 정보
 ```
 
 ### IntegrationTest
-IntelliJ의 경우 테스트를 수행하기 전, 아래의 설정을 변경하여 주세요.
+사용하는 IDE가 IntelliJ일 경우 테스트를 수행하기 전, 아래의 설정으로 변경하여 주세요.
 - Preferences >  Build, Execution, Deployment > Build Tools > Gradle
   - Gradle projects
-    - Build and run using : IntelliJ IDEA
-    - Run tests using : IntelliJ IDEA
+    - Build and run using : Gradle 에서 IntelliJ IDEA 으로
+    - Run tests using : Gradle 에서 IntelliJ IDEA 으로
 ```
 ./gradlew app-container:integrationTest
 ```
@@ -78,7 +78,7 @@ app-container/src/main/java/me/gogosing/ApplicationInitializr.java
 
 ### API Documentation
 
-API 명세는 아래의 경로를 통하여 확인할 수 있습니다.
+API 명세는 어플리케이션 실행 후, 아래의 경로를 통하여 확인할 수 있습니다.
 
 ```
 http://localhost:9090/swagger-ui/index.html
