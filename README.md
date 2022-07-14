@@ -55,9 +55,13 @@ Local MariaDB 접속 정보
 ```
 
 ### IntegrationTest
-
+IntelliJ의 경우 테스트를 수행하기 전, 아래의 설정을 변경하여 주세요.
+- Preferences >  Build, Execution, Deployment > Build Tools > Gradle
+  - Gradle projects
+    - Build and run using : IntelliJ IDEA
+    - Run tests using : IntelliJ IDEA
 ```
-./gradlew integrationTest
+./gradlew app-container:integrationTest
 ```
 
 ### Run the Application
